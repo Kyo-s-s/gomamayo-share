@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::API
-  def aaa
-    a = 'aaaa'
-    a.upper!
+def aaa
+    a = 'aaa'
   end
 end

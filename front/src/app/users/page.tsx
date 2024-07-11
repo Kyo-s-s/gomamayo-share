@@ -1,8 +1,8 @@
+import { getRequest } from "../_utils/request";
+
 const Users = async () => {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL! + "/users";
-  const responce = await fetch(apiUrl, { cache: "no-store" });
-  const data = await responce.json();
-  return <p>{JSON.stringify(data)}</p>;
+  const res = await getRequest("/users");
+  return <p>{JSON.stringify(res)}</p>;
 };
 const Page = () => {
   return (

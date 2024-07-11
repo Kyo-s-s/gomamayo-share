@@ -21,6 +21,29 @@ const resultFailure = <T>(error: RequestError): Result<T> => {
   return { success: undefined, failure: error };
 };
 
+const fetchError = <T>() => {
+  return resultFailure<T>({
+    status: -1,
+    error: "Fetch Error",
+  });
+};
+
+export const getRequest = async <T>(url: string): Promise<Result<T>> => {
+  try {
+    console.log("GET: " + process.env.NEXT_PUBLIC_API_URL! + url);
+    const response = await fetch(process.env.NEXT_PUBLIC_API_URL! + url, {
+      cache: "no-store", // FIXME
+    });
+    if (response.ok) {
+      return resultSuccess((await response.json()) as T);
+    } else {
+      return resultFailure((await response.json()) as RequestError);
+    }
+  } catch (error) {
+    return fetchError();
+  }
+};
+
 export const postRequest = async <T>(
   url: string,
   data: object
@@ -44,9 +67,6 @@ export const postRequest = async <T>(
       return resultFailure((await response.json()) as RequestError);
     }
   } catch (error) {
-    return resultFailure({
-      status: -1,
-      error: "Fetch Error",
-    });
+    return fetchError();
   }
 };

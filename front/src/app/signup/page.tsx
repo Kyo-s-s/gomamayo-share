@@ -3,11 +3,7 @@
 import { useCallback, useState } from "react";
 import { postRequest } from "../_utils/request";
 import { useRouter } from "next/navigation";
-
-type User = {
-  id: number;
-  name: string;
-};
+import { User } from "../_types/types";
 
 // FIXME: move utils
 const useNavigate = () => {

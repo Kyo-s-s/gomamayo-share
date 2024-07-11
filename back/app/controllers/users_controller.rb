@@ -1,9 +1,7 @@
 class UsersController < ApplicationController
   def index
     users = User.all
-    render json: users.map do |user|
-      serialize_user(user)
-    end
+    render json: users.map { |user| serialize_user(user) }
   end
 
   def show

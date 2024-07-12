@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 
 type RequestError = {
   status: number;
-  error: string;
+  message: string;
 };
 
 type Result<T> =
@@ -26,7 +26,7 @@ const resultFailure = <T>(error: RequestError): Result<T> => {
 const fetchError = <T>() => {
   return resultFailure<T>({
     status: -1,
-    error: "Fetch Error",
+    message: "Fetch Error",
   });
 };
 
@@ -35,14 +35,15 @@ export const getRequest = async <T>(url: string): Promise<Result<T>> => {
     console.log("GET: " + process.env.NEXT_PUBLIC_API_URL! + url);
     const response = await axios.get<T>(
       process.env.NEXT_PUBLIC_API_URL! + url,
-      {
-        withCredentials: true, // ?
-      }
+      { withCredentials: true } // ?
     );
     return resultSuccess(response.data);
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      return resultFailure(error.response.data as RequestError);
+    if (axios.isAxiosError(error)) {
+      return resultFailure({
+        status: -1, // FIXME
+        message: error.message,
+      });
     }
     return fetchError();
   }
@@ -57,18 +58,16 @@ export const postRequest = async <T>(
     const response = await axios.post<T>(
       process.env.NEXT_PUBLIC_API_URL! + url,
       data,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true, // ?
-      }
+      { withCredentials: true } // ?
     );
-
     return resultSuccess(response.data);
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      return resultFailure(error.response.data as RequestError);
+    if (isAxiosError(error)) {
+      console.log(error.message);
+      return resultFailure({
+        status: -1, // FIXME
+        message: error.message,
+      });
     }
     return fetchError();
   }

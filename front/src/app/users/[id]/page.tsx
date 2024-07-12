@@ -1,8 +1,23 @@
-import { getRequest } from "@/app/_utils/request";
+"use client";
 
-const UserPage = async ({ id }: { id: string }) => {
-  const res = await getRequest(`/users/${id}`);
-  return <p>{JSON.stringify(res)}</p>;
+import { User } from "@/app/_types/types";
+import { getRequest } from "@/app/_utils/request";
+import { useEffect, useState } from "react";
+
+const UserPage = ({ id }: { id: string }) => {
+  const [user, setUser] = useState<User | null>(null);
+  // loading ?
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getRequest<User>(`/users/${id}`);
+      if (res.success) {
+        setUser(res.success);
+      }
+    };
+    fetchData();
+  }, []);
+  return <p>{JSON.stringify(user)}</p>;
 };
 
 const Page = ({ params }: { params: { id: string } }) => {

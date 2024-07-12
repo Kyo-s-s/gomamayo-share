@@ -30,7 +30,7 @@ const SignUpForm = () => {
     if (res.success) {
       navigateTo(`/users/${res.success.id}`);
     } else {
-      alert("ERROR: " + res.failure.error);
+      alert("ERROR: " + res.failure.message);
     }
   };
   return (

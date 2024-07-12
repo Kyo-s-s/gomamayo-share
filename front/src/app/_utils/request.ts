@@ -1,3 +1,5 @@
+import axios from "axios";
+
 type RequestError = {
   status: number;
   error: string;
@@ -31,15 +33,17 @@ const fetchError = <T>() => {
 export const getRequest = async <T>(url: string): Promise<Result<T>> => {
   try {
     console.log("GET: " + process.env.NEXT_PUBLIC_API_URL! + url);
-    const response = await fetch(process.env.NEXT_PUBLIC_API_URL! + url, {
-      cache: "no-store", // FIXME
-    });
-    if (response.ok) {
-      return resultSuccess((await response.json()) as T);
-    } else {
-      return resultFailure((await response.json()) as RequestError);
-    }
+    const response = await axios.get<T>(
+      process.env.NEXT_PUBLIC_API_URL! + url,
+      {
+        withCredentials: true, // ?
+      }
+    );
+    return resultSuccess(response.data);
   } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return resultFailure(error.response.data as RequestError);
+    }
     return fetchError();
   }
 };
@@ -48,25 +52,24 @@ export const postRequest = async <T>(
   url: string,
   data: object
 ): Promise<Result<T>> => {
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
-
   try {
-    const response = await fetch(
+    console.log("POST: " + process.env.NEXT_PUBLIC_API_URL! + url);
+    const response = await axios.post<T>(
       process.env.NEXT_PUBLIC_API_URL! + url,
-      options
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true, // ?
+      }
     );
-    if (response.ok) {
-      return resultSuccess((await response.json()) as T);
-    } else {
-      return resultFailure((await response.json()) as RequestError);
-    }
+
+    return resultSuccess(response.data);
   } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return resultFailure(error.response.data as RequestError);
+    }
     return fetchError();
   }
 };

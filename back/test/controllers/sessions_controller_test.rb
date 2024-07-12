@@ -30,4 +30,14 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unauthorized
     assert current_user.nil?
   end
+
+  test 'duplicate login' do
+    log_in_as(@name, @password)
+    assert current_user.name == @name
+    other_name = 'other'
+    other_password = 'other password'
+    User.create(name: other_name, password: other_password)
+    log_in_as(other_name, other_password)
+    assert current_user.name == other_name
+  end
 end

@@ -1,7 +1,6 @@
 import axios, { isAxiosError } from "axios";
 
 type RequestError = {
-  status: number;
   message: string;
 };
 
@@ -25,7 +24,6 @@ const resultFailure = <T>(error: RequestError): Result<T> => {
 
 const fetchError = <T>() => {
   return resultFailure<T>({
-    status: -1,
     message: "Fetch Error",
   });
 };
@@ -41,7 +39,6 @@ export const getRequest = async <T>(url: string): Promise<Result<T>> => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return resultFailure({
-        status: -1, // FIXME
         message: error.message,
       });
     }
@@ -63,9 +60,7 @@ export const postRequest = async <T>(
     return resultSuccess(response.data);
   } catch (error) {
     if (isAxiosError(error)) {
-      console.log(error.message);
       return resultFailure({
-        status: -1, // FIXME
         message: error.message,
       });
     }

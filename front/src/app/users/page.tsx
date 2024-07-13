@@ -15,8 +15,8 @@ const Users = () => {
         setUsers(res.success);
       }
     };
-    fetchData();
-  }, []);
+    if (users == null) fetchData();
+  }, [users]);
   return <p>{JSON.stringify(users)}</p>;
 };
 const Page = () => {

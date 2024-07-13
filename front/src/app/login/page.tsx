@@ -1,9 +1,10 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { postRequest } from "../_utils/request";
 import { useRouter } from "next/navigation";
 import { User } from "../_types/types";
+import { useAuth } from "../_context/AuthContext";
 
 // FIXME: move utils
 const useNavigate = () => {
@@ -20,14 +21,23 @@ const useNavigate = () => {
 };
 
 const LoginForm = () => {
+  const { user, login } = useAuth();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const navigateTo = useNavigate();
+
+  useEffect(() => {
+    if (user != null) {
+      navigateTo(`/users/${user.id}`);
+    }
+  }, [user, navigateTo]);
+
   const handleSignUp = async () => {
     let res = await postRequest<User>("/login", {
       user: { name: name, password: password },
     });
     if (res.success) {
+      login(res.success);
       navigateTo(`/users/${res.success.id}`);
     } else {
       alert("ERROR: " + res.failure.message);

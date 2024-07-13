@@ -22,15 +22,13 @@ const useNavigate = () => {
 
 const SignUpForm = () => {
   const { user, login } = useAuth();
+  const navigateTo = useNavigate();
+  if (user != null) {
+    navigateTo(`/users/${user.id}`);
+  }
+
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const navigateTo = useNavigate();
-
-  useEffect(() => {
-    if (user != null) {
-      navigateTo(`/users/${user.id}`);
-    }
-  }, [user, navigateTo]);
 
   const handleSignUp = async () => {
     let res = await postRequest<User>("/users", {

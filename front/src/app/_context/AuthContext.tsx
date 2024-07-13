@@ -22,7 +22,7 @@ export const AuthProvider = ({
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser) as User);
     }
@@ -30,13 +30,13 @@ export const AuthProvider = ({
   }, []);
 
   const login = (user: User) => {
-    localStorage.setItem("user", JSON.stringify(user));
+    sessionStorage.setItem("user", JSON.stringify(user));
     setUser(user);
   };
 
   const logout = () => {
     axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/logout`);
-    localStorage.setItem("user", JSON.stringify(null));
+    sessionStorage.setItem("user", JSON.stringify(null));
     setUser(null);
   };
 

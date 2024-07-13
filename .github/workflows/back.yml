@@ -1,4 +1,4 @@
-name: format
+name: back
 on:
   push:
     branches:
@@ -6,19 +6,8 @@ on:
   pull_request:
 
 jobs:
-  eslint:
-    name: ESLint Check
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-      - working-directory: front
-        run: |
-          npm install
-          npm run lint
-
   rubocop:
-    name: Rubocop Check
+    name: Rubocop Check and Rails Test
     runs-on: ubuntu-latest
 
     steps:
@@ -32,3 +21,4 @@ jobs:
         run: |
           bundle install
           rubocop
+          rails test

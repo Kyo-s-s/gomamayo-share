@@ -6,28 +6,26 @@ import axios from "axios";
 
 interface AuthContextType {
   user: User | null;
-  isLoading: boolean;
   login: (user: User) => void;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({
+const AuthProvider = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
+  const storedUser = () => {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser) as User);
+      return JSON.parse(storedUser) as User;
     }
-    setIsLoading(false);
-  }, []);
+    return null;
+  };
+
+  const [user, setUser] = useState<User | null>(storedUser());
 
   const login = (user: User) => {
     sessionStorage.setItem("user", JSON.stringify(user));
@@ -41,11 +39,13 @@ export const AuthProvider = ({
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
+export default AuthProvider;
 
 export const useAuth = () => {
   const context = useContext(AuthContext);

@@ -3,19 +3,30 @@ class PostsController < ApplicationController
 
   def index
     posts = Post.all
-    render json: posts.map(&:serialize)
+    render json: posts.map(&:serialize_include_user)
   end
 
   def show
     post = Post.find_by(id: params[:id])
     if post
-      render json: post.serialize
+      render json: post.serialize_include_user
     else
       render json: { message: 'Post not found' }, status: :not_found
     end
   end
 
   def create
-    # TODO
+    post = current_user.posts.new(user_params)
+    if post.save
+      render json: post.serialize
+    else
+      render json: { message: 'Invalid content' }, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def user_params
+    params.require(:post).permit(:content)
   end
 end

@@ -4,8 +4,12 @@ class Post < ApplicationRecord
   validates :content, presence: true, uniqueness: true, length: { maximum: 100 }
 
   def serialize
+    as_json(only: %i[id content created_at])
+  end
+
+  def serialize_include_user
     {
-      post: as_json(only: %i[id content created_at]),
+      post: serialize,
       user: user.serialize
     }
   end

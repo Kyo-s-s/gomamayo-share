@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { getRequest } from "../../utils/request";
 import { User } from "../../types/types";
+import { Heading } from "@chakra-ui/react";
 
 const Users = () => {
   const [users, setUsers] = useState<User[] | null>(null);
@@ -22,7 +23,7 @@ const Users = () => {
 const Page = () => {
   return (
     <>
-      <h1>users</h1>
+      <Heading>users</Heading>
       <Users />
     </>
   );

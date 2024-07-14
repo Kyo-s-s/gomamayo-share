@@ -5,6 +5,15 @@ import { postRequest } from "../../utils/request";
 import { useRouter } from "next/navigation";
 import { User } from "../../types/types";
 import { useAuth } from "../../context/AuthContext";
+import {
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  position,
+  useToast,
+} from "@chakra-ui/react";
+import { Button } from "@/components/custom";
 
 // FIXME: move utils
 const useNavigate = () => {
@@ -30,6 +39,8 @@ const SignUpForm = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
+  const toast = useToast();
+
   const handleSignUp = async () => {
     let res = await postRequest<User>("/users", {
       user: { name: name, password: password },
@@ -38,32 +49,35 @@ const SignUpForm = () => {
       login(res.success);
       navigateTo(`/users/${res.success.id}`);
     } else {
-      alert("ERROR: " + res.failure.message);
+      toast({
+        title: `Error!!`,
+        description: `${res.failure.message}`,
+        position: "top",
+        duration: 3000,
+        isClosable: true,
+        status: "error",
+      });
     }
   };
+
   return (
     <>
-      <div>
-        <label>
-          name:{" "}
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          password:{" "}
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-      </div>
-      <button onClick={handleSignUp}>Sign up</button>
+      <FormControl>
+        <FormLabel>Name</FormLabel>
+        <Input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <FormLabel>Password</FormLabel>
+        <Input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {/* TODO: password confirm */}
+      </FormControl>
+      <Button onClick={handleSignUp}>Sign up</Button>
     </>
   );
 };
@@ -71,7 +85,7 @@ const SignUpForm = () => {
 const Page = () => {
   return (
     <>
-      <h1>sign up</h1>
+      <Heading>sign up</Heading>
       <SignUpForm />
     </>
   );

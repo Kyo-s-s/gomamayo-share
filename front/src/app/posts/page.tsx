@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { getRequest } from "../../utils/request";
 import { Post, User } from "../../types/types";
+import { Heading } from "@chakra-ui/react";
 
 type PostsApiResponse = {
   user: User;
@@ -27,7 +28,7 @@ const Posts = () => {
 const Page = () => {
   return (
     <>
-      <h1>posts</h1>
+      <Heading>posts</Heading>
       <Posts />
     </>
   );

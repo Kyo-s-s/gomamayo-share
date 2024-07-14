@@ -1,5 +1,5 @@
 gomamayo:
-  content: "ごままよ"
+  content: "ごまマヨネーズ"
   created_at: <%= 10.minutes.ago %>
   user: :kyo
 

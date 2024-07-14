@@ -30,6 +30,12 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
+  test 'failure create post not gomamayo' do
+    log_in_as(@user.name, 'password')
+    post create_post_path, params: { post: { content: 'はとぽっぽー' } }
+    assert_response :unprocessable_entity # FIXME: not gomamayo message
+  end
+
   test 'show success' do
     get show_post_path(id: @post.id)
     assert_response :ok

@@ -19,6 +19,7 @@ module GomamayoChecker
 
   def gomamayo_check(str)
     mecab_parse(str).each_cons(2).filter do |first, second|
+      # TODO: 高次ゴママヨ
       first[:reading][-1] == second[:reading][0]
     end
   end

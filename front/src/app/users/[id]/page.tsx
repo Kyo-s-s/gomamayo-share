@@ -1,7 +1,8 @@
 "use client";
 
-import { User } from "@/app/_types/types";
-import { getRequest } from "@/app/_utils/request";
+import { User } from "@/types/types";
+import { getRequest } from "@/utils/request";
+import { Heading } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 const UserPage = ({ id }: { id: string }) => {
@@ -23,7 +24,7 @@ const UserPage = ({ id }: { id: string }) => {
 const Page = ({ params }: { params: { id: string } }) => {
   return (
     <>
-      <h1>users {params.id}</h1>
+      <Heading>users {params.id}</Heading>
       <UserPage id={params.id} />
     </>
   );

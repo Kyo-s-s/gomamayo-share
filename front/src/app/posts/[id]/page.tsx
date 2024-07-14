@@ -1,7 +1,8 @@
 "use client";
 
-import { Post, User } from "@/app/_types/types";
-import { getRequest } from "@/app/_utils/request";
+import { Post, User } from "@/types/types";
+import { getRequest } from "@/utils/request";
+import { Heading } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 type PostApiResponse = {
@@ -27,7 +28,7 @@ const PostPage = ({ id }: { id: string }) => {
 const Page = ({ params }: { params: { id: string } }) => {
   return (
     <>
-      <h1>posts {params.id}</h1>
+      <Heading>posts {params.id}</Heading>
       <PostPage id={params.id} />
     </>
   );

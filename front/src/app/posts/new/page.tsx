@@ -2,9 +2,17 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/app/_context/AuthContext";
-import { postRequest } from "@/app/_utils/request";
-import { Post } from "@/app/_types/types";
+import { useAuth } from "@/context/AuthContext";
+import { postRequest } from "@/utils/request";
+import { Post } from "@/types/types";
+import {
+  FormControl,
+  FormLabel,
+  Heading,
+  Textarea,
+  useToast,
+} from "@chakra-ui/react";
+import { Button } from "@/components/custom";
 
 // FIXME: move utils
 const useNavigate = () => {
@@ -21,13 +29,17 @@ const useNavigate = () => {
 };
 
 const PostForm = () => {
-  const { user, login } = useAuth();
+  const { user } = useAuth();
   const navigateTo = useNavigate();
-  if (user == null) {
-    navigateTo(`/signup`);
-  }
-
   const [content, setContent] = useState("");
+  const toast = useToast();
+
+  useEffect(() => {
+    if (user == null) {
+      navigateTo(`/login`);
+    }
+  }, [user]);
+
   const handlePost = async () => {
     let res = await postRequest<Post>("/posts", {
       post: { content: content },
@@ -35,22 +47,28 @@ const PostForm = () => {
     if (res.success) {
       navigateTo("/posts");
     } else {
-      alert("ERROR: " + res.failure.message);
+      toast({
+        title: `Error!!`,
+        description: `${res.failure.message}`,
+        position: "top",
+        duration: 3000,
+        isClosable: true,
+        status: "error",
+      });
     }
   };
 
   return (
     <>
-      <form>
-        <label>
-          content:{" "}
-          <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          ></textarea>
-        </label>
-      </form>
-      <button onClick={handlePost}>Post</button>
+      <FormControl>
+        <FormLabel>content</FormLabel>
+        <Textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          placeholder="ごまマヨネーズ"
+        />
+      </FormControl>
+      <Button onClick={handlePost}>Post</Button>
     </>
   );
 };
@@ -58,7 +76,7 @@ const PostForm = () => {
 const Page = () => {
   return (
     <>
-      <h1>new post</h1>
+      <Heading>new post</Heading>
       <PostForm />
     </>
   );

@@ -11,7 +11,7 @@ module GomamayoChecker
         sep = line.split(/[\t|,]/).map { |w| w == '*' ? nil : w }
         {
           surface: sep[0],
-          reading: sep[8].nil? ? sep[0] : sep[8]
+          reading: sep[8].nil? ? sep[0] : sep[8] # FIXME: ー
         }
       end
   end

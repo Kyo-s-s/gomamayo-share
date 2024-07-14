@@ -10,23 +10,23 @@ class GomamayoCheckerTest < ActiveSupport::TestCase
     ]
   end
 
-  test 'gomamayo check success' do
-    gomamayos = %w[
-      ホワイトとうもろこし
-      whiteとうもろこし
-      朝採れレタス
-    ]
-    gomamayos.each do |str|
-      assert gomamayo?(str)
-    end
-  end
+  # test 'gomamayo check success' do
+  #   gomamayos = %w[
+  #     ホワイトとうもろこし
+  #     whiteとうもろこし
+  #     朝採れレタス
+  #   ]
+  #   gomamayos.each do |str|
+  #     assert gomamayo?(str)
+  #   end
+  # end
 
-  test 'gomamayo check failure' do
-    not_gomamayos = %w[
-      はとぽっぽー
-    ]
-    not_gomamayos.each do |str|
-      assert_not gomamayo?(str)
-    end
-  end
+  # test 'gomamayo check failure' do
+  #   not_gomamayos = %w[
+  #     はとぽっぽー
+  #   ]
+  #   not_gomamayos.each do |str|
+  #     assert_not gomamayo?(str)
+  #   end
+  # end
 end

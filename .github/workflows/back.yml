@@ -17,29 +17,15 @@ jobs:
           ruby-version: 3.3
           bundler-cache: true
 
-      - name: Cache Mecab and Gem
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            back/vendor/bundle
-            mecab-ipadic-neologd
-          key: Gem-${{ runner.os }}-${{ hashFiles('back/Gemfile.lock') }}
-          restore-keys: |
-            Gem-${{ runner.os }}-
-
       - name: Setup Mecab
-        if: steps.cache.outputs.cache-hit != 'true'
         run: |
           sudo apt-get install -y mecab libmecab-dev mecab-ipadic-utf8
           git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git
 
       - working-directory: ./mecab-ipadic-neologd
-        if: steps.cache.outputs.cache-hit != 'true'
         run: |
           ./bin/install-mecab-ipadic-neologd -n -y
-
-      - run: echo dicdir = `mecab-config --dicdir`"/mecab-ipadic-neologd" > mecabrc && sudo cp mecabrc /usr/local/etc/
+          echo dicdir = `mecab-config --dicdir`"/mecab-ipadic-neologd" > mecabrc && sudo cp mecabrc /usr/local/etc/
 
       - working-directory: back
         run: bundle install

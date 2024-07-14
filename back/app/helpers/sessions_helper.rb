@@ -11,10 +11,16 @@ module SessionsHelper
   def current_user
     return unless (user_id = session[:user_id])
 
-    User.find_by(id: user_id)
+    User.find_by(id: user_id) # FIXME: memo current_user
   end
 
   def current_user?(user)
     user && user == current_user
+  end
+
+  def log_in_check
+    return unless current_user.nil?
+
+    render json: { message: 'Not Authorized' }, status: :unauthorized
   end
 end

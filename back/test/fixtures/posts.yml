@@ -1,0 +1,5 @@
+gomamayo:
+  content: "ごままよ"
+  created_at: <%= 10.minutes.ago %>
+  user: :kyo
+

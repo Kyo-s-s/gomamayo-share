@@ -29,14 +29,16 @@ const useNavigate = () => {
 };
 
 const PostForm = () => {
-  const { user, login } = useAuth();
+  const { user } = useAuth();
   const navigateTo = useNavigate();
-  if (user == null) {
-    navigateTo(`/signup`);
-  }
-
   const [content, setContent] = useState("");
   const toast = useToast();
+
+  useEffect(() => {
+    if (user == null) {
+      navigateTo(`/login`);
+    }
+  }, [user]);
 
   const handlePost = async () => {
     let res = await postRequest<Post>("/posts", {

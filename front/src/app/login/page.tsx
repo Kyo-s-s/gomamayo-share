@@ -31,13 +31,15 @@ const useNavigate = () => {
 const LoginForm = () => {
   const { user, login } = useAuth();
   const navigateTo = useNavigate();
-  if (user != null) {
-    navigateTo(`/users/${user.id}`);
-  }
-
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const toast = useToast();
+
+  useEffect(() => {
+    if (user != null) {
+      navigateTo(`/users/${user.id}`);
+    }
+  }, [user]);
 
   const handleLogin = async () => {
     let res = await postRequest<User>("/login", {
@@ -45,7 +47,6 @@ const LoginForm = () => {
     });
     if (res.success) {
       login(res.success);
-      navigateTo(`/users/${res.success.id}`);
     } else {
       toast({
         title: `Error!!`,

@@ -22,7 +22,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: mecab-ipadic-neologd
-          key: mecab-ipadic-neologd-${{ runner.os }}-
+          key: mecab-ipadic-neologd-${{ runner.os }}-${{ hashFiles('**/back/Gemfile.lock') }}
           restore-keys: |
             mecab-ipadic-neologd-${{ runner.os }}-
 
@@ -39,7 +39,13 @@ jobs:
           echo dicdir = `mecab-config --dicdir`"/mecab-ipadic-neologd" > mecabrc && sudo cp mecabrc /usr/local/etc/
 
       - working-directory: back
-        run: |
-          bundle install
-          rubocop
-          rails test
+        if: steps.cache-mecab.outputs.cache-hit != 'true'
+        run: bundle install
+
+      - name: Rubocop
+        working-directory: back
+        run: rubocop
+
+      - name: Rails Test
+        working-directory: back
+        run: rails test

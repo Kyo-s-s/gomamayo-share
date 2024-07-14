@@ -17,6 +17,16 @@ jobs:
           ruby-version: 3.3
           bundler-cache: true
 
+      - name: Setup Mecab
+        run: |
+          sudo apt-get install -y mecab libmecab-dev mecab-ipadic-utf8
+          git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git
+
+      - working-directory: ./mecab-ipadic-neologd
+        run: |
+          ./bin/install-mecab-ipadic-neologd -n -y
+          echo dicdir = `mecab-config --dicdir`"/mecab-ipadic-neologd" > mecabrc && sudo cp mecabrc /usr/local/etc/
+
       - working-directory: back
         run: |
           bundle install

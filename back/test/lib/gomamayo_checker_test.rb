@@ -5,8 +5,28 @@ class GomamayoCheckerTest < ActiveSupport::TestCase
 
   test 'mecab parse' do
     assert mecab_parse('ホワイトとうもろこし') == [
-      ['ホワイト', '名詞', '一般', '*', '*', '*', '*', 'ホワイト', 'ホワイト', 'ホワイト'],
-      ['とうもろこし', '名詞', '一般', '*', '*', '*', '*', 'とうもろこし', 'トウモロコシ', 'トウモロコシ']
+      { surface: 'ホワイト', reading: 'ホワイト' },
+      { surface: 'とうもろこし', reading: 'トウモロコシ' }
     ]
+  end
+
+  test 'gomamayo check success' do
+    gomamayos = %w[
+      ホワイトとうもろこし
+      whiteとうもろこし
+      朝採れレタス
+    ]
+    gomamayos.each do |str|
+      assert gomamayo?(str)
+    end
+  end
+
+  test 'gomamayo check failure' do
+    not_gomamayos = %w[
+      はとぽっぽー
+    ]
+    not_gomamayos.each do |str|
+      assert_not gomamayo?(str)
+    end
   end
 end

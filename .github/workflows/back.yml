@@ -17,41 +17,11 @@ jobs:
           ruby-version: 3.3
           bundler-cache: true
 
-      - name: Cache MeCab
-        id: cache-mecab
-        uses: actions/cache@v4
-        with:
-          path: |
-            /usr/local/lib/mecab
-            /usr/local/lib/libmecab.so
-            /usr/local/bin/mecab
-            /usr/local/etc/mecabrc
-            /usr/local/libexec/mecab
-            /usr/local/include/mecab
-            /usr/lib/x86_64-linux-gnu/libmecab.*
-            mecab-ipadic-neologd
-            /usr/local/etc/mecabrc
-          key: mecab-${{ runner.os }}
-
-      - name: Setup MeCab
-        if: steps.cache-mecab.outputs.cache-hit != 'true'
-        run: |
-          sudo apt-get install -y mecab libmecab-dev mecab-ipadic-utf8
-          git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git
-
-      - working-directory: ./mecab-ipadic-neologd
-        if: steps.cache-mecab.outputs.cache-hit != 'true'
-        run: |
-          ./bin/install-mecab-ipadic-neologd -n -y
-          echo dicdir = `mecab-config --dicdir`"/mecab-ipadic-neologd" > mecabrc && sudo cp mecabrc /usr/local/etc/
-
-      - working-directory: back
-        run: bundle install
+      - name: Build Docker image
+        run: docker build -t gomamayo-share-back-test -f docker/Dockerfile.test .
 
       - name: Rubocop
-        working-directory: back
-        run: rubocop
+        run: docker run --rm gomamayo-share-back-test rubocop
 
       - name: Rails Test
-        working-directory: back
-        run: rails test
+        run: docker run --rm gomamayo-share-back-test rails test

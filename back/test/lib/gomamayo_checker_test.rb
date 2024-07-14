@@ -21,12 +21,12 @@ class GomamayoCheckerTest < ActiveSupport::TestCase
   #   end
   # end
 
-  # test 'gomamayo check failure' do
-  #   not_gomamayos = %w[
-  #     はとぽっぽー
-  #   ]
-  #   not_gomamayos.each do |str|
-  #     assert_not gomamayo?(str)
-  #   end
-  # end
+  test 'gomamayo check failure' do
+    not_gomamayos = %w[
+      はとぽっぽー
+    ]
+    not_gomamayos.each do |str|
+      assert_not gomamayo?(str)
+    end
+  end
 end

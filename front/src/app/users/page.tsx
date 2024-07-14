@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getRequest } from "../_utils/request";
-import { User } from "../_types/types";
+import { getRequest } from "../../utils/request";
+import { User } from "../../types/types";
 
 const Users = () => {
   const [users, setUsers] = useState<User[] | null>(null);

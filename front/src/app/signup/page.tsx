@@ -1,10 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { postRequest } from "../_utils/request";
+import { postRequest } from "../../utils/request";
 import { useRouter } from "next/navigation";
-import { User } from "../_types/types";
-import { useAuth } from "../_context/AuthContext";
+import { User } from "../../types/types";
+import { useAuth } from "../../context/AuthContext";
+import { Button } from "@chakra-ui/react";
 
 // FIXME: move utils
 const useNavigate = () => {
@@ -63,7 +64,7 @@ const SignUpForm = () => {
           />
         </label>
       </div>
-      <button onClick={handleSignUp}>Sign up</button>
+      <Button onClick={handleSignUp}>Sign up</Button>
     </>
   );
 };

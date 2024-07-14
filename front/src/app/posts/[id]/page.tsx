@@ -1,7 +1,7 @@
 "use client";
 
-import { Post, User } from "@/app/_types/types";
-import { getRequest } from "@/app/_utils/request";
+import { Post, User } from "@/types/types";
+import { getRequest } from "@/utils/request";
 import { useEffect, useState } from "react";
 
 type PostApiResponse = {

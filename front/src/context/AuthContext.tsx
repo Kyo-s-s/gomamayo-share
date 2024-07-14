@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { User } from "../_types/types";
+import { User } from "../types/types";
 import axios from "axios";
 
 interface AuthContextType {

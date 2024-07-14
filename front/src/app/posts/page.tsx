@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getRequest } from "../_utils/request";
-import { Post, User } from "../_types/types";
+import { getRequest } from "../../utils/request";
+import { Post, User } from "../../types/types";
 
 type PostsApiResponse = {
   user: User;

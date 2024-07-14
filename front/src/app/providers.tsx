@@ -2,7 +2,7 @@
 
 import { ChakraProvider } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
-const AuthProvider = dynamic(() => import("./_context/AuthContext"), {
+const AuthProvider = dynamic(() => import("../context/AuthContext"), {
   ssr: false,
 });
 

@@ -1,10 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { postRequest } from "../_utils/request";
+import { postRequest } from "../../utils/request";
 import { useRouter } from "next/navigation";
-import { User } from "../_types/types";
-import { useAuth } from "../_context/AuthContext";
+import { User } from "../../types/types";
+import { useAuth } from "../../context/AuthContext";
 
 // FIXME: move utils
 const useNavigate = () => {

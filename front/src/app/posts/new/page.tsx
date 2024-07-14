@@ -2,9 +2,9 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/app/_context/AuthContext";
-import { postRequest } from "@/app/_utils/request";
-import { Post } from "@/app/_types/types";
+import { useAuth } from "@/context/AuthContext";
+import { postRequest } from "@/utils/request";
+import { Post } from "@/types/types";
 
 // FIXME: move utils
 const useNavigate = () => {

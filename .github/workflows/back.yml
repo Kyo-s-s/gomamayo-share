@@ -21,7 +21,16 @@ jobs:
         id: cache-mecab
         uses: actions/cache@v4
         with:
-          path: mecab-ipadic-neologd
+          path: |
+            /usr/local/lib/mecab
+            /usr/local/lib/libmecab.so
+            /usr/local/bin/mecab
+            /usr/local/etc/mecabrc
+            /usr/local/libexec/mecab
+            /usr/local/include/mecab
+            /usr/lib/x86_64-linux-gnu/libmecab.*
+            mecab-ipadic-neologd
+            /usr/local/etc/mecabrc
           key: mecab-${{ runner.os }}
 
       - name: Setup MeCab

@@ -38,7 +38,8 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
           ./bin/install-mecab-ipadic-neologd -n -y
-          echo dicdir = `mecab-config --dicdir`"/mecab-ipadic-neologd" > mecabrc && sudo cp mecabrc /usr/local/etc/
+
+      - run: echo dicdir = `mecab-config --dicdir`"/mecab-ipadic-neologd" > mecabrc && sudo cp mecabrc /usr/local/etc/
 
       - working-directory: back
         if: steps.cache.outputs.cache-hit != 'true'

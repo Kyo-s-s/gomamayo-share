@@ -24,7 +24,7 @@ jobs:
           path: |
             back/vendor/bundle
             mecab-ipadic-neologd
-          key: Gem-${{ runner.os }}-${{ hashFiles('**/Gemfile.lock') }}
+          key: Gem-${{ runner.os }}-${{ hashFiles('back/Gemfile.lock') }}
           restore-keys: |
             Gem-${{ runner.os }}-
 

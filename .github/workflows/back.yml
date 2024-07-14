@@ -23,9 +23,9 @@ jobs:
           # Define cache dir
           CACHE_PATH="/tmp/docker_cache"
           # Get Dockerfile hash for image cache
-          IMAGE_HASH="${{ hashFiles('docker/Dockerfile.test') }}-${{ hashFiles('back/Gemfile.lock') }}"
+          IMAGE_HASH="${{ hashFiles('docker/Dockerfile.test', 'back/Gemfile.lock') }}"
           # Create image tag
-          IMAGE_NAME="slcc_cmake"
+          IMAGE_NAME="gomamayo-share"
           TAG="${IMAGE_NAME}:${IMAGE_HASH}"
           # Cache dir setting
           TAR_NAME="${IMAGE_NAME}_${IMAGE_HASH}.tar"

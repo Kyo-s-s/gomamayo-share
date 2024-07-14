@@ -5,7 +5,6 @@ import { postRequest } from "../../utils/request";
 import { useRouter } from "next/navigation";
 import { User } from "../../types/types";
 import { useAuth } from "../../context/AuthContext";
-import { Button } from "@chakra-ui/react";
 
 // FIXME: move utils
 const useNavigate = () => {
@@ -64,7 +63,7 @@ const SignUpForm = () => {
           />
         </label>
       </div>
-      <Button onClick={handleSignUp}>Sign up</Button>
+      <button onClick={handleSignUp}>Sign up</button>
     </>
   );
 };

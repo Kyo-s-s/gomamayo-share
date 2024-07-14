@@ -1,8 +1,7 @@
 "use client";
 
-import { Link } from "@chakra-ui/next-js";
 import { useAuth } from "../context/AuthContext";
-import { Button } from "@chakra-ui/react";
+import { Button, LinkButton } from "./custom";
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -10,15 +9,11 @@ const Header = () => {
     <header>
       {user ? (
         <>
-          <Link href={`/users/${user.id}`}>
-            <Button>{user.name}</Button>
-          </Link>
+          <LinkButton href={`/users/${user.id}`}>{user.name}</LinkButton>
           <Button onClick={logout}>logout</Button>
         </>
       ) : (
-        <Link href={`/signup`}>
-          <Button>signup!</Button>
-        </Link>
+        <LinkButton href={`/signup`}>signup!</LinkButton>
       )}
       <hr />
     </header>

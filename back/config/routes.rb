@@ -13,6 +13,6 @@ Rails.application.routes.draw do
   post   'login', to: 'sessions#create', as: 'login'
   delete 'logout', to: 'sessions#destroy', as: 'logout'
   post   'posts', to: 'posts#create', as: 'create_post'
-  get    'posts', to: 'posts#index'
+  get    'posts', to: 'posts#index', as: 'index_post'
   get    'posts/:id', to: 'posts#show', as: 'show_post'
 end

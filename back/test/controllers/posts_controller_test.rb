@@ -13,6 +13,32 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     post login_path, params: { user: { name:, password: } }
   end
 
+  test 'index limit' do
+    limit = 10
+    get index_post_path(limit:)
+    assert_response :ok
+    assert response.parsed_body.length == limit
+    assert response.parsed_body[0][:post][:content] == 'ごまマヨネーズ 59'
+  end
+
+  test 'index timestamp' do
+    limit = 50
+    timestamp = Time.new(2024, 1, 1, 2, 0, 0, '+00:00')
+    get index_post_path(timestamp:, limit:)
+    assert_response :ok
+    assert response.parsed_body[0][:post][:content] == 'ごまマヨネーズ 59'
+    assert response.parsed_body[-1][:post][:content] == "ごまマヨネーズ #{59 - limit + 1}"
+  end
+
+  test 'index timestamp2' do
+    limit = 50
+    timestamp = Time.new(2024, 1, 1, 0, 0, 0, '+00:00')
+    get index_post_path(timestamp:, limit:)
+    assert_response :ok
+    assert response.parsed_body.length == 1
+    assert response.parsed_body[0][:post][:content] == 'ごまマヨネーズ'
+  end
+
   test 'success create post' do
     log_in_as(@user.name, 'password')
     post create_post_path, params: { post: { content: 'ホワイトとうもろこし' } }

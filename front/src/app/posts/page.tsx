@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getRequest } from "../../utils/request";
 import { Post, User } from "../../types/types";
 import { Heading } from "@chakra-ui/react";
+import PostCard from "@/components/PostCard";
 
 type PostsApiResponse = {
   user: User;
@@ -23,7 +24,20 @@ const Posts = () => {
     };
     if (posts == null) fetchData();
   }, [posts]);
-  return <p>{JSON.stringify(posts)}</p>;
+
+  return (
+    <>
+      {posts ? (
+        <>
+          {posts.map((post) => (
+            <PostCard {...post} />
+          ))}
+        </>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </>
+  );
 };
 const Page = () => {
   return (

@@ -1,5 +1,6 @@
 "use client";
 
+import PostCard from "@/components/PostCard";
 import { Post, User } from "@/types/types";
 import { getRequest } from "@/utils/request";
 import { Heading } from "@chakra-ui/react";
@@ -11,19 +12,19 @@ type PostApiResponse = {
 };
 
 const PostPage = ({ id }: { id: string }) => {
-  const [posts, setPosts] = useState<PostApiResponse | null>(null);
+  const [post, setPost] = useState<PostApiResponse | null>(null);
   // loading ?
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await getRequest<PostApiResponse>(`/posts/${id}`);
       if (res.success) {
-        setPosts(res.success);
+        setPost(res.success);
       }
     };
-    if (posts == null) fetchData();
-  }, [posts]);
-  return <p>{JSON.stringify(posts)}</p>;
+    if (post == null) fetchData();
+  }, [post]);
+  return <>{post ? <PostCard {...post} /> : <p>Loading...</p>}</>;
 };
 const Page = ({ params }: { params: { id: string } }) => {
   return (

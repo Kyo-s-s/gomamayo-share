@@ -12,6 +12,7 @@ const PostCard = ({ post, user }: PostCardProps) => {
     <Card my={2}>
       <CardBody>
         <Link href={`/users/${user.id}`}>{user.name}</Link>
+        <Text>{post.created_at}</Text>
         <Text>{post.content}</Text>
       </CardBody>
     </Card>

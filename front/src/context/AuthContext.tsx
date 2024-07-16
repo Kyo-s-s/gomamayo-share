@@ -2,7 +2,8 @@
 
 import React, { createContext, useContext, useState } from "react";
 import { User } from "../types/types";
-import axios from "axios";
+import { deleteRequest } from "@/utils/request";
+import useNavigate from "@/utils/useNavigate";
 
 interface AuthContextType {
   user: User | null;
@@ -17,6 +18,8 @@ const AuthProvider = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
+  const navigateTo = useNavigate();
+
   const storedUser = () => {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
@@ -32,10 +35,12 @@ const AuthProvider = ({
     setUser(user);
   };
 
+  // TODO: ログアウト確認
   const logout = () => {
-    axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/logout`);
+    deleteRequest("/logout");
     sessionStorage.setItem("user", JSON.stringify(null));
     setUser(null);
+    navigateTo("/");
   };
 
   return (

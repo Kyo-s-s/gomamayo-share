@@ -24,13 +24,11 @@ const PostLoader = ({
   const isInView = useInView(ref);
   useEffect(() => {
     const fetchData = async () => {
-      const timestamp =
-        posts.length > 0
-          ? `timestamp=${posts[posts.length - 1].post.created_at}`
-          : "";
-      const res = await getRequest<PostsApiResponse>(
-        `/posts?limit=20&${timestamp}`
-      );
+      const params: Record<string, string> = { limit: "10" };
+      if (posts.length > 0) {
+        params["timestamp"] = posts[posts.length - 1].post.created_at;
+      }
+      const res = await getRequest<PostsApiResponse>(`/posts`, params);
       if (res.success) {
         if (res.success.length === 0) {
           setFinish(true);

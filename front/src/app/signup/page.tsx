@@ -1,8 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { postRequest } from "../../utils/request";
-import { useRouter } from "next/navigation";
 import { User } from "../../types/types";
 import { useAuth } from "../../context/AuthContext";
 import {
@@ -10,24 +9,10 @@ import {
   FormLabel,
   Heading,
   Input,
-  position,
   useToast,
 } from "@chakra-ui/react";
 import { Button } from "@/components/custom";
-
-// FIXME: move utils
-const useNavigate = () => {
-  const router = useRouter();
-
-  const navigateTo = useCallback(
-    (url: string) => {
-      router.push(url);
-    },
-    [router]
-  );
-
-  return navigateTo;
-};
+import useNavigate from "@/utils/useNavigate";
 
 const SignUpForm = () => {
   const { user, login } = useAuth();

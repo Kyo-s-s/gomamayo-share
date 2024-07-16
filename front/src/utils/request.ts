@@ -28,11 +28,17 @@ const fetchError = <T>() => {
   });
 };
 
-export const getRequest = async <T>(url: string): Promise<Result<T>> => {
+export const getRequest = async <T>(
+  url: string,
+  data: Record<string, string> = {}
+): Promise<Result<T>> => {
   try {
-    console.log("GET: " + process.env.NEXT_PUBLIC_API_URL! + url);
+    const params = Object.entries(data)
+      .map(([key, value]) => `${key}=${value}`)
+      .join("&");
+    console.log(`GET: ${process.env.NEXT_PUBLIC_API_URL!}${url}?${params}`);
     const response = await axios.get<T>(
-      process.env.NEXT_PUBLIC_API_URL! + url,
+      `${process.env.NEXT_PUBLIC_API_URL!}${url}?${params}`,
       { withCredentials: true } // ?
     );
     return resultSuccess(response.data);
@@ -53,7 +59,7 @@ export const postRequest = async <T>(
   try {
     console.log("POST: " + process.env.NEXT_PUBLIC_API_URL! + url);
     const response = await axios.post<T>(
-      process.env.NEXT_PUBLIC_API_URL! + url,
+      `${process.env.NEXT_PUBLIC_API_URL!}${url}`,
       data,
       { withCredentials: true } // ?
     );

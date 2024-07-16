@@ -13,6 +13,7 @@ class GomamayoCheckerTest < ActiveSupport::TestCase
   test 'gomamayo check success' do
     gomamayos = %w[
       ホワイトとうもろこし
+      whiteとうもろこし
       朝採れレタス
     ]
     gomamayos.each do |str|

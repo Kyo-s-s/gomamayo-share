@@ -28,7 +28,7 @@ const LoginForm = () => {
   }, [user]);
 
   const handleLogin = async () => {
-    let res = await postRequest<User>("/login", {
+    const res = await postRequest<User>("/login", {
       user: { name: name, password: password },
     });
     if (res.success) {

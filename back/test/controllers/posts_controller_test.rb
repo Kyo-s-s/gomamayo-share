@@ -65,5 +65,9 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   test 'show success' do
     get show_post_path(id: @post.id)
     assert_response :ok
+    assert response.parsed_body[:post] == @post.serialize
+    assert response.parsed_body[:post][:likes_count].zero?
+    assert response.parsed_body[:user] == @post.user.serialize
+    assert response.parsed_body[:is_liked] == false
   end
 end

@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 type PostApiResponse = {
   user: User;
   post: Post;
+  is_liked: boolean;
 };
 
 const PostPage = ({ id }: { id: string }) => {

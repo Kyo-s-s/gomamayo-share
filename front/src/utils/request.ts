@@ -54,13 +54,31 @@ export const getRequest = async <T>(
 
 export const postRequest = async <T>(
   url: string,
-  data: object
+  data: object = {}
 ): Promise<Result<T>> => {
   try {
     console.log("POST: " + process.env.NEXT_PUBLIC_API_URL! + url);
     const response = await axios.post<T>(
       `${process.env.NEXT_PUBLIC_API_URL!}${url}`,
       data,
+      { withCredentials: true } // ?
+    );
+    return resultSuccess(response.data);
+  } catch (error) {
+    if (isAxiosError(error)) {
+      return resultFailure({
+        message: error.message,
+      });
+    }
+    return fetchError();
+  }
+};
+
+export const deleteRequest = async <T>(url: string): Promise<Result<T>> => {
+  try {
+    console.log("DELETE: " + process.env.NEXT_PUBLIC_API_URL! + url);
+    const response = await axios.delete<T>(
+      `${process.env.NEXT_PUBLIC_API_URL!}${url}`,
       { withCredentials: true } // ?
     );
     return resultSuccess(response.data);

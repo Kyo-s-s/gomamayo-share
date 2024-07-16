@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
   belongs_to :user
+  has_many :likes, dependent: :destroy
   default_scope -> { order(created_at: :desc) }
   validates :content, presence: true, uniqueness: true, length: { maximum: 100 }
   validate :content_gomamayo_validation
@@ -7,14 +8,7 @@ class Post < ApplicationRecord
   include GomamayoChecker
 
   def serialize
-    as_json(only: %i[id content created_at])
-  end
-
-  def serialize_include_user
-    {
-      post: serialize,
-      user: user.serialize
-    }
+    as_json(only: %i[id content created_at likes_count])
   end
 
   private

@@ -18,6 +18,4 @@ WORKDIR /app
 COPY back/Gemfile* .
 RUN bundle install
 
-COPY back .
-
 CMD ["bash"]

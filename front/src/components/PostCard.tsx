@@ -2,10 +2,11 @@
 
 import { Post, User } from "@/types/types";
 import { Link } from "@chakra-ui/next-js";
-import { Card, CardBody, Flex, Text } from "@chakra-ui/react";
+import { Card, CardBody, Flex, Text, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { Button } from "./custom";
 import { deleteRequest, postRequest } from "@/utils/request";
+import { useAuth } from "@/context/AuthContext";
 
 type PostCardProps = {
   post: Post;
@@ -13,14 +14,25 @@ type PostCardProps = {
   is_liked: boolean;
 };
 
-// FIXME: ログアウトしてもlikeが保持されてしまう
-// APIサーバー側でログアウトしてもセッションが残っている バグ
 const PostCard = ({ post, user, is_liked }: PostCardProps) => {
+  const { user: login_user } = useAuth();
   const [liked, setLiked] = useState(is_liked);
   const [isLocked, setIsLocked] = useState(false);
   const likes_count = post.likes_count + (liked ? 1 : 0) - (is_liked ? 1 : 0);
+  const toast = useToast();
 
   const handleLike = async () => {
+    if (!login_user) {
+      toast({
+        title: "Error!!",
+        description: "Please log in",
+        position: "top",
+        duration: 3000,
+        isClosable: true,
+        status: "error",
+      });
+      return;
+    }
     if (isLocked) return;
     liked
       ? deleteRequest(`/likes/${post.id}`)

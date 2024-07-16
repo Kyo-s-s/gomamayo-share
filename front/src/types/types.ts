@@ -7,4 +7,5 @@ export type Post = {
   id: number;
   content: string;
   created_at: string;
+  likes_count: number;
 };

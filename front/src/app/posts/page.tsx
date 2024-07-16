@@ -10,6 +10,7 @@ import { useInView } from "framer-motion";
 type PostsApiResponse = {
   user: User;
   post: Post;
+  is_liked: boolean;
 }[];
 
 const PostLoader = ({

@@ -1,7 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { postRequest } from "@/utils/request";
 import { Post } from "@/types/types";
@@ -13,20 +12,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Button } from "@/components/custom";
-
-// FIXME: move utils
-const useNavigate = () => {
-  const router = useRouter();
-
-  const navigateTo = useCallback(
-    (url: string) => {
-      router.push(url);
-    },
-    [router]
-  );
-
-  return navigateTo;
-};
+import useNavigate from "@/utils/useNavigate";
 
 const PostForm = () => {
   const { user } = useAuth();

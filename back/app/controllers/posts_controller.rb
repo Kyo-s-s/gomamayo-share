@@ -2,7 +2,9 @@ class PostsController < ApplicationController
   before_action :log_in_check, only: :create
 
   def index
-    posts = Post.all
+    limit = params[:limit] || 50
+    timestamp = params[:timestamp] || Time.zone.now
+    posts = Post.where(created_at: ..timestamp).limit(limit)
     render json: posts.map(&:serialize_include_user)
   end
 

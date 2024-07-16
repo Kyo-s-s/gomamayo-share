@@ -28,7 +28,7 @@ const SignUpForm = () => {
   }, [user]);
 
   const handleSignUp = async () => {
-    let res = await postRequest<User>("/users", {
+    const res = await postRequest<User>("/users", {
       user: { name: name, password: password },
     });
     if (res.success) {

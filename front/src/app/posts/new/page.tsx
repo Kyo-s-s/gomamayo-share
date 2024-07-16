@@ -27,7 +27,7 @@ const PostForm = () => {
   }, [user]);
 
   const handlePost = async () => {
-    let res = await postRequest<Post>("/posts", {
+    const res = await postRequest<Post>("/posts", {
       post: { content: content },
     });
     if (res.success) {

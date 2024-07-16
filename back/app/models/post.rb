@@ -8,14 +8,7 @@ class Post < ApplicationRecord
   include GomamayoChecker
 
   def serialize
-    as_json(only: %i[id content created_at])
-  end
-
-  def serialize_include_user
-    {
-      post: serialize,
-      user: user.serialize
-    }
+    as_json(only: %i[id content created_at likes_count])
   end
 
   private

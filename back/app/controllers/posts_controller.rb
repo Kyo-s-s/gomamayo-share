@@ -31,4 +31,12 @@ class PostsController < ApplicationController
   def user_params
     params.require(:post).permit(:content)
   end
+
+  def post_serialize_include_user(post, is_liked: false)
+    {
+      post: post.serialize,
+      user: post.user.serialize,
+      is_liked:
+    }
+  end
 end

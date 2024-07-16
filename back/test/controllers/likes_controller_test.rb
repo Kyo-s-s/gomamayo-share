@@ -13,10 +13,15 @@ class LikesControllerTest < ActionDispatch::IntegrationTest
 
   test 'success like create and destroy' do
     log_in_as(@user.name, 'password')
+    initial_likes_count = @post.likes_count
     post create_like_path(id: @post.id)
     assert_response :ok
+    @post.reload
+    assert initial_likes_count + 1 == @post.likes_count
     delete destroy_like_path(id: @post.id)
     assert_response :ok
+    @post.reload
+    assert initial_likes_count == @post.likes_count
   end
 
   test 'failure like create unauthorized' do

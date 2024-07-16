@@ -2,16 +2,18 @@ class PostsController < ApplicationController
   before_action :log_in_check, only: :create
 
   def index
-    limit = params[:limit] || 50
-    timestamp = params[:timestamp] || Time.zone.now
-    posts = Post.where(created_at: ..timestamp).limit(limit)
-    render json: posts.map(&:serialize_include_user)
+    limit, timestamp = index_params
+    posts = Post.where(created_at: ..timestamp).limit(limit).includes(:user)
+    current_user_likes = (current_user&.likes&.pluck(:post_id) || []) & posts.pluck(:id) # よくわかっていない...
+    render json: posts.map { |post|
+      post_serialize_include_user(post, is_liked: current_user_likes.include?(post.id))
+    }
   end
 
   def show
     post = Post.find_by(id: params[:id])
     if post
-      render json: post.serialize_include_user
+      render json: post_serialize_include_user(post, is_liked: current_user&.likes&.exists?(post_id: post.id) || false)
     else
       render json: { message: 'Post not found' }, status: :not_found
     end
@@ -27,6 +29,12 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def index_params
+    limit = params[:limit] || 50
+    timestamp = params[:timestamp] || Time.zone.now
+    [limit, timestamp]
+  end
 
   def user_params
     params.require(:post).permit(:content)

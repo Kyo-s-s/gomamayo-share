@@ -68,5 +68,6 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert response.parsed_body[:post] == @post.serialize
     assert response.parsed_body[:post][:likes_count].zero?
     assert response.parsed_body[:user] == @post.user.serialize
+    assert response.parsed_body[:is_liked] == false
   end
 end

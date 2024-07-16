@@ -51,7 +51,7 @@ jobs:
       - name: Build Docker image
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          docker build -t ${{ steps.image_tag.outputs.TAG }} -v /back:/app -f docker/Dockerfile.test .
+          docker build -t ${{ steps.image_tag.outputs.TAG }} -f docker/Dockerfile.test .
           mkdir -p ${{ steps.image_tag.outputs.CACHE_PATH }}
           docker save ${{ steps.image_tag.outputs.TAG }} > ${{ steps.image_tag.outputs.TAR_PATH }}
 

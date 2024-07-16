@@ -11,8 +11,7 @@ RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git /usr
     cd /usr/local/src/mecab-ipadic-neologd && \
     ./bin/install-mecab-ipadic-neologd -n -y
 
-RUN mv /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd /var/lib/mecab/dic && \
-    echo "dicdir = /var/lib/mecab/dic/mecab-ipadic-neologd" > /etc/mecabrc
+RUN echo "dicdir = /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd" > /etc/mecabrc
 
 WORKDIR /app
 

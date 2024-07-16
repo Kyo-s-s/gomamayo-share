@@ -17,14 +17,20 @@ type PostCardProps = {
 // APIサーバー側でログアウトしてもセッションが残っている バグ
 const PostCard = ({ post, user, is_liked }: PostCardProps) => {
   const [liked, setLiked] = useState(is_liked);
+  const [isLocked, setIsLocked] = useState(false);
   const likes_count = post.likes_count + (liked ? 1 : 0) - (is_liked ? 1 : 0);
 
-  // TODO: 5secくらいの間弄れないようにする
   const handleLike = async () => {
+    if (isLocked) return;
     liked
       ? deleteRequest(`/likes/${post.id}`)
       : postRequest(`/likes/${post.id}`);
     setLiked(!liked);
+    setIsLocked(true);
+
+    setTimeout(() => {
+      setIsLocked(false);
+    }, 3000);
   };
 
   return (

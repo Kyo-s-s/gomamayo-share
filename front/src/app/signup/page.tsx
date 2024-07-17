@@ -12,22 +12,23 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Button } from "@/components/custom";
-import useNavigate, { useRedirectIfLoggedIn } from "@/utils/useNavigate";
+import useRedirect from "@/utils/useRedirect";
 
 const SignUpForm = () => {
+  const { redirectTo, redirectIfLoggedIn } = useRedirect();
+  redirectIfLoggedIn();
+
   const { login } = useAuth();
-  const navigateTo = useNavigate();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const toast = useToast();
-
   const handleSignUp = async () => {
     const res = await postRequest<User>("/users", {
       user: { name: name, password: password },
     });
     if (res.success) {
       login(res.success);
-      navigateTo(`/users/${res.success.id}`);
+      redirectTo(`/users/${res.success.id}`);
     } else {
       toast({
         title: `Error!!`,
@@ -63,7 +64,6 @@ const SignUpForm = () => {
 };
 
 const Page = () => {
-  useRedirectIfLoggedIn();
   return (
     <>
       <Heading>sign up</Heading>

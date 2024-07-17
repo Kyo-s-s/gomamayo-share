@@ -9,14 +9,13 @@ RUN apt-get update && apt-get install -y \
 
 RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git /usr/local/src/mecab-ipadic-neologd && \
     cd /usr/local/src/mecab-ipadic-neologd && \
-    ./bin/install-mecab-ipadic-neologd -n -y && \
-    echo "dicdir = `mecab-config --dicdir`/mecab-ipadic-neologd" > /usr/local/etc/mecabrc
+    ./bin/install-mecab-ipadic-neologd -n -y
+
+RUN echo "dicdir = /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd" > /etc/mecabrc
 
 WORKDIR /app
 
 COPY back/Gemfile* .
 RUN bundle install
-
-COPY back .
 
 CMD ["bash"]

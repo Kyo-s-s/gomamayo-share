@@ -56,7 +56,7 @@ jobs:
           docker save ${{ steps.image_tag.outputs.TAG }} > ${{ steps.image_tag.outputs.TAR_PATH }}
 
       - name: Rubocop
-        run: docker run --rm ${{ steps.image_tag.outputs.TAG }} rubocop
+        run: docker run -v $(pwd)/back:/app --rm ${{ steps.image_tag.outputs.TAG }} rubocop
 
       - name: Rails Test
-        run: docker run --rm ${{ steps.image_tag.outputs.TAG }} rails test
+        run: docker run -v $(pwd)/back:/app --rm ${{ steps.image_tag.outputs.TAG }} rails test

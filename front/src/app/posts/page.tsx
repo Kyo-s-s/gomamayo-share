@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { getRequest } from "../../utils/request";
 import { Post, User } from "../../types/types";
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Container, Heading } from "@chakra-ui/react";
 import PostCard from "@/components/PostCard";
 import { useInView } from "framer-motion";
 
@@ -60,10 +60,9 @@ const Posts = () => {
 };
 const Page = () => {
   return (
-    <>
-      <Heading>posts</Heading>
+    <Container maxW="container.md">
       <Posts />
-    </>
+    </Container>
   );
 };
 

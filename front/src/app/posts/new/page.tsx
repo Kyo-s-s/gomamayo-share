@@ -11,12 +11,10 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Button } from "@/components/custom";
-import useRedirect from "@/utils/useRedirect";
+import useNavigate, { useRedirectIfNotLoggedIn } from "@/utils/useNavigate";
 
 const PostForm = () => {
-  const { redirectTo, redirectIfNotLoggedIn } = useRedirect();
-  redirectIfNotLoggedIn();
-
+  const navigateTo = useNavigate();
   const [content, setContent] = useState("");
   const toast = useToast();
 
@@ -32,7 +30,7 @@ const PostForm = () => {
         isClosable: true,
         status: "success",
       });
-      redirectTo("/posts");
+      navigateTo("/posts");
     } else {
       toast({
         title: `Error!!`,
@@ -61,6 +59,7 @@ const PostForm = () => {
 };
 
 const Page = () => {
+  useRedirectIfNotLoggedIn();
   return (
     <>
       <Heading>new post</Heading>

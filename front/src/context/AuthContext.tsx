@@ -3,8 +3,7 @@
 import React, { createContext, useContext, useState } from "react";
 import { User } from "../types/types";
 import { deleteRequest } from "@/utils/request";
-import useNavigate from "@/utils/useRedirect";
-import useRedirect from "@/utils/useRedirect";
+import useNavigate from "@/utils/useNavigate";
 
 interface AuthContextType {
   user: User | null;
@@ -19,7 +18,7 @@ const AuthProvider = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const { redirectTo } = useRedirect();
+  const navigateTo = useNavigate();
 
   const storedUser = () => {
     const storedUser = sessionStorage.getItem("user");
@@ -41,7 +40,7 @@ const AuthProvider = ({
     deleteRequest("/logout");
     sessionStorage.setItem("user", JSON.stringify(null));
     setUser(null);
-    redirectTo("/");
+    navigateTo("/");
   };
 
   return (

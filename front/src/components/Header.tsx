@@ -1,27 +1,60 @@
 "use client";
 
-import { Link } from "@chakra-ui/next-js";
 import { useAuth } from "../context/AuthContext";
-import { Button, LinkButton } from "./custom";
+import { LinkButton } from "./custom";
+import {
+  Button,
+  Container,
+  Divider,
+  Flex,
+  Heading,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Spacer,
+} from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
+
+const AccountMenuButton = () => {
+  const { logout } = useAuth();
+  return (
+    <Menu>
+      <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+        Account
+      </MenuButton>
+      <MenuList>
+        <MenuItem onClick={logout}>Logout</MenuItem>
+      </MenuList>
+    </Menu>
+  );
+};
 
 const Header = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   return (
-    <header>
-      {user ? (
-        <>
-          <Link href={`/users/${user.id}`}>{user.name}</Link>
-          <LinkButton href="/posts">all posts</LinkButton>
-          <LinkButton href={`/posts/new`}>new post</LinkButton>
-          <Button onClick={logout}>logout</Button>
-        </>
-      ) : (
-        <>
-          <LinkButton href={`/signup`}>signup!</LinkButton>
-          <LinkButton href={`/login`}>Login!</LinkButton>
-        </>
-      )}
-      <hr />
+    <header
+      style={{
+        position: "sticky",
+        top: "0pt",
+        left: "0pt",
+        width: "100%",
+        backgroundColor: "white",
+        zIndex: 2,
+      }}
+    >
+      <Container maxW="container.lg">
+        <Flex>
+          <Heading as="h2">Gomamayo Share</Heading>
+          <Spacer />
+          {user ? (
+            <AccountMenuButton />
+          ) : (
+            <LinkButton href={`/login`}>Login!</LinkButton>
+          )}
+        </Flex>
+      </Container>
+      <Divider />
     </header>
   );
 };

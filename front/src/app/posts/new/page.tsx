@@ -7,7 +7,6 @@ import {
   Container,
   FormControl,
   FormLabel,
-  Heading,
   Textarea,
   useToast,
 } from "@chakra-ui/react";

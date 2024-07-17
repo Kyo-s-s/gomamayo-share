@@ -6,7 +6,7 @@ import { Post, User } from "../../types/types";
 import { Box, Container } from "@chakra-ui/react";
 import PostCard from "@/components/PostCard";
 import { useInView } from "framer-motion";
-import { Button, LinkButton } from "@/components/custom";
+import { LinkButton } from "@/components/custom";
 
 type PostsApiResponse = {
   user: User;

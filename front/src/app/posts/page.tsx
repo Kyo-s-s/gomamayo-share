@@ -3,9 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { getRequest } from "../../utils/request";
 import { Post, User } from "../../types/types";
-import { Box, Container, Heading } from "@chakra-ui/react";
+import { Box, Container } from "@chakra-ui/react";
 import PostCard from "@/components/PostCard";
 import { useInView } from "framer-motion";
+import { Button, LinkButton } from "@/components/custom";
 
 type PostsApiResponse = {
   user: User;
@@ -62,6 +63,9 @@ const Page = () => {
   return (
     <Container maxW="container.md">
       <Posts />
+      <LinkButton position="fixed" bottom="10px" right="10px" href="/posts/new">
+        New Post
+      </LinkButton>
     </Container>
   );
 };

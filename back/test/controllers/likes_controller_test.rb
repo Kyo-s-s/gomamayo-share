@@ -6,13 +6,8 @@ class LikesControllerTest < ActionDispatch::IntegrationTest
     @post = posts(:gomamayo)
   end
 
-  # FIXME!! DRY
-  def log_in_as(name, password)
-    post login_path, params: { user: { name:, password: } }
-  end
-
   test 'success like create and destroy' do
-    log_in_as(@user.name, 'password')
+    log_in_kyo
     initial_likes_count = @post.likes_count
     post create_like_path(id: @post.id)
     assert_response :ok
@@ -30,7 +25,7 @@ class LikesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'failure like create not found' do
-    log_in_as(@user.name, 'password')
+    log_in_kyo
     post create_like_path(id: 0)
     assert_response :not_found
   end

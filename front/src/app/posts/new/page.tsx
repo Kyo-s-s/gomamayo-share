@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useAuth } from "@/context/AuthContext";
+import { useState } from "react";
 import { postRequest } from "@/utils/request";
 import { Post } from "@/types/types";
 import {
@@ -12,25 +11,25 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Button } from "@/components/custom";
-import useNavigate from "@/utils/useNavigate";
+import useNavigate, { useRedirectIfNotLoggedIn } from "@/utils/useNavigate";
 
 const PostForm = () => {
-  const { user } = useAuth();
   const navigateTo = useNavigate();
   const [content, setContent] = useState("");
   const toast = useToast();
-
-  useEffect(() => {
-    if (user == null) {
-      navigateTo(`/login`);
-    }
-  }, [user]);
 
   const handlePost = async () => {
     const res = await postRequest<Post>("/posts", {
       post: { content: content },
     });
     if (res.success) {
+      toast({
+        title: `Success!!`,
+        position: "top",
+        duration: 1000,
+        isClosable: true,
+        status: "success",
+      });
       navigateTo("/posts");
     } else {
       toast({
@@ -60,6 +59,7 @@ const PostForm = () => {
 };
 
 const Page = () => {
+  useRedirectIfNotLoggedIn();
   return (
     <>
       <Heading>new post</Heading>

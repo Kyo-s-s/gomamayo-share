@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { postRequest } from "../../utils/request";
 import { User } from "../../types/types";
 import { useAuth } from "../../context/AuthContext";
@@ -12,20 +12,14 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Button } from "@/components/custom";
-import useNavigate from "@/utils/useNavigate";
+import useNavigate, { useRedirectIfLoggedIn } from "@/utils/useNavigate";
 
 const SignUpForm = () => {
-  const { user, login } = useAuth();
+  const { login } = useAuth();
   const navigateTo = useNavigate();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const toast = useToast();
-
-  useEffect(() => {
-    if (user != null) {
-      navigateTo(`/users/${user.id}`);
-    }
-  }, [user]);
 
   const handleSignUp = async () => {
     const res = await postRequest<User>("/users", {
@@ -69,6 +63,7 @@ const SignUpForm = () => {
 };
 
 const Page = () => {
+  useRedirectIfLoggedIn();
   return (
     <>
       <Heading>sign up</Heading>

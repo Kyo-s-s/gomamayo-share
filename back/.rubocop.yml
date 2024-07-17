@@ -19,3 +19,6 @@ Style/FrozenStringLiteralComment:
 
 Rails/HelperInstanceVariable:
   Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false

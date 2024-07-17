@@ -4,10 +4,7 @@ class PostsController < ApplicationController
   def index
     limit, timestamp = index_params
     posts = Post.where(created_at: ..timestamp).limit(limit).includes(:user)
-    current_user_likes = (current_user&.likes&.pluck(:post_id) || []) & posts.pluck(:id) # よくわかっていない...
-    render json: posts.map { |post|
-      post_serialize_include_user(post, is_liked: current_user_likes.include?(post.id))
-    }
+    render json: posts_serialize(posts)
   end
 
   def show
@@ -28,6 +25,12 @@ class PostsController < ApplicationController
     end
   end
 
+  def ranking
+    ranking_limit = 10
+    posts = Post.unscoped.order(likes_count: :desc, created_at: :desc).limit(ranking_limit).includes(:user)
+    render json: posts_serialize(posts)
+  end
+
   private
 
   def index_params
@@ -38,6 +41,13 @@ class PostsController < ApplicationController
 
   def user_params
     params.require(:post).permit(:content)
+  end
+
+  def posts_serialize(posts)
+    current_user_likes = (current_user&.likes&.pluck(:post_id) || []) & posts.pluck(:id)
+    posts.map do |post|
+      post_serialize_include_user(post, is_liked: current_user_likes.include?(post.id))
+    end
   end
 
   def post_serialize_include_user(post, is_liked: false)

@@ -30,8 +30,19 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     timestamp = Time.new(2024, 1, 1, 0, 0, 0, '+00:00')
     get index_post_path(timestamp:, limit:)
     assert_response :ok
-    assert response.parsed_body.length == 1
-    assert response.parsed_body[0][:post][:content] == 'ごまマヨネーズ'
+    assert response.parsed_body.length == 2
+    assert response.parsed_body[0][:post][:content] == posts(:gomamayo).content
+    assert response.parsed_body[1][:post][:content] == posts(:asadoreretasu).content
+  end
+
+  test 'ranking' do
+    get ranking_post_path
+    assert_response :ok
+    assert response.parsed_body.length == 10
+    assert response.parsed_body[0][:post] = posts(:asadoreretasu).serialize
+    assert response.parsed_body[1][:post] = posts(:gomamayo).serialize
+    assert response.parsed_body[2][:post] = posts(:gomamayo_59).serialize
+    assert response.parsed_body[3][:post] = posts(:gomamayo_58).serialize
   end
 
   test 'success create post' do
@@ -61,7 +72,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     get show_post_path(id: @post.id)
     assert_response :ok
     assert response.parsed_body[:post] == @post.serialize
-    assert response.parsed_body[:post][:likes_count].zero?
+    assert response.parsed_body[:post][:likes_count] == 1
     assert response.parsed_body[:user] == @post.user.serialize
     assert response.parsed_body[:is_liked] == false
   end

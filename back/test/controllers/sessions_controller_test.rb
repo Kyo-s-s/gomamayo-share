@@ -4,9 +4,11 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   include SessionsHelper
 
   def setup
-    @name = 'example'
+    @user = users(:kyo)
     @password = 'password'
-    @user = User.create(name: @name, password: @password)
+
+    @another_user = User.create(name: 'another', password: 'hogehoge')
+    @another_password = 'hogehoge'
   end
 
   def teardown
@@ -17,27 +19,27 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     post login_path, params: { user: { name:, password: } }
   end
 
-  test 'login success' do
-    log_in_as(@name, @password)
+  def log_out
+    delete logout_path
+  end
+
+  test 'login and logout success' do
+    log_in_as(@user.name, @password)
     assert_response :success
     assert current_user?(@user)
-    delete logout_path
+    assert session[:user_id] == @user.id
+
+    log_out
     assert current_user.nil?
+    assert session[:user_id].nil?
+
+    log_in_as(@another_user.name, @another_password)
+    assert current_user.name == @another_user.name
   end
 
   test 'login failure' do
-    log_in_as(@name, 'invalid password')
+    log_in_as(@user.name, 'invalid password')
     assert_response :unauthorized
     assert current_user.nil?
-  end
-
-  test 'duplicate login' do
-    log_in_as(@name, @password)
-    assert current_user.name == @name
-    other_name = 'other'
-    other_password = 'other password'
-    User.create(name: other_name, password: other_password)
-    log_in_as(other_name, other_password)
-    assert current_user.name == other_name
   end
 end

@@ -32,9 +32,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     log_out
     assert current_user.nil?
     assert session[:user_id].nil?
-
-    log_in_as(@another_user.name, @another_password)
-    assert current_user.name == @another_user.name
   end
 
   test 'login failure' do

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  post   'users', to: 'users#create', as: 'create_user' # FIXME: signup
+  post   'users', to: 'users#create', as: 'create_user'
   get    'users', to: 'users#index'
   get    'users/:id', to: 'users#show', as: 'show_user'
   post   'login', to: 'sessions#create', as: 'login'

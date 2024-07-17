@@ -47,11 +47,15 @@ const Header = () => {
         <Flex>
           <Heading as="h2">Gomamayo Share</Heading>
           <Spacer />
-          {user ? (
-            <AccountMenuButton />
-          ) : (
-            <LinkButton href={`/login`}>Login!</LinkButton>
-          )}
+          <Flex gap={2}>
+            <LinkButton href={`/posts`}>Posts</LinkButton>
+            <LinkButton href={`/posts/ranking`}>Ranking</LinkButton>
+            {user ? (
+              <AccountMenuButton />
+            ) : (
+              <LinkButton href={`/login`}>Login!</LinkButton>
+            )}
+          </Flex>
         </Flex>
       </Container>
       <Divider />

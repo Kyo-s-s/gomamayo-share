@@ -7,11 +7,24 @@ import { useState } from "react";
 import { Button } from "./custom";
 import { deleteRequest, postRequest } from "@/utils/request";
 import { useAuth } from "@/context/AuthContext";
+import { formatDistanceToNow, format, parseISO } from "date-fns";
+import { ja } from "date-fns/locale";
 
 type PostCardProps = {
   post: Post;
   user: User;
   is_liked: boolean;
+};
+
+const formatPostTime = (dateStr: string): string => {
+  const date = parseISO(dateStr);
+  const now = new Date();
+  const diffInDay = (now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24);
+  if (diffInDay < 1) {
+    return formatDistanceToNow(date, { addSuffix: true, locale: ja });
+  } else {
+    return format(date, "yyyy/MM/dd");
+  }
 };
 
 const PostCard = ({ post, user, is_liked }: PostCardProps) => {
@@ -50,15 +63,20 @@ const PostCard = ({ post, user, is_liked }: PostCardProps) => {
       <CardBody>
         <Flex gap={4}>
           <Link href={`/users/${user.id}`}>{user.name}</Link>
-          <Text>{post.created_at}</Text>
-          <Text>{likes_count}</Text>
-          <Button
-            onClick={handleLike}
-            colorScheme="teal"
-            variant={liked ? "solid" : "outline"}
-          />
+          <Text>{formatPostTime(post.created_at)}</Text>
         </Flex>
         <Text>{post.content}</Text>
+        <Flex gap={2}>
+          <Button
+            size="sm"
+            onClick={handleLike}
+            colorScheme="red"
+            variant={liked ? "solid" : "outline"}
+          >
+            ⁉
+          </Button>
+          <Text>{likes_count}</Text>
+        </Flex>
       </CardBody>
     </Card>
   );

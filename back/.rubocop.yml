@@ -16,3 +16,6 @@ Style/Documentation:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Rails/HelperInstanceVariable:
+  Enabled: false

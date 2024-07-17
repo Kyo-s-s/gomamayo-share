@@ -13,5 +13,9 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
+
+    def log_in_kyo
+      post login_path, params: { user: { name: 'Kyo', password: 'password' } }
+    end
   end
 end

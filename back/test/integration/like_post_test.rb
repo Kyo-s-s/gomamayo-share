@@ -4,12 +4,7 @@ class LikePostTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:kyo)
     @post = posts(:gomamayo)
-    log_in_as(@user.name, 'password')
-  end
-
-  # FIXME!! DRY
-  def log_in_as(name, password)
-    post login_path, params: { user: { name:, password: } }
+    log_in_kyo
   end
 
   test 'switch is_liked' do

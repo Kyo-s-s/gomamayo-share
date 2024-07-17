@@ -6,7 +6,6 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }
 
   def serialize
-    # FIXME: user: { as_json(...) }
     as_json(only: %i[id name])
   end
 

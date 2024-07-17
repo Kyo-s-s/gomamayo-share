@@ -8,11 +8,6 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     @post = posts(:gomamayo)
   end
 
-  # FIXME!! DRY
-  def log_in_as(name, password)
-    post login_path, params: { user: { name:, password: } }
-  end
-
   test 'index limit' do
     limit = 10
     get index_post_path(limit:)
@@ -40,7 +35,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'success create post' do
-    log_in_as(@user.name, 'password')
+    log_in_kyo
     post create_post_path, params: { post: { content: 'ホワイトとうもろこし' } }
     assert_response :ok
   end
@@ -51,13 +46,13 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'failure create post duplicate' do
-    log_in_as(@user.name, 'password')
+    log_in_kyo
     post create_post_path, params: { post: { content: @post.content } }
     assert_response :unprocessable_entity
   end
 
   test 'failure create post not gomamayo' do
-    log_in_as(@user.name, 'password')
+    log_in_kyo
     post create_post_path, params: { post: { content: 'はとぽっぽー' } }
     assert_response :unprocessable_entity # FIXME: not gomamayo message
   end

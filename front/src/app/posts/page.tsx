@@ -3,9 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import { getRequest } from "../../utils/request";
 import { Post, User } from "../../types/types";
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Container } from "@chakra-ui/react";
 import PostCard from "@/components/PostCard";
 import { useInView } from "framer-motion";
+import { LinkButton } from "@/components/custom";
+import { useAuth } from "@/context/AuthContext";
 
 type PostsApiResponse = {
   user: User;
@@ -59,11 +61,21 @@ const Posts = () => {
   );
 };
 const Page = () => {
+  const { user } = useAuth();
   return (
-    <>
-      <Heading>posts</Heading>
+    <Container maxW="container.md">
       <Posts />
-    </>
+      {user && (
+        <LinkButton
+          position="fixed"
+          bottom="10px"
+          right="10px"
+          href="/posts/new"
+        >
+          New Post
+        </LinkButton>
+      )}
+    </Container>
   );
 };
 

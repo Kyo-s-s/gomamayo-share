@@ -4,9 +4,9 @@ import { useState } from "react";
 import { postRequest } from "@/utils/request";
 import { Post } from "@/types/types";
 import {
+  Container,
   FormControl,
   FormLabel,
-  Heading,
   Textarea,
   useToast,
 } from "@chakra-ui/react";
@@ -61,10 +61,9 @@ const PostForm = () => {
 const Page = () => {
   useRedirectIfNotLoggedIn();
   return (
-    <>
-      <Heading>new post</Heading>
+    <Container maxW="container.md">
       <PostForm />
-    </>
+    </Container>
   );
 };
 

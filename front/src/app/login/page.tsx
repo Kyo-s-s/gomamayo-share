@@ -5,6 +5,7 @@ import { postRequest } from "../../utils/request";
 import { User } from "../../types/types";
 import { useAuth } from "../../context/AuthContext";
 import {
+  Container,
   FormControl,
   FormLabel,
   Heading,
@@ -63,10 +64,10 @@ const LoginForm = () => {
 const Page = () => {
   useRedirectIfLoggedIn();
   return (
-    <>
+    <Container maxW="container.md">
       <Heading>Login</Heading>
       <LoginForm />
-    </>
+    </Container>
   );
 };
 

@@ -5,10 +5,12 @@ import { postRequest } from "../../utils/request";
 import { User } from "../../types/types";
 import { useAuth } from "../../context/AuthContext";
 import {
+  Container,
   FormControl,
   FormLabel,
   Heading,
   Input,
+  Text,
   useToast,
 } from "@chakra-ui/react";
 import { Button } from "@/components/custom";
@@ -19,6 +21,7 @@ const SignUpForm = () => {
   const redirectTo = useRedirect();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const toast = useToast();
 
   const handleSignUp = async () => {
@@ -40,6 +43,8 @@ const SignUpForm = () => {
     }
   };
 
+  const isPasswordConfirmInvalid = password !== passwordConfirm;
+
   return (
     <>
       <FormControl>
@@ -55,9 +60,20 @@ const SignUpForm = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        {/* TODO: password confirm */}
+        <FormLabel>Password Confirm</FormLabel>
+        <Input
+          type="password"
+          value={passwordConfirm}
+          isInvalid={isPasswordConfirmInvalid}
+          onChange={(e) => setPasswordConfirm(e.target.value)}
+        />
+        {isPasswordConfirmInvalid && (
+          <Text color="red">Password is not matched</Text>
+        )}
       </FormControl>
-      <Button onClick={handleSignUp}>Sign up</Button>
+      <Button isDisabled={isPasswordConfirmInvalid} onClick={handleSignUp}>
+        Sign up
+      </Button>
     </>
   );
 };
@@ -65,10 +81,10 @@ const SignUpForm = () => {
 const Page = () => {
   useRedirectIfLoggedIn();
   return (
-    <>
+    <Container maxW="container.md">
       <Heading>sign up</Heading>
       <SignUpForm />
-    </>
+    </Container>
   );
 };
 

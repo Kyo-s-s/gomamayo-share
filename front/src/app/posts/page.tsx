@@ -7,6 +7,7 @@ import { Box, Container } from "@chakra-ui/react";
 import PostCard from "@/components/PostCard";
 import { useInView } from "framer-motion";
 import { LinkButton } from "@/components/custom";
+import { useAuth } from "@/context/AuthContext";
 
 type PostsApiResponse = {
   user: User;
@@ -60,12 +61,20 @@ const Posts = () => {
   );
 };
 const Page = () => {
+  const { user } = useAuth();
   return (
     <Container maxW="container.md">
       <Posts />
-      <LinkButton position="fixed" bottom="10px" right="10px" href="/posts/new">
-        New Post
-      </LinkButton>
+      {user && (
+        <LinkButton
+          position="fixed"
+          bottom="10px"
+          right="10px"
+          href="/posts/new"
+        >
+          New Post
+        </LinkButton>
+      )}
     </Container>
   );
 };

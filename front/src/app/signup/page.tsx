@@ -12,11 +12,11 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Button } from "@/components/custom";
-import useNavigate, { useRedirectIfLoggedIn } from "@/utils/useNavigate";
+import useRedirect, { useRedirectIfLoggedIn } from "@/utils/useRedirect";
 
 const SignUpForm = () => {
   const { login } = useAuth();
-  const navigateTo = useNavigate();
+  const redirectTo = useRedirect();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const toast = useToast();
@@ -27,7 +27,7 @@ const SignUpForm = () => {
     });
     if (res.success) {
       login(res.success);
-      navigateTo(`/users/${res.success.id}`);
+      redirectTo(`/users/${res.success.id}`);
     } else {
       toast({
         title: `Error!!`,

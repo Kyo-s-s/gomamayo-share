@@ -90,8 +90,16 @@ GEM
     debug (1.9.2)
       irb (~> 1.10)
       reline (>= 0.3.8)
+    diff-lcs (1.5.1)
     drb (2.2.1)
     erubi (1.13.0)
+    factory_bot (6.4.6)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.4.3)
+      factory_bot (~> 6.4)
+      railties (>= 5.0.0)
+    faker (3.4.2)
+      i18n (>= 1.8.11, < 2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.5)
@@ -203,6 +211,23 @@ GEM
       io-console (~> 0.5)
     rexml (3.3.1)
       strscan
+    rspec-core (3.13.0)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-mocks (3.13.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-rails (6.1.3)
+      actionpack (>= 6.1)
+      activesupport (>= 6.1)
+      railties (>= 6.1)
+      rspec-core (~> 3.13)
+      rspec-expectations (~> 3.13)
+      rspec-mocks (~> 3.13)
+      rspec-support (~> 3.13)
+    rspec-support (3.13.1)
     rubocop (1.65.0)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
@@ -259,6 +284,8 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap
   debug
+  factory_bot_rails
+  faker
   mecab
   minitest
   minitest-reporters
@@ -266,6 +293,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 7.1.3, >= 7.1.3.4)
   rails_same_site_cookie (~> 0.1.8)
+  rspec-rails (~> 6.1.0)
   rubocop
   rubocop-performance
   rubocop-rails

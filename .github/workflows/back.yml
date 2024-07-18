@@ -60,3 +60,6 @@ jobs:
 
       - name: Rails Test
         run: docker run -v $(pwd)/back:/app --rm ${{ steps.image_tag.outputs.TAG }} rails test
+
+      - name: RSpec
+        run: docker run -v $(pwd)/back:/app --rm ${{ steps.image_tag.outputs.TAG }} rspec

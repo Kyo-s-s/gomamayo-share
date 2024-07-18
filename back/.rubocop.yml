@@ -22,3 +22,6 @@ Rails/HelperInstanceVariable:
 
 Naming/VariableNumber:
   Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false

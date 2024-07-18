@@ -3,4 +3,9 @@ FactoryBot.define do
     name { 'Kyo' }
     password { 'password' }
   end
+
+  factory :user_another, class: 'User' do
+    name { 'another' }
+    password { 'hogehoge' }
+  end
 end

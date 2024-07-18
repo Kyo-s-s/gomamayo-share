@@ -1,11 +1,13 @@
-require 'test_helper'
+# post_spec.rb
 
-class PostTest < ActiveSupport::TestCase
-  def setup
-    @post = posts(:gomamayo)
-  end
+# require 'test_helper'
 
-  test 'should be valid' do
-    assert @post.valid?
-  end
-end
+# class PostTest < ActiveSupport::TestCase
+#   def setup
+#     @post = posts(:gomamayo)
+#   end
+
+#   test 'should be valid' do
+#     assert @post.valid?
+#   end
+# end

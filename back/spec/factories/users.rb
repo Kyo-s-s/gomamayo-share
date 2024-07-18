@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :user do
-    name { Faker::Name.name }
+  factory :user_kyo, class: 'User' do
+    name { 'Kyo' }
     password { 'password' }
   end
 end

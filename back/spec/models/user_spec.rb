@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe 'create' do
-    let(:user) { FactoryBot.create(:user) }
+    let(:user) { FactoryBot.build(:user_kyo) }
 
     context 'with valid' do
       it 'is valid' do

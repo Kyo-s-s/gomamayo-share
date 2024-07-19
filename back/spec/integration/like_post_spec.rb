@@ -4,7 +4,6 @@ RSpec.describe type: :request do
   include SessionsHelper
 
   describe '' do
-    let!(:user) { FactoryBot.create(:user_kyo) }
     let!(:gomamayo) { FactoryBot.create(:post_gomamayo) }
 
     before do

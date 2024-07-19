@@ -1,7 +1,0 @@
-kyo:
-  name: 'Kyo'
-  password_digest: <%= User.digest('password') %>
-
-batsumaru:
-  name: 'Batsumaru'
-  password_digest: <%= User.digest('password') %>

@@ -7,7 +7,7 @@ on:
 
 jobs:
   rubocop:
-    name: Rubocop Check and Rails Test
+    name: Rubocop Check and RSpec
     runs-on: ubuntu-latest
 
     steps:
@@ -57,9 +57,6 @@ jobs:
 
       - name: Rubocop
         run: docker run -v $(pwd)/back:/app --rm ${{ steps.image_tag.outputs.TAG }} rubocop
-
-      - name: Rails Test
-        run: docker run -v $(pwd)/back:/app --rm ${{ steps.image_tag.outputs.TAG }} rails test
 
       - name: RSpec
         run: docker run -v $(pwd)/back:/app --rm ${{ steps.image_tag.outputs.TAG }} rspec

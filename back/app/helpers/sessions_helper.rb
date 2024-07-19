@@ -9,11 +9,11 @@ module SessionsHelper
     @current_user = nil
   end
 
-  def current_user
-    return unless (user_id = session[:user_id])
+  # def current_user
+  #   return unless (user_id = session[:user_id])
 
-    @current_user ||= User.find_by(id: user_id)
-  end
+  #   @current_user ||= User.find_by(id: user_id)
+  # end
 
   def current_user?(user)
     user && user == current_user

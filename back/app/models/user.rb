@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   devise  :database_authenticatable, :registerable,
-          :recoverable, :rememberable, :validatable
+          :recoverable, :rememberable, :validatable,
+          authentication_keys: [:name]
   include DeviseTokenAuth::Concerns::User
 
   has_many :posts, dependent: :destroy

@@ -26,7 +26,7 @@ RSpec.describe 'Auth::Registrations', type: :request do
 
     context 'when success login' do
       it 'success' do
-        post '/auth/sign_in', params: { email: user.email, password: user.password }
+        post '/auth/sign_in', params: { name: user.name, password: user.password }
         expect(response).to be_successful
       end
     end

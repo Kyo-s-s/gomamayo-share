@@ -5,7 +5,7 @@ module Helpers
   end
 
   def sign_in(user)
-    post '/auth/sign_in', params: { email: user.email, password: user.password }
+    post '/auth/sign_in', params: { name: user.name, password: user.password }
     response.headers.slice('client', 'uid', 'token-type', 'access-token')
   end
 end

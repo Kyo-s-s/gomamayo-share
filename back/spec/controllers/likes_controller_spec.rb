@@ -1,26 +1,23 @@
 require 'rails_helper'
 
 RSpec.describe LikesController, type: :request do
-  include SessionsHelper
-
   describe 'POST #create' do
     let!(:gomamayo) { FactoryBot.create(:post_gomamayo) }
 
     context 'with login' do
-      before do
-        log_in_kyo
-      end
+      let!(:user) { FactoryBot.create(:user_kyo) }
+      let!(:header) { sign_in user }
 
       it 'success' do
         initial_likes_count = gomamayo.likes_count
-        post create_like_path(id: gomamayo.id)
+        post create_like_path(id: gomamayo.id), headers: header
         expect(response).to be_successful
         gomamayo.reload
         expect(initial_likes_count + 1).to eq(gomamayo.likes_count)
       end
 
       it 'failure not found' do
-        post create_like_path(id: 0)
+        post create_like_path(id: 0), headers: header
         expect(response).to have_http_status(:not_found)
       end
     end
@@ -41,20 +38,19 @@ RSpec.describe LikesController, type: :request do
     let!(:gomamayo) { FactoryBot.create(:post_gomamayo) }
 
     context 'with login' do
-      before do
-        log_in_kyo
-      end
+      let!(:user) { FactoryBot.create(:user_kyo) }
+      let!(:header) { sign_in user }
 
       it 'success' do
         initial_likes_count = gomamayo.likes_count
-        delete destroy_like_path(id: gomamayo.id)
+        delete destroy_like_path(id: gomamayo.id), headers: header
         expect(response).to be_successful
         gomamayo.reload
         expect(initial_likes_count - 1).to eq(gomamayo.likes_count)
       end
 
       it 'failure not found' do
-        delete destroy_like_path(id: 0)
+        delete destroy_like_path(id: 0), headers: header
         expect(response).to have_http_status(:not_found)
       end
     end

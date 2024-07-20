@@ -8,6 +8,7 @@ FactoryBot.define do
 
   factory :user_another, class: 'User' do
     name { 'another' }
+    email { 'example2@example.com' }
     password { 'hogehoge' }
     initialize_with { User.find_or_create_by(name:) }
   end

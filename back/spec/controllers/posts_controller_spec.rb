@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe PostsController, type: :request do
-  include SessionsHelper
-
   describe 'GET #index' do
     before do
       FactoryBot.create(:post_gomamayo)
@@ -57,22 +55,21 @@ RSpec.describe PostsController, type: :request do
     let!(:gomamayo) { FactoryBot.create(:post_gomamayo) }
 
     context 'with login' do
-      before do
-        log_in_kyo
-      end
+      let!(:user) { FactoryBot.create(:user_kyo) }
+      let!(:header) { sign_in user }
 
       it 'success' do
-        post create_post_path, params: { post: { content: 'ホワイトとうもろこし' } }
+        post create_post_path, headers: header, params: { post: { content: 'ホワイトとうもろこし' } }
         expect(response).to be_successful
       end
 
       it 'post duplicate' do
-        post create_post_path, params: { post: { content: gomamayo.content } }
+        post create_post_path, headers: header, params: { post: { content: gomamayo.content } }
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it 'not gomamayo' do
-        post create_post_path, params: { post: { content: 'はとぽっぽー' } }
+        post create_post_path, headers: header, params: { post: { content: 'はとぽっぽー' } }
         expect(response).to have_http_status(:unprocessable_entity) # FIXME: not gomamayo message
       end
     end

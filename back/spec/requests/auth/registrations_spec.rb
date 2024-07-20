@@ -5,7 +5,7 @@ RSpec.describe 'Auth::Registrations', type: :request do
     context 'when success create user' do
       it 'success' do
         post '/auth',
-             params: { name: 'Kyo', email: 'example@example.com', password: 'password' }
+             params: { name: 'Kyo', password: 'password' }
         expect(response).to be_successful
       end
     end
@@ -15,7 +15,7 @@ RSpec.describe 'Auth::Registrations', type: :request do
 
       it 'failure' do
         post '/auth',
-             params: { name: user.name, email: user.email, password: 'password' }
+             params: { name: user.name, password: 'password' }
         expect(response.parsed_body['errors']['full_messages']).to eq(['Name has already been taken'])
       end
     end

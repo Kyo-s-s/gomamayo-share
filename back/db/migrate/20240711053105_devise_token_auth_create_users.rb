@@ -29,7 +29,7 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[7.1]
 
       ## User Info
       t.string :name
-      t.string :email
+      t.string :email, default: '' # これが無いと devise-token-auth が動かないため、使わないが残しておく
 
       ## Tokens
       t.text :tokens
@@ -37,8 +37,8 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    add_index :users, :name,                 unique: true
-    add_index :users, :email,                unique: true
+    add_index :users, :name, unique: true
+    # add_index :users, :email,                unique: true
     add_index :users, %i[uid provider], unique: true
     add_index :users, :reset_password_token, unique: true
     # add_index :users, :confirmation_token,   unique: true

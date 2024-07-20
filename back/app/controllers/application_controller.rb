@@ -3,8 +3,8 @@ class ApplicationController < ActionController::API
   include ActionController::Cookies
   include AuthHelper
 
-  # def provider
-  #   super
-  #   'name'
-  # end
+  def provider
+    super
+    'name'
+  end
 end

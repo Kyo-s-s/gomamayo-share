@@ -8,7 +8,15 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   validates :name, presence: true, uniqueness: true, length: { maximum: 20 }
 
+  before_validation :set_uid
+
   def serialize
     as_json(only: %i[id name])
+  end
+
+  private
+
+  def set_uid
+    self.uid = name if uid.blank?
   end
 end

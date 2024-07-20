@@ -5,18 +5,18 @@ RSpec.describe 'Auth::Registrations', type: :request do
     context 'when success create user' do
       it 'success' do
         post '/auth',
-             params: { name: 'Kyo', email: 'example@example.com', password: 'password',
-                       password_confirmation: 'password' }
+             params: { name: 'Kyo', email: 'example@example.com', password: 'password' }
         expect(response).to be_successful
       end
     end
 
     context 'when failure create user' do
+      let!(:user) { FactoryBot.create(:user_kyo) }
+
       it 'failure' do
         post '/auth',
-             params: { name: 'Kyo', email: 'example@example.com', password: 'password',
-                       password_confirmation: 'invalid_password' }
-        expect(response.parsed_body['errors']['full_messages']).to eq(["Password confirmation doesn't match Password"])
+             params: { name: user.name, email: user.email, password: 'password' }
+        expect(response.parsed_body['errors']['full_messages']).to eq(['Name has already been taken'])
       end
     end
   end

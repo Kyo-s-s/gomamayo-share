@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { postRequest } from "../../utils/request";
-import { User } from "../../types/types";
 import { useAuth } from "../../context/AuthContext";
 import {
   Container,

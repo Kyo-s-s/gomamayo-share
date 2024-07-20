@@ -2,7 +2,6 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { User } from "../types/types";
-import { deleteRequest } from "@/utils/request";
 import useRedirect from "@/utils/useRedirect";
 import { logoutRequest, tokenCheck } from "@/utils/auth";
 

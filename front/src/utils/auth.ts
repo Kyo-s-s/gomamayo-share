@@ -49,8 +49,10 @@ export const tokenCheck = async () => {
   const res = await getRequest<TokenCheckResponse>("/auth/sessions", {}, true);
   if (res.success?.is_login) {
     const user = {
+      /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
       id: res.success.user?.id!,
       name: res.success.user?.name!,
+      /* eslint-enable @typescript-eslint/no-non-null-asserted-optional-chain */
     };
     registerUser(user);
     return user;

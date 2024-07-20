@@ -17,6 +17,9 @@ Style/Documentation:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+Style/ClassAndModuleChildren:
+  Enabled: false
+
 Rails/HelperInstanceVariable:
   Enabled: false
 

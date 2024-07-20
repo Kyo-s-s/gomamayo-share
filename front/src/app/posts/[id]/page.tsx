@@ -18,7 +18,7 @@ const PostPage = ({ id }: { id: string }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getRequest<PostApiResponse>(`/posts/${id}`);
+      const res = await getRequest<PostApiResponse>(`/posts/${id}`, {}, true);
       if (res.success) {
         setPost(res.success);
       }

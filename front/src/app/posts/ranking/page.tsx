@@ -17,7 +17,11 @@ const PostRanking = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getRequest<PostsApiResponse>("/posts/ranking");
+      const res = await getRequest<PostsApiResponse>(
+        "/posts/ranking",
+        {},
+        true
+      );
       if (res.success) {
         setPosts(res.success);
       }

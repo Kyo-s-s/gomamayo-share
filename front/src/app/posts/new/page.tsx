@@ -19,9 +19,13 @@ const PostForm = () => {
   const toast = useToast();
 
   const handlePost = async () => {
-    const res = await postRequest<Post>("/posts", {
-      post: { content: content },
-    });
+    const res = await postRequest<Post>(
+      "/posts",
+      {
+        post: { content: content },
+      },
+      true
+    );
     if (res.success) {
       toast({
         title: `Success!!`,

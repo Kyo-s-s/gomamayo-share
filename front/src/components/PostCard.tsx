@@ -48,8 +48,8 @@ const PostCard = ({ post, user, is_liked }: PostCardProps) => {
     }
     if (isLocked) return;
     liked
-      ? deleteRequest(`/likes/${post.id}`)
-      : postRequest(`/likes/${post.id}`);
+      ? deleteRequest(`/likes/${post.id}`, true)
+      : postRequest(`/likes/${post.id}`, {}, true);
     setLiked(!liked);
     setIsLocked(true);
 

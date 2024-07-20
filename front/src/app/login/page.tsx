@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { Button } from "@/components/custom";
 import useRedirect, { useRedirectIfLoggedIn } from "@/utils/useRedirect";
+import { loginRequest } from "@/utils/auth";
 
 const LoginForm = () => {
   const { login } = useAuth();
@@ -23,9 +24,7 @@ const LoginForm = () => {
   const toast = useToast();
 
   const handleLogin = async () => {
-    const res = await postRequest<User>("/login", {
-      user: { name: name, password: password },
-    });
+    const res = await loginRequest(name, password);
     if (res.success) {
       login(res.success);
       redirectTo(`/users/${res.success.id}`);

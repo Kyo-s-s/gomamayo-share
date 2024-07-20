@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState } from "react";
 import { User } from "../types/types";
 import { deleteRequest } from "@/utils/request";
 import useRedirect from "@/utils/useRedirect";
+import { logoutRequest } from "@/utils/auth";
 
 interface AuthContextType {
   user: User | null;
@@ -37,7 +38,7 @@ const AuthProvider = ({
 
   // TODO: ログアウト確認
   const logout = () => {
-    deleteRequest("/logout");
+    logoutRequest();
     sessionStorage.setItem("user", JSON.stringify(null));
     setUser(null);
     redirectTo("/");

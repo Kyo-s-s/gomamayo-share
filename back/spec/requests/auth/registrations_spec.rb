@@ -50,4 +50,29 @@ RSpec.describe 'Auth::Registrations', type: :request do
       end
     end
   end
+
+  # TODO: 他ユーザー強制ログアウト
+  # .tokens を空にすれば良い(有効なtokenのリストがここにあるため)
+  # アプリ側でログアウト時に他端末でログアウトするかどうかのチェックを入れる？
+  describe 'simultaneous login and logout' do
+    let!(:user) { FactoryBot.create(:user_kyo) }
+
+    it 'success' do
+      header1 = sign_in user
+      header2 = sign_in user
+      expect(response).to be_successful
+      get '/auth/sessions', headers: header1
+      expect(response.parsed_body['is_login']).to be(true)
+      get '/auth/sessions', headers: header2
+      expect(response.parsed_body['is_login']).to be(true)
+
+      delete '/auth/sign_out', headers: header1
+
+      get '/auth/sessions', headers: header1
+      expect(response.parsed_body['is_login']).to be(false)
+
+      get '/auth/sessions', headers: header2
+      expect(response.parsed_body['is_login']).to be(true)
+    end
+  end
 end

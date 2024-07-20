@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  mount_devise_token_auth_for 'User', at: 'auth', skip: [:omniauth_callbacks], controllers: {
+    registrations: 'auth/registrations'
+  }
+
+  namespace :auth do
+    resources :sessions, only: [:index]
+  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -7,11 +15,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  post   'users', to: 'users#create', as: 'create_user'
+  # post   'users', to: 'users#create', as: 'create_user'
   get    'users', to: 'users#index'
   get    'users/:id', to: 'users#show', as: 'show_user'
-  post   'login', to: 'sessions#create', as: 'login'
-  delete 'logout', to: 'sessions#destroy', as: 'logout'
+  # post   'login', to: 'sessions#create', as: 'login'
+  # delete 'logout', to: 'sessions#destroy', as: 'logout'
   post   'posts', to: 'posts#create', as: 'create_post'
   get    'posts', to: 'posts#index', as: 'index_post'
   get    'posts/ranking', to: 'posts#ranking', as: 'ranking_post'

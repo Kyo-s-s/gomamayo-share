@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { postRequest } from "../../utils/request";
-import { User } from "../../types/types";
 import { useAuth } from "../../context/AuthContext";
 import {
   Container,
@@ -15,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { Button } from "@/components/custom";
 import useRedirect, { useRedirectIfLoggedIn } from "@/utils/useRedirect";
+import { signupRequest } from "@/utils/auth";
 
 const SignUpForm = () => {
   const { login } = useAuth();
@@ -25,9 +24,7 @@ const SignUpForm = () => {
   const toast = useToast();
 
   const handleSignUp = async () => {
-    const res = await postRequest<User>("/users", {
-      user: { name: name, password: password },
-    });
+    const res = await signupRequest(name, password);
     if (res.success) {
       login(res.success);
       redirectTo(`/users/${res.success.id}`);

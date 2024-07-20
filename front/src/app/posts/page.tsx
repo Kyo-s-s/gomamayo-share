@@ -31,7 +31,7 @@ const PostLoader = ({
       if (posts.length > 0) {
         params["timestamp"] = posts[posts.length - 1].post.created_at;
       }
-      const res = await getRequest<PostsApiResponse>(`/posts`, params);
+      const res = await getRequest<PostsApiResponse>(`/posts`, params, true);
       if (res.success) {
         if (res.success.length === 0) {
           setFinish(true);

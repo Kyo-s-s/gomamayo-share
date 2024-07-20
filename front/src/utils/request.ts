@@ -1,10 +1,11 @@
 import axios, { isAxiosError } from "axios";
+import { forceLogout, pickupHeader } from "./auth";
 
-type RequestError = {
+export type RequestError = {
   message: string;
 };
 
-type Result<T> =
+export type Result<T> =
   | {
       success: T;
       failure?: undefined;
@@ -14,23 +15,42 @@ type Result<T> =
       failure: RequestError;
     };
 
-const resultSuccess = <T>(inner: T): Result<T> => {
+export const resultSuccess = <T>(inner: T): Result<T> => {
   return { success: inner, failure: undefined };
 };
 
-const resultFailure = <T>(error: RequestError): Result<T> => {
+export const resultFailure = <T>(error: RequestError): Result<T> => {
   return { success: undefined, failure: error };
 };
 
-const fetchError = <T>() => {
+export const fetchError = <T>() => {
   return resultFailure<T>({
     message: "Fetch Error",
   });
 };
 
+const createHeaders = (withAuth: boolean) => {
+  const base = { withCredentials: true };
+  const headers = pickupHeader();
+  return withAuth ? { ...base, ...headers } : base;
+};
+
+const errorHandle = <T>(error: unknown): Result<T> => {
+  if (isAxiosError(error)) {
+    if (error.response?.status === 401) {
+      forceLogout();
+    }
+    return resultFailure({
+      message: error.message,
+    });
+  }
+  return fetchError();
+};
+
 export const getRequest = async <T>(
   url: string,
-  data: Record<string, string> = {}
+  data: Record<string, string> = {},
+  withAuth = false
 ): Promise<Result<T>> => {
   try {
     const params = Object.entries(data)
@@ -39,55 +59,44 @@ export const getRequest = async <T>(
     console.log(`GET: ${process.env.NEXT_PUBLIC_API_URL!}${url}?${params}`);
     const response = await axios.get<T>(
       `${process.env.NEXT_PUBLIC_API_URL!}${url}?${params}`,
-      { withCredentials: true } // ?
+      createHeaders(withAuth)
     );
     return resultSuccess(response.data);
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return resultFailure({
-        message: error.message,
-      });
-    }
-    return fetchError();
+    return errorHandle(error);
   }
 };
 
 export const postRequest = async <T>(
   url: string,
-  data: object = {}
+  data: object = {},
+  withAuth = false
 ): Promise<Result<T>> => {
   try {
     console.log("POST: " + process.env.NEXT_PUBLIC_API_URL! + url);
     const response = await axios.post<T>(
       `${process.env.NEXT_PUBLIC_API_URL!}${url}`,
       data,
-      { withCredentials: true } // ?
+      createHeaders(withAuth)
     );
     return resultSuccess(response.data);
   } catch (error) {
-    if (isAxiosError(error)) {
-      return resultFailure({
-        message: error.message,
-      });
-    }
-    return fetchError();
+    return errorHandle(error);
   }
 };
 
-export const deleteRequest = async <T>(url: string): Promise<Result<T>> => {
+export const deleteRequest = async <T>(
+  url: string,
+  withAuth = false
+): Promise<Result<T>> => {
   try {
     console.log("DELETE: " + process.env.NEXT_PUBLIC_API_URL! + url);
     const response = await axios.delete<T>(
       `${process.env.NEXT_PUBLIC_API_URL!}${url}`,
-      { withCredentials: true } // ?
+      createHeaders(withAuth)
     );
     return resultSuccess(response.data);
   } catch (error) {
-    if (isAxiosError(error)) {
-      return resultFailure({
-        message: error.message,
-      });
-    }
-    return fetchError();
+    return errorHandle(error);
   }
 };

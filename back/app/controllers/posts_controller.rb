@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :log_in_check, only: :create
+  before_action :signin_check, only: :create
 
   def index
     limit, timestamp = index_params

@@ -20,16 +20,6 @@ RSpec.describe User, type: :model do
         user.name = 'a' * 21
         expect(user).to be_invalid
       end
-
-      it 'is invalid without password' do
-        user.password = '   '
-        expect(user).to be_invalid
-      end
-
-      it 'is invalid with too short password' do
-        user.password = 'a' * 5
-        expect(user).to be_invalid
-      end
     end
   end
 end

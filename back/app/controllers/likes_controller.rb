@@ -1,5 +1,5 @@
 class LikesController < ApplicationController
-  before_action :log_in_check, only: %i[create destroy]
+  before_action :signin_check, only: %i[create destroy]
   def create
     like = current_user.likes.new(post_id: params[:id])
     if like.save

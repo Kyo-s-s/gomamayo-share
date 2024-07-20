@@ -1,5 +1,5 @@
 import axios, { isAxiosError } from "axios";
-import { pickupHeader } from "./auth";
+import { forceLogout, pickupHeader } from "./auth";
 
 export type RequestError = {
   message: string;
@@ -35,6 +35,18 @@ const createHeaders = (withAuth: boolean) => {
   return withAuth ? { ...base, ...headers } : base;
 };
 
+const errorHandle = <T>(error: unknown): Result<T> => {
+  if (isAxiosError(error)) {
+    if (error.response?.status === 401) {
+      forceLogout();
+    }
+    return resultFailure({
+      message: error.message,
+    });
+  }
+  return fetchError();
+};
+
 export const getRequest = async <T>(
   url: string,
   data: Record<string, string> = {},
@@ -51,12 +63,7 @@ export const getRequest = async <T>(
     );
     return resultSuccess(response.data);
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return resultFailure({
-        message: error.message,
-      });
-    }
-    return fetchError();
+    return errorHandle(error);
   }
 };
 
@@ -74,12 +81,7 @@ export const postRequest = async <T>(
     );
     return resultSuccess(response.data);
   } catch (error) {
-    if (isAxiosError(error)) {
-      return resultFailure({
-        message: error.message,
-      });
-    }
-    return fetchError();
+    return errorHandle(error);
   }
 };
 
@@ -95,11 +97,6 @@ export const deleteRequest = async <T>(
     );
     return resultSuccess(response.data);
   } catch (error) {
-    if (isAxiosError(error)) {
-      return resultFailure({
-        message: error.message,
-      });
-    }
-    return fetchError();
+    return errorHandle(error);
   }
 };

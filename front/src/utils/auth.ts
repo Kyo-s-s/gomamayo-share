@@ -9,12 +9,6 @@ import {
 } from "./request";
 import axios, { isAxiosError } from "axios";
 
-type TokenCheckResponse = {
-  is_login: boolean;
-  user: User | null;
-  message: string | null;
-};
-
 export const registerHeader = (
   accessToken: string,
   client: string,
@@ -23,6 +17,10 @@ export const registerHeader = (
   sessionStorage.setItem("access-token", accessToken);
   sessionStorage.setItem("client", client);
   sessionStorage.setItem("uid", uid);
+};
+
+const registerUser = (user: User) => {
+  sessionStorage.setItem("user", JSON.stringify(user));
 };
 
 export const pickupHeader = () => {
@@ -38,13 +36,28 @@ export const pickupHeader = () => {
   };
 };
 
+type TokenCheckResponse = {
+  is_login: boolean;
+  user: User | null;
+  message: string | null;
+};
+
 export const tokenCheck = async () => {
   if (sessionStorage.getItem("access-token") === null) {
     return null;
   }
-  const res = getRequest<TokenCheckResponse>("/auth/sessions", {}, true);
-  console.log(JSON.stringify(res));
-  return (await res).success?.user;
+  const res = await getRequest<TokenCheckResponse>("/auth/sessions", {}, true);
+  if (res.success?.is_login) {
+    const user = {
+      id: res.success.user?.id!,
+      name: res.success.user?.name!,
+    };
+    registerUser(user);
+    return user;
+  } else {
+    clearSession();
+    return null;
+  }
 };
 
 const setHeaderRequest = async (
@@ -63,10 +76,12 @@ const setHeaderRequest = async (
       res.headers["client"],
       res.headers["uid"]
     );
-    return resultSuccess({
+    const user: User = {
       id: res.data.data.id,
       name: res.data.data.name,
-    });
+    };
+    sessionStorage.setItem("user", JSON.stringify(user));
+    return resultSuccess(user);
   } catch (error) {
     if (isAxiosError(error)) {
       return resultFailure({
@@ -87,7 +102,18 @@ export const loginRequest = async (name: string, password: string) => {
 
 export const logoutRequest = async () => {
   await deleteRequest("/auth/sign_out", true);
+  clearSession();
+};
+
+const clearSession = () => {
   sessionStorage.removeItem("access-token");
   sessionStorage.removeItem("client");
   sessionStorage.removeItem("uid");
+  sessionStorage.removeItem("user");
+};
+
+export const forceLogout = () => {
+  clearSession();
+  alert("セッションが切れました。再度ログインしてください。");
+  window.location.href = "/login";
 };

@@ -7,10 +7,8 @@ import {
   AbsoluteCenter,
   Box,
   Button,
-  Center,
   Container,
   Heading,
-  Text,
   VStack,
 } from "@chakra-ui/react";
 import React from "react";

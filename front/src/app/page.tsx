@@ -1,95 +1,117 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import { Emoji } from "@/components/emoji";
+import { useAuth } from "@/context/AuthContext";
+import { Link } from "@chakra-ui/next-js";
+import {
+  AbsoluteCenter,
+  Box,
+  Button,
+  Center,
+  Container,
+  Heading,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import React from "react";
+
+const TopButton = ({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) => {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <Link href={href}>
+      <Button
+        variant="outline"
+        border="1px"
+        fontSize="25px"
+        borderRadius="30px"
+        p="30px"
+      >
+        {children}
+      </Button>
+    </Link>
   );
-}
+};
+
+const RandomInterrobangs = () => {
+  // FIXME: Mobile
+  const positions = [
+    ["260px", "-2%", "-2%", "rotate(70deg)"],
+    ["290px", "-12%", "20%", "rotate(310deg)"],
+    ["260px", "1%", "80%", "rotate(220deg)"],
+    ["330px", "-20%", "53%", "rotate(40deg)"],
+    ["240px", "39%", "80%", "rotate(350deg)"],
+    ["200px", "25%", "12%", "rotate(10deg)"],
+    ["260px", "49%", "-5%", "rotate(220deg)"],
+    ["240px", "15%", "37%", "rotate(230deg)"],
+    ["300px", "20%", "60%", "rotate(400deg)"],
+    ["330px", "68%", "13%", "rotate(50deg)"],
+    ["340px", "35%", "20%", "rotate(200deg)"],
+    ["240px", "70%", "45%", "rotate(240deg)"],
+    ["200px", "43%", "45%", "rotate(300deg)"],
+    ["250px", "70%", "65%", "rotate(20deg)"],
+    ["250px", "70%", "87%", "rotate(150deg)"],
+  ];
+  return (
+    <>
+      {positions.map(([size, top, left, transform], index) => (
+        <Emoji
+          key={index}
+          shortcodes=":interrobang:"
+          size={size}
+          style={{
+            position: "absolute",
+            top,
+            left,
+            transform,
+          }}
+        />
+      ))}
+      <Box
+        w="100%"
+        h="100%"
+        position="absolute"
+        backgroundColor="white"
+        opacity={0.6}
+      />
+    </>
+  );
+};
+
+const MainBox = () => {
+  const { user } = useAuth();
+
+  return (
+    <Box height="100vh" position="relative" overflow="hidden">
+      <RandomInterrobangs />
+      <AbsoluteCenter>
+        <VStack spacing={8} position="relative">
+          <Heading fontSize="4em">Gomamayo Share</Heading>
+          {user ? (
+            <TopButton href="/posts">タイムライン</TopButton>
+          ) : (
+            <TopButton href="/signup">
+              アカウント登録
+              <Emoji shortcodes=":interrobang:" />
+            </TopButton>
+          )}
+        </VStack>
+      </AbsoluteCenter>
+    </Box>
+  );
+};
+
+const Home = () => {
+  return (
+    <>
+      <MainBox />
+      <Container maxW="container.lg"></Container>
+    </>
+  );
+};
+
+export default Home;

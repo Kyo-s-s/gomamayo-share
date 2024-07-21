@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { getRequest } from "../../utils/request";
-import { Post, User } from "../../types/types";
+import { getRequest } from "../../../utils/request";
+import { Post, User } from "../../../types/types";
 import { Box, Container } from "@chakra-ui/react";
 import PostCard from "@/components/PostCard";
 import { useInView } from "framer-motion";

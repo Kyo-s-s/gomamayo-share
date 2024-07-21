@@ -5,9 +5,11 @@ init({ data });
 export const Emoji = ({
   shortcodes,
   size = "1em",
+  style,
 }: {
   shortcodes: string;
   size?: string;
+  style?: React.CSSProperties;
 }) => {
-  return <em-emoji shortcodes={shortcodes} size={size} />; // ?
+  return <em-emoji shortcodes={shortcodes} size={size} style={style} />; // ?
 };

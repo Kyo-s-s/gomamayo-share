@@ -15,6 +15,7 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import Link from "next/link";
 
 const AccountMenuButton = () => {
   const { logout } = useAuth();
@@ -45,7 +46,9 @@ const Header = () => {
     >
       <Container maxW="container.lg">
         <Flex>
-          <Heading as="h2">Gomamayo Share</Heading>
+          <Link href="/">
+            <Heading as="h2">Gomamayo Share</Heading>
+          </Link>
           <Spacer />
           <Flex gap={2}>
             <LinkButton href={`/posts`}>Posts</LinkButton>

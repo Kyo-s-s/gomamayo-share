@@ -25,11 +25,11 @@ const TopButton = ({
   return (
     <Link href={href}>
       <Button
-        variant="outline"
         border="1px"
         fontSize="25px"
         borderRadius="30px"
         p="30px"
+        bg="white"
       >
         {children}
       </Button>

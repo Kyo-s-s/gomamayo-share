@@ -1,4 +1,14 @@
-import { FormLabel, Heading, Input } from "@chakra-ui/react";
+import {
+  Box,
+  Card,
+  CardBody,
+  CardHeader,
+  Flex,
+  FormLabel,
+  Heading,
+  Input,
+  Spacer,
+} from "@chakra-ui/react";
 import { Button } from "./custom";
 
 export const Form = ({
@@ -13,13 +23,20 @@ export const Form = ({
   isInvalid?: boolean;
 }) => {
   return (
-    <>
-      <Heading>{title}</Heading>
-      {children}
-      <Button isDisabled={isInvalid} mt={4} onClick={onSubmit}>
-        確定
-      </Button>
-    </>
+    <Card borderRadius="15px">
+      <CardHeader pb={0}>
+        <Heading>{title}</Heading>
+      </CardHeader>
+      <CardBody>
+        {children}
+        <Flex>
+          <Spacer />
+          <Button isDisabled={isInvalid} mt={4} onClick={onSubmit}>
+            確定
+          </Button>
+        </Flex>
+      </CardBody>
+    </Card>
   );
 };
 

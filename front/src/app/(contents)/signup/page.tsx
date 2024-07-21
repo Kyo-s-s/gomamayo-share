@@ -1,26 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
-import {
-  Container,
-  FormControl,
-  FormLabel,
-  Heading,
-  Input,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
-import { Button } from "@/components/custom";
+import { AbsoluteCenter, Container, useToast } from "@chakra-ui/react";
 import useRedirect, { useRedirectIfLoggedIn } from "@/utils/useRedirect";
 import { signupRequest } from "@/utils/auth";
+import { EmojiInterrobang } from "@/components/emoji";
+import { Form, StringForm } from "@/components/form";
 
-const SignUpForm = () => {
+const Page = () => {
+  useRedirectIfLoggedIn();
+
   const { login } = useAuth();
   const redirectTo = useRedirect();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+
   const toast = useToast();
 
   const handleSignUp = async () => {
@@ -40,47 +36,39 @@ const SignUpForm = () => {
     }
   };
 
-  const isPasswordConfirmInvalid = password !== passwordConfirm;
+  const isPasswordInvalid = password.length < 6;
+  const isPasswordConfirmInvalid =
+    isPasswordInvalid || password !== passwordConfirm;
 
   return (
-    <>
-      <FormControl>
-        <FormLabel>Name</FormLabel>
-        <Input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <FormLabel>Password</FormLabel>
-        <Input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <FormLabel>Password Confirm</FormLabel>
-        <Input
-          type="password"
-          value={passwordConfirm}
+    <Container maxW="container.md" height="90vh" position="relative">
+      <AbsoluteCenter width="container.sm" pb="10vh">
+        <Form
+          title={
+            <>
+              アカウント登録 <EmojiInterrobang />
+            </>
+          }
+          onSubmit={handleSignUp}
           isInvalid={isPasswordConfirmInvalid}
-          onChange={(e) => setPasswordConfirm(e.target.value)}
-        />
-        {isPasswordConfirmInvalid && (
-          <Text color="red">Password is not matched</Text>
-        )}
-      </FormControl>
-      <Button isDisabled={isPasswordConfirmInvalid} onClick={handleSignUp}>
-        Sign up
-      </Button>
-    </>
-  );
-};
-
-const Page = () => {
-  useRedirectIfLoggedIn();
-  return (
-    <Container maxW="container.md">
-      <Heading>sign up</Heading>
-      <SignUpForm />
+        >
+          <StringForm title="ユーザーネーム" value={name} setValue={setName} />
+          <StringForm
+            title="パスワード"
+            value={password}
+            setValue={setPassword}
+            isPassword
+            isInvalid={isPasswordInvalid}
+          />
+          <StringForm
+            title="パスワード(確認)"
+            value={passwordConfirm}
+            setValue={setPasswordConfirm}
+            isPassword
+            isInvalid={isPasswordConfirmInvalid}
+          />
+        </Form>
+      </AbsoluteCenter>
     </Container>
   );
 };

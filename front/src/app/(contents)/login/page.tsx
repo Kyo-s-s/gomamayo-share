@@ -2,19 +2,14 @@
 
 import { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
-import {
-  Container,
-  FormControl,
-  FormLabel,
-  Heading,
-  Input,
-  useToast,
-} from "@chakra-ui/react";
-import { Button } from "@/components/custom";
+import { AbsoluteCenter, Container, useToast } from "@chakra-ui/react";
 import useRedirect, { useRedirectIfLoggedIn } from "@/utils/useRedirect";
 import { loginRequest } from "@/utils/auth";
+import { Form, StringForm } from "@/components/form";
 
-const LoginForm = () => {
+const Page = () => {
+  useRedirectIfLoggedIn();
+
   const { login } = useAuth();
   const redirectTo = useRedirect();
   const [name, setName] = useState("");
@@ -37,33 +32,20 @@ const LoginForm = () => {
       });
     }
   };
-  return (
-    <>
-      <FormControl>
-        <FormLabel>Name</FormLabel>
-        <Input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <FormLabel>Password</FormLabel>
-        <Input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </FormControl>
-      <Button onClick={handleLogin}>Login</Button>
-    </>
-  );
-};
 
-const Page = () => {
-  useRedirectIfLoggedIn();
   return (
-    <Container maxW="container.md">
-      <Heading>Login</Heading>
-      <LoginForm />
+    <Container maxW="container.md" height="90vh" position="relative">
+      <AbsoluteCenter width="container.sm" pb="10vh">
+        <Form title="ログイン" onSubmit={handleLogin}>
+          <StringForm title="ユーザーネーム" value={name} setValue={setName} />
+          <StringForm
+            title="パスワード"
+            value={password}
+            setValue={setPassword}
+            isPassword
+          />
+        </Form>
+      </AbsoluteCenter>
     </Container>
   );
 };

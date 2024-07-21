@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getRequest } from "../../utils/request";
-import { User } from "../../types/types";
+import { getRequest } from "../../../utils/request";
+import { User } from "../../../types/types";
 import { Heading } from "@chakra-ui/react";
 
 const Users = () => {

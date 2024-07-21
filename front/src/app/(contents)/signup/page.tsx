@@ -1,28 +1,30 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../../context/AuthContext";
 import {
   Container,
   FormControl,
   FormLabel,
   Heading,
   Input,
+  Text,
   useToast,
 } from "@chakra-ui/react";
 import { Button } from "@/components/custom";
 import useRedirect, { useRedirectIfLoggedIn } from "@/utils/useRedirect";
-import { loginRequest } from "@/utils/auth";
+import { signupRequest } from "@/utils/auth";
 
-const LoginForm = () => {
+const SignUpForm = () => {
   const { login } = useAuth();
   const redirectTo = useRedirect();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const toast = useToast();
 
-  const handleLogin = async () => {
-    const res = await loginRequest(name, password);
+  const handleSignUp = async () => {
+    const res = await signupRequest(name, password);
     if (res.success) {
       login(res.success);
       redirectTo(`/users/${res.success.id}`);
@@ -37,6 +39,9 @@ const LoginForm = () => {
       });
     }
   };
+
+  const isPasswordConfirmInvalid = password !== passwordConfirm;
+
   return (
     <>
       <FormControl>
@@ -52,8 +57,20 @@ const LoginForm = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <FormLabel>Password Confirm</FormLabel>
+        <Input
+          type="password"
+          value={passwordConfirm}
+          isInvalid={isPasswordConfirmInvalid}
+          onChange={(e) => setPasswordConfirm(e.target.value)}
+        />
+        {isPasswordConfirmInvalid && (
+          <Text color="red">Password is not matched</Text>
+        )}
       </FormControl>
-      <Button onClick={handleLogin}>Login</Button>
+      <Button isDisabled={isPasswordConfirmInvalid} onClick={handleSignUp}>
+        Sign up
+      </Button>
     </>
   );
 };
@@ -62,8 +79,8 @@ const Page = () => {
   useRedirectIfLoggedIn();
   return (
     <Container maxW="container.md">
-      <Heading>Login</Heading>
-      <LoginForm />
+      <Heading>sign up</Heading>
+      <SignUpForm />
     </Container>
   );
 };

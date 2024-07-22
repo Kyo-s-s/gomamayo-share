@@ -7,6 +7,7 @@ import {
   Heading,
   Input,
   Spacer,
+  Textarea,
 } from "@chakra-ui/react";
 import { Button } from "./custom";
 
@@ -15,11 +16,13 @@ export const Form = ({
   onSubmit,
   children,
   isInvalid = false,
+  submitButton = "確定",
 }: {
   title: React.ReactNode;
   onSubmit: () => void;
   children?: React.ReactNode;
   isInvalid?: boolean;
+  submitButton?: string;
 }) => {
   return (
     <Card borderRadius="15px">
@@ -31,7 +34,7 @@ export const Form = ({
         <Flex>
           <Spacer />
           <Button isDisabled={isInvalid} mt={4} onClick={onSubmit}>
-            確定
+            {submitButton}
           </Button>
         </Flex>
       </CardBody>
@@ -61,6 +64,29 @@ export const StringForm = ({
         value={value}
         onChange={(e) => setValue(e.target.value)}
         isInvalid={isInvalid}
+      />
+    </>
+  );
+};
+
+export const TextForm = ({
+  title = "",
+  value,
+  setValue,
+  placeholder = "",
+}: {
+  title?: string;
+  value: string;
+  setValue: (s: string) => void;
+  placeholder?: string;
+}) => {
+  return (
+    <>
+      <FormLabel my={2}>{title}</FormLabel>
+      <Textarea
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder={placeholder}
       />
     </>
   );

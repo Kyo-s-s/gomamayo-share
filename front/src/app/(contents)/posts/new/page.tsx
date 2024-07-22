@@ -102,7 +102,7 @@ const Page = () => {
 
   return (
     <Container maxW="container.sm" height="90vh" position="relative">
-      <AbsoluteCenter width="100%" pb="10vh">
+      <AbsoluteCenter width="100%" pb="10vh" px={4}>
         <Form title="ゴママヨ投稿" onSubmit={handlePost} submitButton="投稿">
           <TextForm
             value={content}

@@ -35,7 +35,7 @@ const Page = () => {
 
   return (
     <Container maxW="container.md" height="90vh" position="relative">
-      <AbsoluteCenter width="container.sm" pb="10vh">
+      <AbsoluteCenter width="100%" pb="10vh" px={4}>
         <Form title="ログイン" onSubmit={handleLogin}>
           <StringForm title="ユーザーネーム" value={name} setValue={setName} />
           <StringForm

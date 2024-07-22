@@ -3,15 +3,7 @@
 import { useState } from "react";
 import { postRequest } from "@/utils/request";
 import { Post } from "@/types/types";
-import {
-  AbsoluteCenter,
-  Container,
-  FormControl,
-  FormLabel,
-  Textarea,
-  useToast,
-} from "@chakra-ui/react";
-import { Button } from "@/components/custom";
+import { AbsoluteCenter, Container, useToast } from "@chakra-ui/react";
 import useRedirect, { useRedirectIfNotLoggedIn } from "@/utils/useRedirect";
 import { Form, TextForm } from "@/components/form";
 

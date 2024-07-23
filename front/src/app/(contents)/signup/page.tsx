@@ -41,8 +41,8 @@ const Page = () => {
     isPasswordInvalid || password !== passwordConfirm;
 
   return (
-    <Container maxW="container.md" height="90vh" position="relative">
-      <AbsoluteCenter width="container.sm" pb="10vh">
+    <Container maxW="container.sm" height="90vh" position="relative">
+      <AbsoluteCenter width="100%" pb="10vh" px={4}>
         <Form
           title={
             <>

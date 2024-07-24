@@ -77,7 +77,7 @@ export const tokenCheck = async () => {
     registerUser(user);
     return user;
   } else {
-    clearSession();
+    clearSessionsAndCookies();
     return null;
   }
 };
@@ -134,10 +134,10 @@ export const loginRequest = async (
 
 export const logoutRequest = async () => {
   await deleteRequest("/auth/sign_out", true);
-  clearSession();
+  clearSessionsAndCookies();
 };
 
-const clearSession = () => {
+const clearSessionsAndCookies = () => {
   sessionStorage.removeItem("access-token");
   sessionStorage.removeItem("client");
   sessionStorage.removeItem("uid");
@@ -148,7 +148,7 @@ const clearSession = () => {
 };
 
 export const forceLogout = () => {
-  clearSession();
+  clearSessionsAndCookies();
   alert("セッションが切れました。再度ログインしてください。");
   window.location.href = "/login";
 };

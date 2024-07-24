@@ -16,6 +16,5 @@ production:
   adapter: postgresql
   encoding: unicode
   pool:  <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  database: gomamayo-db
+  database: gomamayo-share-db
   username: kyo
-  password: <%= ENV['DB_PASSWORD'] %> # .envで設定

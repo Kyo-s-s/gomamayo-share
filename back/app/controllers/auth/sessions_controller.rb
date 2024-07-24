@@ -1,4 +1,5 @@
 class Auth::SessionsController < DeviseTokenAuth::SessionsController
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   # https://github.com/lynndylanhurley/devise_token_auth/blob/master/app/controllers/devise_token_auth/sessions_controller.rb
   def destroy
     # remove auth instance variables so that after_action does not run
@@ -25,4 +26,5 @@ class Auth::SessionsController < DeviseTokenAuth::SessionsController
       render_destroy_error
     end
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 end

@@ -32,8 +32,9 @@ const PostCard = ({ post, user, is_liked }: PostCardProps) => {
   const { user: login_user } = useAuth();
   const [liked, setLiked] = useState(is_liked);
   const [isLocked, setIsLocked] = useState(false);
-  const likes_count = post.likes_count + (liked ? 1 : 0) - (is_liked ? 1 : 0);
   const { errorMessage } = useMessage();
+
+  const likes_count = post.likes_count + (liked ? 1 : 0) - (is_liked ? 1 : 0);
 
   const handleLike = async () => {
     if (!login_user) {

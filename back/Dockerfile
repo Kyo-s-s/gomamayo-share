@@ -19,6 +19,8 @@ COPY Gemfile* .
 RUN bundle install
 
 COPY . .
+EXPOSE 3000
+CMD ["rails", "server", "-e", "production"]
 
 # COPY entrypoint.sh /usr/bin/
 # RUN chmod +x /usr/bin/entrypoint.sh

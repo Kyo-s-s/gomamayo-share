@@ -2,6 +2,7 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Checkbox,
   Flex,
   FormLabel,
   Heading,
@@ -92,5 +93,27 @@ export const TextForm = ({
         placeholder={placeholder}
       />
     </>
+  );
+};
+
+export const CheckForm = ({
+  title,
+  isChecked,
+  setIsChecked,
+}: {
+  title: string;
+  isChecked: boolean;
+  setIsChecked: (b: boolean) => void;
+}) => {
+  return (
+    <Checkbox
+      my={2}
+      size="lg"
+      colorScheme="red"
+      isChecked={isChecked}
+      onChange={() => setIsChecked(!isChecked)}
+    >
+      {title}
+    </Checkbox>
   );
 };

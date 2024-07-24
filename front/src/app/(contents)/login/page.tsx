@@ -5,7 +5,7 @@ import { useAuth } from "../../../context/AuthContext";
 import { AbsoluteCenter, Container, useToast } from "@chakra-ui/react";
 import useRedirect, { useRedirectIfLoggedIn } from "@/utils/useRedirect";
 import { loginRequest } from "@/utils/auth";
-import { Form, StringForm } from "@/components/form";
+import { CheckForm, Form, StringForm } from "@/components/form";
 import { validateName, validatePassword } from "@/utils/validate";
 
 const Page = () => {
@@ -15,10 +15,11 @@ const Page = () => {
   const redirectTo = useRedirect();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [isCookieAllowed, setIsCookieAllowed] = useState(false);
   const toast = useToast();
 
   const handleLogin = async () => {
-    const res = await loginRequest(name, password);
+    const res = await loginRequest(name, password, isCookieAllowed);
     if (res.success) {
       login(res.success);
       redirectTo(`/users/${res.success.id}`);
@@ -55,6 +56,11 @@ const Page = () => {
             setValue={setPassword}
             isPassword
             errorMessage={passwordError}
+          />
+          <CheckForm
+            title={"ログイン状態を保持する(Cookieを使用します)"}
+            isChecked={isCookieAllowed}
+            setIsChecked={setIsCookieAllowed}
           />
         </Form>
       </AbsoluteCenter>

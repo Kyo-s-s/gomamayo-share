@@ -19,15 +19,13 @@ COPY Gemfile* .
 RUN bundle install
 
 COPY . .
+
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
+
 CMD ["rails", "server", "-e", "production"]
-
-# COPY entrypoint.sh /usr/bin/
-# RUN chmod +x /usr/bin/entrypoint.sh
-# ENTRYPOINT ["entrypoint.sh"]
-# EXPOSE 3000
-# CMD ["./bin/rails", "server"]
-
 
 
 # # syntax = docker/dockerfile:1

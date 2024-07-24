@@ -7,6 +7,7 @@ import useRedirect, { useRedirectIfLoggedIn } from "@/utils/useRedirect";
 import { signupRequest } from "@/utils/auth";
 import { EmojiInterrobang } from "@/components/emoji";
 import { Form, StringForm } from "@/components/form";
+import { validateName, validatePassword } from "@/utils/validate";
 
 const Page = () => {
   useRedirectIfLoggedIn();
@@ -36,9 +37,14 @@ const Page = () => {
     }
   };
 
-  const isPasswordInvalid = password.length < 6;
-  const isPasswordConfirmInvalid =
-    isPasswordInvalid || password !== passwordConfirm;
+  const nameError = validateName(name);
+  const passwordError = validatePassword(password);
+  const passwordConfirmError =
+    passwordError ||
+    (password !== passwordConfirm ? "パスワードが一致しません" : "");
+
+  const isInvalid =
+    nameError !== "" || passwordError !== "" || passwordConfirmError !== "";
 
   return (
     <Container maxW="container.sm" height="90vh" position="relative">
@@ -50,22 +56,27 @@ const Page = () => {
             </>
           }
           onSubmit={handleSignUp}
-          isInvalid={isPasswordConfirmInvalid}
+          isInvalid={isInvalid}
         >
-          <StringForm title="ユーザーネーム" value={name} setValue={setName} />
+          <StringForm
+            title="ユーザー名"
+            value={name}
+            setValue={setName}
+            errorMessage={nameError}
+          />
           <StringForm
             title="パスワード"
             value={password}
             setValue={setPassword}
             isPassword
-            isInvalid={isPasswordInvalid}
+            errorMessage={passwordError}
           />
           <StringForm
             title="パスワード(確認)"
             value={passwordConfirm}
             setValue={setPasswordConfirm}
             isPassword
-            isInvalid={isPasswordConfirmInvalid}
+            errorMessage={passwordConfirmError}
           />
         </Form>
       </AbsoluteCenter>

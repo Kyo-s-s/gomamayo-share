@@ -6,7 +6,8 @@ class User < ApplicationRecord
 
   has_many :posts, dependent: :destroy
   has_many :likes, dependent: :destroy
-  validates :name, presence: true, uniqueness: true, length: { maximum: 20 }
+  validates :name, presence: true, uniqueness: true, length: { maximum: 20 },
+                   format: { with: /\A\w+\z/ }
 
   before_validation :set_uid
 

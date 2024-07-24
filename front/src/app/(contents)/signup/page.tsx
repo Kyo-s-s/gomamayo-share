@@ -37,13 +37,14 @@ const Page = () => {
     }
   };
 
-  const isNameInvalid = validateName(name) != null;
-  const isPasswordInvalid = validatePassword(password) != null;
-  const isPasswordConfirmInvalid =
-    isPasswordInvalid || password !== passwordConfirm;
+  const nameError = validateName(name);
+  const passwordError = validatePassword(password);
+  const passwordConfirmError =
+    passwordError ||
+    (password !== passwordConfirm ? "パスワードが一致しません" : "");
 
   const isInvalid =
-    isNameInvalid || isPasswordInvalid || isPasswordConfirmInvalid;
+    nameError !== "" || passwordError !== "" || passwordConfirmError !== "";
 
   return (
     <Container maxW="container.sm" height="90vh" position="relative">
@@ -58,24 +59,24 @@ const Page = () => {
           isInvalid={isInvalid}
         >
           <StringForm
-            title="ユーザーネーム"
+            title="ユーザー名"
             value={name}
             setValue={setName}
-            isInvalid={isNameInvalid}
+            errorMessage={nameError}
           />
           <StringForm
             title="パスワード"
             value={password}
             setValue={setPassword}
             isPassword
-            isInvalid={isPasswordInvalid}
+            errorMessage={passwordError}
           />
           <StringForm
             title="パスワード(確認)"
             value={passwordConfirm}
             setValue={setPasswordConfirm}
             isPassword
-            isInvalid={isPasswordConfirmInvalid}
+            errorMessage={passwordConfirmError}
           />
         </Form>
       </AbsoluteCenter>

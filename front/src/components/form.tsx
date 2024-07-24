@@ -8,6 +8,7 @@ import {
   Input,
   Spacer,
   Textarea,
+  Tooltip,
 } from "@chakra-ui/react";
 import { Button } from "./custom";
 
@@ -48,23 +49,25 @@ export const StringForm = ({
   value,
   setValue,
   isPassword = false,
-  isInvalid = false,
+  errorMessage = "",
 }: {
   title: string;
   value: string;
   setValue: (s: string) => void;
   isPassword?: boolean;
-  isInvalid?: boolean;
+  errorMessage?: string;
 }) => {
   return (
     <>
       <FormLabel my={2}>{title}</FormLabel>
-      <Input
-        type={isPassword ? "password" : "text"}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        isInvalid={isInvalid}
-      />
+      <Tooltip label={errorMessage} placement="top">
+        <Input
+          type={isPassword ? "password" : "text"}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          isInvalid={errorMessage !== ""}
+        />
+      </Tooltip>
     </>
   );
 };

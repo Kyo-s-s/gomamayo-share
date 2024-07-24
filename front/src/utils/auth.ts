@@ -8,15 +8,25 @@ import {
   resultSuccess,
 } from "./request";
 import axios, { isAxiosError } from "axios";
+import { destroyCookie, parseCookies, setCookie } from "nookies";
+
+const cookiesOptions = {
+  sameSite: "Strict",
+  maxAge: 14 * 24 * 60 * 60,
+  path: "/",
+};
 
 export const registerHeader = (
   accessToken: string,
   client: string,
   uid: string
 ) => {
-  sessionStorage.setItem("access-token", accessToken);
-  sessionStorage.setItem("client", client);
-  sessionStorage.setItem("uid", uid);
+  // sessionStorage.setItem("access-token", accessToken);
+  // sessionStorage.setItem("client", client);
+  // sessionStorage.setItem("uid", uid);
+  setCookie(null, "access-token", accessToken, cookiesOptions);
+  setCookie(null, "client", client, cookiesOptions);
+  setCookie(null, "uid", uid, cookiesOptions);
 };
 
 const registerUser = (user: User) => {
@@ -24,9 +34,10 @@ const registerUser = (user: User) => {
 };
 
 export const pickupHeader = () => {
-  const accessToken = sessionStorage.getItem("access-token");
-  const client = sessionStorage.getItem("client");
-  const uid = sessionStorage.getItem("uid");
+  const cookies = parseCookies();
+  const accessToken = cookies["access-token"];
+  const client = cookies["client"];
+  const uid = cookies["uid"];
   return {
     headers: {
       "access-token": accessToken,
@@ -43,7 +54,8 @@ type TokenCheckResponse = {
 };
 
 export const tokenCheck = async () => {
-  if (sessionStorage.getItem("access-token") === null) {
+  const cookies = parseCookies();
+  if (cookies["access-token"] == null) {
     return null;
   }
   const res = await getRequest<TokenCheckResponse>("/auth/sessions", {}, true);
@@ -108,9 +120,12 @@ export const logoutRequest = async () => {
 };
 
 const clearSession = () => {
-  sessionStorage.removeItem("access-token");
-  sessionStorage.removeItem("client");
-  sessionStorage.removeItem("uid");
+  // sessionStorage.removeItem("access-token");
+  // sessionStorage.removeItem("client");
+  // sessionStorage.removeItem("uid");
+  destroyCookie(null, "access-token");
+  destroyCookie(null, "client");
+  destroyCookie(null, "uid");
   sessionStorage.removeItem("user");
 };
 

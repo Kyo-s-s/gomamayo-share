@@ -8,15 +8,29 @@ import {
   resultSuccess,
 } from "./request";
 import axios, { isAxiosError } from "axios";
+import { destroyCookie, parseCookies, setCookie } from "nookies";
+
+const cookiesOptions = {
+  sameSite: "Strict",
+  maxAge: 14 * 24 * 60 * 60,
+  path: "/",
+};
 
 export const registerHeader = (
   accessToken: string,
   client: string,
-  uid: string
+  uid: string,
+  isCookieAllowed: boolean
 ) => {
-  sessionStorage.setItem("access-token", accessToken);
-  sessionStorage.setItem("client", client);
-  sessionStorage.setItem("uid", uid);
+  if (isCookieAllowed) {
+    setCookie(null, "access-token", accessToken, cookiesOptions);
+    setCookie(null, "client", client, cookiesOptions);
+    setCookie(null, "uid", uid, cookiesOptions);
+  } else {
+    sessionStorage.setItem("access-token", accessToken);
+    sessionStorage.setItem("client", client);
+    sessionStorage.setItem("uid", uid);
+  }
 };
 
 const registerUser = (user: User) => {
@@ -24,9 +38,14 @@ const registerUser = (user: User) => {
 };
 
 export const pickupHeader = () => {
-  const accessToken = sessionStorage.getItem("access-token");
-  const client = sessionStorage.getItem("client");
-  const uid = sessionStorage.getItem("uid");
+  const cookies = parseCookies();
+  const accessToken =
+    sessionStorage.getItem("access-token") || cookies["access-token"];
+  const client = sessionStorage.getItem("client") || cookies["client"];
+  const uid = sessionStorage.getItem("uid") || cookies["uid"];
+  if (accessToken == null || client == null || uid == null) {
+    return null;
+  }
   return {
     headers: {
       "access-token": accessToken,
@@ -43,7 +62,8 @@ type TokenCheckResponse = {
 };
 
 export const tokenCheck = async () => {
-  if (sessionStorage.getItem("access-token") === null) {
+  const header = pickupHeader();
+  if (header == null) {
     return null;
   }
   const res = await getRequest<TokenCheckResponse>("/auth/sessions", {}, true);
@@ -57,7 +77,7 @@ export const tokenCheck = async () => {
     registerUser(user);
     return user;
   } else {
-    clearSession();
+    clearSessionsAndCookies();
     return null;
   }
 };
@@ -65,7 +85,8 @@ export const tokenCheck = async () => {
 const setHeaderRequest = async (
   name: string,
   password: string,
-  signup: boolean
+  signup: boolean,
+  isCookieAllowed: boolean
 ): Promise<Result<User>> => {
   const path = signup ? "/auth" : "/auth/sign_in";
   try {
@@ -76,7 +97,8 @@ const setHeaderRequest = async (
     registerHeader(
       res.headers["access-token"],
       res.headers["client"],
-      res.headers["uid"]
+      res.headers["uid"],
+      isCookieAllowed
     );
     const user: User = {
       id: res.data.data.id,
@@ -94,28 +116,39 @@ const setHeaderRequest = async (
   }
 };
 
-export const signupRequest = async (name: string, password: string) => {
-  return setHeaderRequest(name, password, true);
+export const signupRequest = async (
+  name: string,
+  password: string,
+  isCookieAllowed: boolean
+) => {
+  return setHeaderRequest(name, password, true, isCookieAllowed);
 };
 
-export const loginRequest = async (name: string, password: string) => {
-  return setHeaderRequest(name, password, false);
+export const loginRequest = async (
+  name: string,
+  password: string,
+  isCookieAllowed: boolean
+) => {
+  return setHeaderRequest(name, password, false, isCookieAllowed);
 };
 
 export const logoutRequest = async () => {
   await deleteRequest("/auth/sign_out", true);
-  clearSession();
+  clearSessionsAndCookies();
 };
 
-const clearSession = () => {
+const clearSessionsAndCookies = () => {
   sessionStorage.removeItem("access-token");
   sessionStorage.removeItem("client");
   sessionStorage.removeItem("uid");
+  destroyCookie(null, "access-token");
+  destroyCookie(null, "client");
+  destroyCookie(null, "uid");
   sessionStorage.removeItem("user");
 };
 
 export const forceLogout = () => {
-  clearSession();
+  clearSessionsAndCookies();
   alert("セッションが切れました。再度ログインしてください。");
   window.location.href = "/login";
 };

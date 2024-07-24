@@ -31,8 +31,7 @@ export const fetchError = <T>() => {
 
 const createHeaders = (withAuth: boolean) => {
   const base = { withCredentials: true };
-  const headers = pickupHeader();
-  return withAuth ? { ...base, ...headers } : base;
+  return withAuth ? { ...base, ...pickupHeader() } : base;
 };
 
 const errorHandle = <T>(error: unknown): Result<T> => {

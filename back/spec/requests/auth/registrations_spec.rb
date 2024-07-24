@@ -71,6 +71,10 @@ RSpec.describe 'Auth::Registrations', type: :request do
       # After sign_out, the other sessions are broken.
       get '/auth/sessions', headers: header2
       expect(response.parsed_body['is_login']).to be(false)
+
+      header3 = sign_in user
+      get '/auth/sessions', headers: header3
+      expect(response.parsed_body['is_login']).to be(true)
     end
   end
 end

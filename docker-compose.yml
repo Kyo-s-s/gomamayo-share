@@ -1,6 +1,6 @@
 version: "3"
 services:
-  api:
+  api: # FIXME: 壊れてると思う(Dockerfile内で起動コマンドを打つようにしたため)
     build:
       context: ./back
       dockerfile: Dockerfile

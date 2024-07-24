@@ -6,6 +6,7 @@ import { AbsoluteCenter, Container, useToast } from "@chakra-ui/react";
 import useRedirect, { useRedirectIfLoggedIn } from "@/utils/useRedirect";
 import { loginRequest } from "@/utils/auth";
 import { Form, StringForm } from "@/components/form";
+import { validateName, validatePassword } from "@/utils/validate";
 
 const Page = () => {
   useRedirectIfLoggedIn();
@@ -33,16 +34,27 @@ const Page = () => {
     }
   };
 
+  const isNameInvalid = validateName(name) != null;
+  const isPasswordInvalid = validatePassword(password) != null;
+
+  const isInvalid = isNameInvalid || isPasswordInvalid;
+
   return (
     <Container maxW="container.sm" height="90vh" position="relative">
       <AbsoluteCenter width="100%" pb="10vh" px={4}>
-        <Form title="ログイン" onSubmit={handleLogin}>
-          <StringForm title="ユーザーネーム" value={name} setValue={setName} />
+        <Form title="ログイン" onSubmit={handleLogin} isInvalid={isInvalid}>
+          <StringForm
+            title="ユーザーネーム"
+            value={name}
+            setValue={setName}
+            isInvalid={isNameInvalid}
+          />
           <StringForm
             title="パスワード"
             value={password}
             setValue={setPassword}
             isPassword
+            isInvalid={isPasswordInvalid}
           />
         </Form>
       </AbsoluteCenter>

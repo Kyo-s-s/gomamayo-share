@@ -7,6 +7,7 @@ import useRedirect, { useRedirectIfLoggedIn } from "@/utils/useRedirect";
 import { signupRequest } from "@/utils/auth";
 import { EmojiInterrobang } from "@/components/emoji";
 import { Form, StringForm } from "@/components/form";
+import { validateName, validatePassword } from "@/utils/validate";
 
 const Page = () => {
   useRedirectIfLoggedIn();
@@ -36,9 +37,13 @@ const Page = () => {
     }
   };
 
-  const isPasswordInvalid = password.length < 6;
+  const isNameInvalid = validateName(name) != null;
+  const isPasswordInvalid = validatePassword(password) != null;
   const isPasswordConfirmInvalid =
     isPasswordInvalid || password !== passwordConfirm;
+
+  const isInvalid =
+    isNameInvalid || isPasswordInvalid || isPasswordConfirmInvalid;
 
   return (
     <Container maxW="container.sm" height="90vh" position="relative">
@@ -50,9 +55,14 @@ const Page = () => {
             </>
           }
           onSubmit={handleSignUp}
-          isInvalid={isPasswordConfirmInvalid}
+          isInvalid={isInvalid}
         >
-          <StringForm title="ユーザーネーム" value={name} setValue={setName} />
+          <StringForm
+            title="ユーザーネーム"
+            value={name}
+            setValue={setName}
+            isInvalid={isNameInvalid}
+          />
           <StringForm
             title="パスワード"
             value={password}

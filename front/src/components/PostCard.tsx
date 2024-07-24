@@ -2,13 +2,14 @@
 
 import { Post, User } from "@/types/types";
 import { Link } from "@chakra-ui/next-js";
-import { Card, CardBody, Flex, Text, useToast } from "@chakra-ui/react";
+import { Card, CardBody, Flex, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import { Button } from "./custom";
 import { deleteRequest, postRequest } from "@/utils/request";
 import { useAuth } from "@/context/AuthContext";
 import { formatDistanceToNow, format, parseISO } from "date-fns";
 import { ja } from "date-fns/locale";
+import useMessage from "@/utils/useMessage";
 
 type PostCardProps = {
   post: Post;
@@ -32,17 +33,12 @@ const PostCard = ({ post, user, is_liked }: PostCardProps) => {
   const [liked, setLiked] = useState(is_liked);
   const [isLocked, setIsLocked] = useState(false);
   const likes_count = post.likes_count + (liked ? 1 : 0) - (is_liked ? 1 : 0);
-  const toast = useToast();
+  const { errorMessage } = useMessage();
 
   const handleLike = async () => {
     if (!login_user) {
-      toast({
-        title: "Error!!",
+      errorMessage({
         description: "Please log in",
-        position: "top",
-        duration: 3000,
-        isClosable: true,
-        status: "error",
       });
       return;
     }

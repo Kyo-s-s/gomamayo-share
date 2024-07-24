@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
-import { AbsoluteCenter, Container, useToast } from "@chakra-ui/react";
+import { AbsoluteCenter, Container } from "@chakra-ui/react";
 import useRedirect, { useRedirectIfLoggedIn } from "@/utils/useRedirect";
 import { loginRequest } from "@/utils/auth";
 import { CheckForm, Form, StringForm } from "@/components/form";
 import { validateName, validatePassword } from "@/utils/validate";
+import useMessage from "@/utils/useMessage";
 
 const Page = () => {
   useRedirectIfLoggedIn();
@@ -16,21 +17,19 @@ const Page = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [isCookieAllowed, setIsCookieAllowed] = useState(false);
-  const toast = useToast();
+  const { successMessage, errorMessage } = useMessage();
 
   const handleLogin = async () => {
     const res = await loginRequest(name, password, isCookieAllowed);
     if (res.success) {
       login(res.success);
+      successMessage({
+        description: "ログインしました",
+      });
       redirectTo(`/users/${res.success.id}`);
     } else {
-      toast({
-        title: `Error!!`,
+      errorMessage({
         description: `${res.failure.message}`,
-        position: "top",
-        duration: 3000,
-        isClosable: true,
-        status: "error",
       });
     }
   };

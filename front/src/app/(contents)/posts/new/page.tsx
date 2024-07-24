@@ -3,16 +3,17 @@
 import { useState } from "react";
 import { postRequest } from "@/utils/request";
 import { Post } from "@/types/types";
-import { AbsoluteCenter, Container, useToast } from "@chakra-ui/react";
+import { AbsoluteCenter, Container } from "@chakra-ui/react";
 import useRedirect, { useRedirectIfNotLoggedIn } from "@/utils/useRedirect";
 import { Form, TextForm } from "@/components/form";
+import useMessage from "@/utils/useMessage";
 
 const Page = () => {
   useRedirectIfNotLoggedIn();
 
   const redirectTo = useRedirect();
   const [content, setContent] = useState("");
-  const toast = useToast();
+  const { successMessage, errorMessage } = useMessage();
 
   const handlePost = async () => {
     const res = await postRequest<Post>(
@@ -21,22 +22,11 @@ const Page = () => {
       true
     );
     if (res.success) {
-      toast({
-        title: `Success!!`,
-        position: "top",
-        duration: 1000,
-        isClosable: true,
-        status: "success",
-      });
+      successMessage({});
       redirectTo("/posts");
     } else {
-      toast({
-        title: `Error!!`,
+      errorMessage({
         description: `${res.failure.message}`,
-        position: "top",
-        duration: 3000,
-        isClosable: true,
-        status: "error",
       });
     }
   };

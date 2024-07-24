@@ -22,6 +22,7 @@
     "emoji-mart": "^5.6.0",
     "framer-motion": "^11.3.2",
     "next": "14.2.4",
+    "nookies": "^2.5.2",
     "react": "^18",
     "react-dom": "^18"
   },

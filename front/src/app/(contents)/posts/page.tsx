@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { getRequest } from "../../../utils/request";
 import { Post, User } from "../../../types/types";
-import { Box, Container } from "@chakra-ui/react";
+import { Box, Container, Flex } from "@chakra-ui/react";
 import PostCard from "@/components/PostCard";
 import { useInView } from "framer-motion";
 import { LinkButton } from "@/components/custom";
@@ -63,17 +63,19 @@ const Posts = () => {
 const Page = () => {
   const { user } = useAuth();
   return (
-    <Container maxW="container.md">
+    <Container maxW="container.md" height="100%">
       <Posts />
       {user && (
-        <LinkButton
-          position="fixed"
-          bottom="10px"
-          right="10px"
-          href="/posts/new"
-        >
-          New Post
-        </LinkButton>
+        <Flex justify={'flex-end'}>
+          <div style={{ position: 'fixed', bottom: '0px' }}>
+            <LinkButton
+              position="sticky"
+              href="/posts/new"
+            >
+              New Post
+            </LinkButton>
+          </div>
+        </Flex>
       )}
     </Container>
   );

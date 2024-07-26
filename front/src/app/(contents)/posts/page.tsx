@@ -3,11 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import { getRequest } from "../../../utils/request";
 import { Post, User } from "../../../types/types";
-import { Box, Container, Flex } from "@chakra-ui/react";
+import { Box, Container, Flex, IconButton, Link } from "@chakra-ui/react";
 import PostCard from "@/components/PostCard";
 import { useInView } from "framer-motion";
-import { LinkButton } from "@/components/custom";
 import { useAuth } from "@/context/AuthContext";
+import { AddIcon } from "@chakra-ui/icons";
 
 type PostsApiResponse = {
   user: User;
@@ -67,14 +67,19 @@ const Page = () => {
       <Posts />
       {user && (
         <Flex justify={'flex-end'}>
-          <div style={{ position: 'fixed', bottom: '0px' }}>
-            <LinkButton
-              position="sticky"
-              href="/posts/new"
-            >
-              New Post
-            </LinkButton>
-          </div>
+          <Box position='fixed' bottom='20px'>
+            <Link href="/posts/new">
+              <IconButton
+                position="sticky"
+                isRound={true}
+                variant="solid"
+                aria-label="Post"
+                icon={<AddIcon />}
+              >
+                New Post
+              </IconButton>
+            </Link>
+          </Box>
         </Flex>
       )}
     </Container>

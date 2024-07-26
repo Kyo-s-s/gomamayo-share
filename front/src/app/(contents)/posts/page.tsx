@@ -60,28 +60,33 @@ const Posts = () => {
     </>
   );
 };
-const Page = () => {
+
+const PostButton = () => {
   const { user } = useAuth();
+  if (!user) {
+    return <></>;
+  }
+  return (
+    <Flex justify={"flex-end"}>
+      <Box position="fixed" bottom="20px">
+        <Link href="/posts/new">
+          <IconButton
+            size="lg"
+            isRound={true}
+            aria-label="New Post"
+            icon={<AddIcon />}
+          />
+        </Link>
+      </Box>
+    </Flex>
+  );
+};
+
+const Page = () => {
   return (
     <Container maxW="container.md" height="100%">
       <Posts />
-      {user && (
-        <Flex justify={'flex-end'}>
-          <Box position='fixed' bottom='20px'>
-            <Link href="/posts/new">
-              <IconButton
-                position="sticky"
-                isRound={true}
-                variant="solid"
-                aria-label="Post"
-                icon={<AddIcon />}
-              >
-                New Post
-              </IconButton>
-            </Link>
-          </Box>
-        </Flex>
-      )}
+      <PostButton />
     </Container>
   );
 };

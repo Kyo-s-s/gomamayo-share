@@ -29,6 +29,12 @@ export const fetchError = <T>() => {
   });
 };
 
+const console_log = (message: string) => {
+  if (process.env.NEXT_PUBLIC_IS_DEV) {
+    console.log(message);
+  }
+};
+
 const createHeaders = (withAuth: boolean) => {
   const base = { withCredentials: true };
   return withAuth ? { ...base, ...pickupHeader() } : base;
@@ -55,7 +61,7 @@ export const getRequest = async <T>(
     const params = Object.entries(data)
       .map(([key, value]) => `${key}=${value}`)
       .join("&");
-    console.log(`GET: ${process.env.NEXT_PUBLIC_API_URL!}${url}?${params}`);
+    console_log(`GET: ${process.env.NEXT_PUBLIC_API_URL!}${url}?${params}`);
     const response = await axios.get<T>(
       `${process.env.NEXT_PUBLIC_API_URL!}${url}?${params}`,
       createHeaders(withAuth)
@@ -72,7 +78,7 @@ export const postRequest = async <T>(
   withAuth = false
 ): Promise<Result<T>> => {
   try {
-    console.log("POST: " + process.env.NEXT_PUBLIC_API_URL! + url);
+    console_log("POST: " + process.env.NEXT_PUBLIC_API_URL! + url);
     const response = await axios.post<T>(
       `${process.env.NEXT_PUBLIC_API_URL!}${url}`,
       data,
@@ -89,7 +95,7 @@ export const deleteRequest = async <T>(
   withAuth = false
 ): Promise<Result<T>> => {
   try {
-    console.log("DELETE: " + process.env.NEXT_PUBLIC_API_URL! + url);
+    console_log("DELETE: " + process.env.NEXT_PUBLIC_API_URL! + url);
     const response = await axios.delete<T>(
       `${process.env.NEXT_PUBLIC_API_URL!}${url}`,
       createHeaders(withAuth)

@@ -27,12 +27,12 @@ const Page = () => {
     if (res.success) {
       login(res.success);
       successMessage({
-        description: "ログインしました",
+        description: "ログインしました。",
       });
       redirectTo(`/users/${res.success.id}`);
     } else {
       errorMessage({
-        description: `${res.failure.message}`,
+        description: "このユーザー名は既に使用されています。",
       });
     }
   };

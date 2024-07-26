@@ -24,12 +24,12 @@ const Page = () => {
     if (res.success) {
       login(res.success);
       successMessage({
-        description: "ログインしました",
+        description: "ログインしました。",
       });
       redirectTo(`/users/${res.success.id}`);
     } else {
       errorMessage({
-        description: `${res.failure.message}`,
+        description: "ユーザー名またはパスワードが正しくありません。",
       });
     }
   };

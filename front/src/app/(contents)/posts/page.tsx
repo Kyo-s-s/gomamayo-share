@@ -84,7 +84,7 @@ const PostButton = () => {
 
 const Page = () => {
   return (
-    <Container maxW="container.md" height="100%">
+    <Container maxW="container.md">
       <Posts />
       <PostButton />
     </Container>

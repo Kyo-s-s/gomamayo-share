@@ -16,7 +16,7 @@ class PostsController < ApplicationController
     end
   end
 
-  def post_error_message(post)
+  def error_message_for_post(post)
     if post.errors[:content].include?('is not gomamayo')
       '投稿内容にはゴママヨを含める必要があります。'
     elsif post.errors[:content].include?('has already been taken')
@@ -31,7 +31,7 @@ class PostsController < ApplicationController
     if post.save
       render json: post.serialize
     else
-      render json: { message: post_error_message(post) }, status: :unprocessable_entity
+      render json: { message: error_message_for_post(post) }, status: :unprocessable_entity
     end
   end
 

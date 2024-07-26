@@ -18,9 +18,9 @@ class PostsController < ApplicationController
 
   def post_error_message(post)
     if post.errors[:content].include?('is not gomamayo')
-      'ゴママヨを含んでいません。'
+      '投稿内容にはゴママヨを含める必要があります。'
     elsif post.errors[:content].include?('has already been taken')
-      '既に同じ内容の投稿があります。'
+      'この内容は既に投稿されています。'
     else
       'この内容は投稿できません。'
     end

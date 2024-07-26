@@ -16,12 +16,22 @@ class PostsController < ApplicationController
     end
   end
 
+  def post_error_message(post)
+    if post.errors[:content].include?('is not gomamayo')
+      'ゴママヨを含んでいません。'
+    elsif post.errors[:content].include?('has already been taken')
+      '既に同じ内容の投稿があります。'
+    else
+      'この内容は投稿できません。'
+    end
+  end
+
   def create
     post = current_user.posts.new(user_params)
     if post.save
       render json: post.serialize
     else
-      render json: { message: 'Invalid content' }, status: :unprocessable_entity
+      render json: { message: post_error_message(post) }, status: :unprocessable_entity
     end
   end
 

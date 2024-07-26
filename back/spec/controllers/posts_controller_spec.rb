@@ -66,11 +66,13 @@ RSpec.describe PostsController, type: :request do
       it 'post duplicate' do
         post create_post_path, headers: header, params: { post: { content: gomamayo.content } }
         expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:message]).to eq('既に同じ内容の投稿があります。')
       end
 
       it 'not gomamayo' do
         post create_post_path, headers: header, params: { post: { content: 'はとぽっぽー' } }
-        expect(response).to have_http_status(:unprocessable_entity) # FIXME: not gomamayo message
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:message]).to eq('ゴママヨを含んでいません。')
       end
     end
 

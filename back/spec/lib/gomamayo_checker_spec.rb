@@ -21,6 +21,8 @@ RSpec.describe GomamayoChecker do
         ホワイトとうもろこし
         whiteとうもろこし
         朝採れレタス
+        公開買い付け
+        線形形式
       ]
       gomamayos.each do |str|
         expect(obj.gomamayo?(str)).to be true

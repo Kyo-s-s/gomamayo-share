@@ -30,7 +30,7 @@ export const fetchError = <T>() => {
 };
 
 const console_log = (message: string) => {
-  if (process.env.NEXT_PUBLIC_IS_DEV) {
+  if (process.env.NEXT_PUBLIC_IS_DEV === "true") {
     console.log(message);
   }
 };

@@ -5,9 +5,6 @@ ruby '3.3.4'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.1.3', '>= 7.1.3.4'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.4'
-
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '>= 5.0'
 
@@ -43,6 +40,8 @@ gem 'mecab'
 gem 'omniauth', '>= 1.0.0'
 
 group :development, :test do
+  # Use sqlite3 as the database for Active Record
+  gem 'sqlite3', '~> 1.4'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows]
   gem 'factory_bot_rails'
@@ -63,4 +62,9 @@ group :test do
   gem 'database_cleaner'
   gem 'minitest', require: false
   gem 'minitest-reporters', require: false
+end
+
+group :production do
+  gem 'dotenv-rails'
+  gem 'pg'
 end

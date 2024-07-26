@@ -1,11 +1,8 @@
 Rails.application.routes.draw do
   mount_devise_token_auth_for 'User', at: 'auth', skip: [:omniauth_callbacks], controllers: {
-    registrations: 'auth/registrations'
+    registrations: 'auth/registrations',
+    sessions: 'auth/sessions'
   }
-
-  namespace :auth do
-    resources :sessions, only: [:index]
-  end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -14,12 +11,9 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   # Defines the root path route ("/")
-  # root "posts#index"
-  # post   'users', to: 'users#create', as: 'create_user'
   get    'users', to: 'users#index'
   get    'users/:id', to: 'users#show', as: 'show_user'
-  # post   'login', to: 'sessions#create', as: 'login'
-  # delete 'logout', to: 'sessions#destroy', as: 'logout'
+  get    'auth/sessions', to: 'sessions#sessions'
   post   'posts', to: 'posts#create', as: 'create_post'
   get    'posts', to: 'posts#index', as: 'index_post'
   get    'posts/ranking', to: 'posts#ranking', as: 'ranking_post'

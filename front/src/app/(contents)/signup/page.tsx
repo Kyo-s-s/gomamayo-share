@@ -2,11 +2,13 @@
 
 import React, { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
-import { AbsoluteCenter, Container, useToast } from "@chakra-ui/react";
+import { AbsoluteCenter, Container } from "@chakra-ui/react";
 import useRedirect, { useRedirectIfLoggedIn } from "@/utils/useRedirect";
 import { signupRequest } from "@/utils/auth";
 import { EmojiInterrobang } from "@/components/emoji";
-import { Form, StringForm } from "@/components/form";
+import { CheckForm, Form, StringForm } from "@/components/form";
+import { validateName, validatePassword } from "@/utils/validate";
+import useMessage from "@/utils/useMessage";
 
 const Page = () => {
   useRedirectIfLoggedIn();
@@ -16,33 +18,37 @@ const Page = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [isCookieAllowed, setIsCookieAllowed] = useState(false);
 
-  const toast = useToast();
+  const { successMessage, errorMessage } = useMessage();
 
   const handleSignUp = async () => {
-    const res = await signupRequest(name, password);
+    const res = await signupRequest(name, password, isCookieAllowed);
     if (res.success) {
       login(res.success);
+      successMessage({
+        description: "ログインしました",
+      });
       redirectTo(`/users/${res.success.id}`);
     } else {
-      toast({
-        title: `Error!!`,
+      errorMessage({
         description: `${res.failure.message}`,
-        position: "top",
-        duration: 3000,
-        isClosable: true,
-        status: "error",
       });
     }
   };
 
-  const isPasswordInvalid = password.length < 6;
-  const isPasswordConfirmInvalid =
-    isPasswordInvalid || password !== passwordConfirm;
+  const nameError = validateName(name);
+  const passwordError = validatePassword(password);
+  const passwordConfirmError =
+    passwordError ||
+    (password !== passwordConfirm ? "パスワードが一致しません" : "");
+
+  const isInvalid =
+    nameError !== "" || passwordError !== "" || passwordConfirmError !== "";
 
   return (
-    <Container maxW="container.md" height="90vh" position="relative">
-      <AbsoluteCenter width="container.sm" pb="10vh">
+    <Container maxW="container.sm" height="90vh" position="relative">
+      <AbsoluteCenter width="100%" pb="10vh" px={4}>
         <Form
           title={
             <>
@@ -50,22 +56,32 @@ const Page = () => {
             </>
           }
           onSubmit={handleSignUp}
-          isInvalid={isPasswordConfirmInvalid}
+          isInvalid={isInvalid}
         >
-          <StringForm title="ユーザーネーム" value={name} setValue={setName} />
+          <StringForm
+            title="ユーザー名"
+            value={name}
+            setValue={setName}
+            errorMessage={nameError}
+          />
           <StringForm
             title="パスワード"
             value={password}
             setValue={setPassword}
             isPassword
-            isInvalid={isPasswordInvalid}
+            errorMessage={passwordError}
           />
           <StringForm
             title="パスワード(確認)"
             value={passwordConfirm}
             setValue={setPasswordConfirm}
             isPassword
-            isInvalid={isPasswordConfirmInvalid}
+            errorMessage={passwordConfirmError}
+          />
+          <CheckForm
+            title={"ログイン状態を保持する(Cookieを使用します)"}
+            isChecked={isCookieAllowed}
+            setIsChecked={setIsCookieAllowed}
           />
         </Form>
       </AbsoluteCenter>

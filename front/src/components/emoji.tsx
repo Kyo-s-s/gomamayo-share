@@ -9,7 +9,8 @@ type EmojiProps = {
 };
 
 export const Emoji = ({ shortcodes, size = "1em", style }: EmojiProps) => {
-  return <em-emoji shortcodes={shortcodes} size={size} style={style} />; // ?
+  // @ts-expect-error: emoji-mart's Emoji does not work properly, so you need to do this
+  return <em-emoji shortcodes={shortcodes} size={size} style={style} />;
 };
 
 export const EmojiInterrobang = ({

@@ -13,8 +13,6 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// MEMO: session の user 情報がなくても、tokenが存在すればチェックしてログイン状態を復元はできている
-//       token 情報を cookies に保存するようにすることで、ブラウザを閉じてもログイン状態を維持できる
 const AuthProvider = ({
   children,
 }: Readonly<{

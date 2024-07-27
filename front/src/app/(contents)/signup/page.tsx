@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
-import { AbsoluteCenter, Container } from "@chakra-ui/react";
+import { AbsoluteCenter, Container, Text } from "@chakra-ui/react";
 import useRedirect, { useRedirectIfLoggedIn } from "@/utils/useRedirect";
 import { signupRequest } from "@/utils/auth";
-import { EmojiInterrobang } from "@/components/emoji";
 import { CheckForm, Form, StringForm } from "@/components/form";
 import { validateName, validatePassword } from "@/utils/validate";
 import useMessage from "@/utils/useMessage";
+import Interrobang from "@/components/Interrobang";
 
 const Page = () => {
   useRedirectIfLoggedIn();
@@ -52,7 +52,15 @@ const Page = () => {
         <Form
           title={
             <>
-              アカウント登録 <EmojiInterrobang />
+              <Text display="inline-block" verticalAlign="middle">
+                アカウント登録
+              </Text>
+              <Interrobang
+                mx={1}
+                size={9}
+                display="inline-block"
+                verticalAlign="middle"
+              />
             </>
           }
           onSubmit={handleSignUp}

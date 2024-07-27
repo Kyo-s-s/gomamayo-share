@@ -1,45 +1,59 @@
 "use client";
 
 import { Box } from "@chakra-ui/react";
-import { Emoji } from "./emoji";
+import Interrobang from "./Interrobang";
 
 const Background = () => {
-  // FIXME: Mobile
-  const positions = [
-    ["260px", "-2%", "-2%", "rotate(70deg)"],
-    ["290px", "-12%", "20%", "rotate(310deg)"],
-    ["260px", "1%", "80%", "rotate(220deg)"],
-    ["330px", "-20%", "53%", "rotate(40deg)"],
-    ["240px", "39%", "80%", "rotate(350deg)"],
-    ["200px", "25%", "12%", "rotate(10deg)"],
-    ["260px", "49%", "-5%", "rotate(220deg)"],
-    ["240px", "15%", "37%", "rotate(230deg)"],
-    ["300px", "20%", "60%", "rotate(400deg)"],
-    ["330px", "68%", "13%", "rotate(50deg)"],
-    ["340px", "35%", "20%", "rotate(200deg)"],
-    ["240px", "70%", "45%", "rotate(240deg)"],
-    ["200px", "43%", "45%", "rotate(300deg)"],
-    ["250px", "70%", "65%", "rotate(20deg)"],
-    ["250px", "70%", "87%", "rotate(150deg)"],
+  const positions: [number, number, number, number][] = [
+    [320, 0, -10, 320],
+    [350, 200, 200, 240],
+    [380, 500, -50, 20],
+    [390, -100, 400, 310],
+    [360, 0, 800, 220],
+    [330, -100, 1200, 60],
+    [380, 850, 640, 60],
+    [330, 550, 80, 140],
+    [300, 900, -20, 110],
+    [320, 400, 680, 50],
+    [310, 300, 1100, 240],
+    [360, 1000, 250, 20],
+    [400, 1250, -90, 120],
+    [380, 650, 1000, 300],
+    [340, 1320, 450, 60],
+    [380, 1000, 1200, 150],
+    [330, 1700, -100, 330],
+    [320, 1230, 910, 320],
+    [340, 530, 1400, 130],
+    [340, 100, 1510, 140],
+    [370, 900, 1640, 310],
+    [350, 1600, 290, 210],
+    [320, 1550, 740, 120],
+    [320, 1450, 1200, 40],
+    [310, -100, 1860, 290],
+    [370, 370, 1880, 230],
+    [310, 780, 1990, 160],
+    [370, 1200, 2000, 100],
+    [310, 1350, 1650, 250],
+    [320, 1700, 1400, 320],
+    [340, 1800, 1000, 140],
+    [300, 1850, 600, 240],
+    [320, 1700, 1900, 50],
   ];
   return (
     <>
       {positions.map(([size, top, left, transform], index) => (
-        <Emoji
+        <Interrobang
           key={index}
-          shortcodes=":interrobang:"
           size={size}
-          style={{
-            position: "absolute",
-            top,
-            left,
-            transform,
-          }}
+          position="absolute"
+          top={top}
+          left={left}
+          transform={`rotate(${transform}deg)`}
         />
       ))}
       <Box
         w="100%"
-        h="100%"
+        h="100svh"
         position="absolute"
         backgroundColor="white"
         opacity={0.6}

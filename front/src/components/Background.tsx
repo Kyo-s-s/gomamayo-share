@@ -53,7 +53,7 @@ const Background = () => {
       ))}
       <Box
         w="100%"
-        h="100%"
+        h="100svh"
         position="absolute"
         backgroundColor="white"
         opacity={0.6}

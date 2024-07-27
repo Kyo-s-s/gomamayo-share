@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
-import { AbsoluteCenter, Container } from "@chakra-ui/react";
+import { AbsoluteCenter, Container, Divider, Text } from "@chakra-ui/react";
 import useRedirect, { useRedirectIfLoggedIn } from "@/utils/useRedirect";
 import { loginRequest } from "@/utils/auth";
 import { CheckForm, Form, StringForm } from "@/components/form";
 import { validateName, validatePassword } from "@/utils/validate";
 import useMessage from "@/utils/useMessage";
+import { Link } from "@chakra-ui/next-js";
 
 const Page = () => {
   useRedirectIfLoggedIn();
@@ -43,6 +44,13 @@ const Page = () => {
     <Container maxW="container.sm" height="90vh" position="relative">
       <AbsoluteCenter width="100%" pb="10vh" px={4}>
         <Form title="ログイン" onSubmit={handleLogin} isInvalid={isInvalid}>
+          <Text>
+            アカウントをお持ちでない方は{' '}
+            <Link color='teal.300' href='/signup' fontWeight="bold">
+              アカウント登録
+            </Link>
+          </Text>
+          <Divider />
           <StringForm
             title="ユーザーネーム"
             value={name}

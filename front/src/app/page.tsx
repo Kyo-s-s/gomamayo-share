@@ -41,7 +41,7 @@ const MainBox = () => {
   const { user } = useAuth();
 
   return (
-    <Box height="100vh" position="relative" overflow="hidden">
+    <Box height="100svh" position="relative" overflow="hidden">
       <Background />
       <AbsoluteCenter>
         <VStack spacing={8} position="relative">

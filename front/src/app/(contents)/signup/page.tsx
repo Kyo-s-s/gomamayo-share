@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
-import { AbsoluteCenter, Box, Container, Flex, Text } from "@chakra-ui/react";
+import { AbsoluteCenter, Container, Text } from "@chakra-ui/react";
 import useRedirect, { useRedirectIfLoggedIn } from "@/utils/useRedirect";
 import { signupRequest } from "@/utils/auth";
 import { CheckForm, Form, StringForm } from "@/components/form";

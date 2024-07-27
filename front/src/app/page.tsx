@@ -1,7 +1,6 @@
 "use client";
 
 import Background from "@/components/Background";
-import { Emoji } from "@/components/emoji";
 import { useAuth } from "@/context/AuthContext";
 import { Link } from "@chakra-ui/next-js";
 import {
@@ -50,7 +49,7 @@ const MainBox = () => {
           ) : (
             <TopButton href="/signup">
               アカウント登録
-              <Emoji shortcodes=":interrobang:" />
+              {/* TODO!! <Emoji shortcodes=":interrobang:" /> */}
             </TopButton>
           )}
         </VStack>

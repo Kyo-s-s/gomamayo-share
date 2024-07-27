@@ -5,7 +5,6 @@ import { useAuth } from "../../../context/AuthContext";
 import { AbsoluteCenter, Container } from "@chakra-ui/react";
 import useRedirect, { useRedirectIfLoggedIn } from "@/utils/useRedirect";
 import { signupRequest } from "@/utils/auth";
-import { EmojiInterrobang } from "@/components/emoji";
 import { CheckForm, Form, StringForm } from "@/components/form";
 import { validateName, validatePassword } from "@/utils/validate";
 import useMessage from "@/utils/useMessage";
@@ -52,7 +51,8 @@ const Page = () => {
         <Form
           title={
             <>
-              アカウント登録 <EmojiInterrobang />
+              アカウント登録
+              {/* TODO!! <EmojiInterrobang /> */}
             </>
           }
           onSubmit={handleSignUp}

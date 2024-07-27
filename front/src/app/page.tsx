@@ -1,6 +1,7 @@
 "use client";
 
 import Background from "@/components/Background";
+import Interrobang from "@/components/Interrobang";
 import { useAuth } from "@/context/AuthContext";
 import { Link } from "@chakra-ui/next-js";
 import {
@@ -9,6 +10,7 @@ import {
   Button,
   Container,
   Heading,
+  Text,
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
@@ -48,8 +50,15 @@ const MainBox = () => {
             <TopButton href="/posts">タイムライン</TopButton>
           ) : (
             <TopButton href="/signup">
-              アカウント登録
-              {/* TODO!! <Emoji shortcodes=":interrobang:" /> */}
+              <Text display="inline-block" verticalAlign="middle">
+                アカウント登録
+              </Text>
+              <Interrobang
+                mx={1}
+                size={8}
+                display="inline-block"
+                verticalAlign="middle"
+              />
             </TopButton>
           )}
         </VStack>

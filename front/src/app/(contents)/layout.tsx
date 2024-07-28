@@ -9,10 +9,8 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <Box h="100%" w="100%" overflow="hidden" position="fixed">
-        <Background />
-      </Box>
       <Header />
+      <Background />
       {children}
     </>
   );

@@ -40,7 +40,7 @@ const Background = () => {
     [320, 1700, 1900, 50],
   ];
   return (
-    <>
+    <Box w="100%" h="100svh" overflow="hidden" position="fixed" opacity="0.5">
       {positions.map(([size, top, left, transform], index) => (
         <Interrobang
           key={index}
@@ -51,14 +51,7 @@ const Background = () => {
           transform={`rotate(${transform}deg)`}
         />
       ))}
-      <Box
-        w="100%"
-        h="100svh"
-        position="absolute"
-        backgroundColor="white"
-        opacity={0.6}
-      />
-    </>
+    </Box>
   );
 };
 

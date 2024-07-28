@@ -67,7 +67,7 @@ const PostButton = () => {
     return <></>;
   }
   return (
-    <Flex justify={"flex-end"}>
+    <Flex justify={"flex-end"} px="20px">
       <Box position="fixed" bottom="20px">
         <Link href="/posts/new">
           <IconButton
@@ -84,7 +84,7 @@ const PostButton = () => {
 
 const Page = () => {
   return (
-    <Container maxW="container.md">
+    <Container maxW="container.md" pt="50px">
       <Posts />
       <PostButton />
     </Container>

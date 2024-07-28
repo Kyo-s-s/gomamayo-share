@@ -11,6 +11,7 @@ import {
   Container,
   Heading,
   VStack,
+  Text,
 } from "@chakra-ui/react";
 import React from "react";
 
@@ -48,10 +49,18 @@ const MainBox = () => {
           {user ? (
             <TopButton href="/posts">タイムライン</TopButton>
           ) : (
-            <TopButton href="/signup">
-              アカウント登録
-              <Emoji shortcodes=":interrobang:" />
-            </TopButton>
+            <>
+              <TopButton href="/signup">
+                アカウント登録
+                <Emoji shortcodes=":interrobang:" />
+              </TopButton>
+              <Text fontWeight="bold">
+                アカウント登録せず{' '}
+                <Link color='teal.300' href='/posts'>
+                  タイムラインを見る
+                </Link>
+              </Text>
+            </>
           )}
         </VStack>
       </AbsoluteCenter>

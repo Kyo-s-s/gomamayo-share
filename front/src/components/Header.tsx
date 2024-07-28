@@ -15,24 +15,35 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import Link from "next/link";
+import { Link } from "@chakra-ui/next-js";
+
 
 const AccountMenuButton = () => {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
         Account
       </MenuButton>
       <MenuList>
-        <MenuItem onClick={logout}>Logout</MenuItem>
+        {user ? (
+          <MenuItem onClick={logout}>Logout</MenuItem>
+        ) : (
+          <>
+            <Link href="/signup">
+              <MenuItem>アカウント登録</MenuItem>
+            </Link>
+            <Link href="/login">
+              <MenuItem>login</MenuItem>
+            </Link>
+          </>
+        )}
       </MenuList>
     </Menu>
   );
 };
 
 const Header = () => {
-  const { user } = useAuth();
   return (
     <header
       style={{
@@ -53,9 +64,7 @@ const Header = () => {
           <Flex gap={2}>
             <LinkButton href={`/posts`}>Posts</LinkButton>
             <LinkButton href={`/posts/ranking`}>Ranking</LinkButton>
-            {user && (
-              <AccountMenuButton />
-            )}
+            <AccountMenuButton />
           </Flex>
         </Flex>
       </Container>

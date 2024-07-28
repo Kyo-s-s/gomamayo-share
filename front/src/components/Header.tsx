@@ -53,10 +53,8 @@ const Header = () => {
           <Flex gap={2}>
             <LinkButton href={`/posts`}>Posts</LinkButton>
             <LinkButton href={`/posts/ranking`}>Ranking</LinkButton>
-            {user ? (
+            {user && (
               <AccountMenuButton />
-            ) : (
-              <LinkButton href={`/login`}>Login!</LinkButton>
             )}
           </Flex>
         </Flex>

@@ -5,10 +5,10 @@ import { useAuth } from "../../../context/AuthContext";
 import { AbsoluteCenter, Container, Divider, Text } from "@chakra-ui/react";
 import useRedirect, { useRedirectIfLoggedIn } from "@/utils/useRedirect";
 import { signupRequest } from "@/utils/auth";
-import { EmojiInterrobang } from "@/components/emoji";
 import { CheckForm, Form, StringForm } from "@/components/form";
 import { validateName, validatePassword } from "@/utils/validate";
 import useMessage from "@/utils/useMessage";
+import Interrobang from "@/components/Interrobang";
 import { Link } from "@chakra-ui/next-js";
 
 const Page = () => {
@@ -28,12 +28,12 @@ const Page = () => {
     if (res.success) {
       login(res.success);
       successMessage({
-        description: "ログインしました",
+        description: "ログインしました。",
       });
       redirectTo(`/users/${res.success.id}`);
     } else {
       errorMessage({
-        description: `${res.failure.message}`,
+        description: "このユーザー名は既に使用されています。",
       });
     }
   };
@@ -48,12 +48,20 @@ const Page = () => {
     nameError !== "" || passwordError !== "" || passwordConfirmError !== "";
 
   return (
-    <Container maxW="container.sm" height="90vh" position="relative">
-      <AbsoluteCenter width="100%" pb="10vh" px={4}>
+    <Container maxW="container.sm" height="100svh" position="relative">
+      <AbsoluteCenter width="100%" px={4}>
         <Form
           title={
             <>
-              アカウント登録 <EmojiInterrobang />
+              <Text display="inline-block" verticalAlign="middle">
+                アカウント登録
+              </Text>
+              <Interrobang
+                mx={1}
+                size={9}
+                display="inline-block"
+                verticalAlign="middle"
+              />
             </>
           }
           onSubmit={handleSignUp}

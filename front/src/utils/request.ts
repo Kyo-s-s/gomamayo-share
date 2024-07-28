@@ -46,7 +46,7 @@ const errorHandle = <T>(error: unknown): Result<T> => {
       forceLogout();
     }
     return resultFailure({
-      message: error.message,
+      message: error.response?.data.message,
     });
   }
   return fetchError();

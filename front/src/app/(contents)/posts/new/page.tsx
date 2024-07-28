@@ -32,8 +32,8 @@ const Page = () => {
   };
 
   return (
-    <Container maxW="container.sm" height="90vh" position="relative">
-      <AbsoluteCenter width="100%" pb="10vh" px={4}>
+    <Container maxW="container.sm" height="90svh" position="relative">
+      <AbsoluteCenter width="100%" pb="10svh" px={4}>
         <Form title="ゴママヨ投稿" onSubmit={handlePost} submitButton="投稿">
           <TextForm
             value={content}

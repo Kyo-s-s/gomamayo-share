@@ -41,7 +41,7 @@ const PostRanking = () => {
 
 const Page = () => {
   return (
-    <Container maxW="container.md">
+    <Container maxW="container.md" pt="50px">
       <Heading position="relative">Ranking</Heading>
       <PostRanking />
     </Container>

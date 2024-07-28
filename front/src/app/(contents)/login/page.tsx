@@ -40,8 +40,8 @@ const Page = () => {
   const isInvalid = nameError !== "" || passwordError !== "";
 
   return (
-    <Container maxW="container.sm" height="90vh" position="relative">
-      <AbsoluteCenter width="100%" pb="10vh" px={4}>
+    <Container maxW="container.sm" height="100svh" position="relative">
+      <AbsoluteCenter width="100%" px={4}>
         <Form title="ログイン" onSubmit={handleLogin} isInvalid={isInvalid}>
           <StringForm
             title="ユーザーネーム"

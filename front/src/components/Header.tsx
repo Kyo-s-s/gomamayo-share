@@ -30,12 +30,12 @@ const AccountMenuButton = () => {
           <MenuItem onClick={logout}>Logout</MenuItem>
         ) : (
           <>
-            <Link href="/signup">
-              <MenuItem>アカウント登録</MenuItem>
-            </Link>
-            <Link href="/login">
-              <MenuItem>login</MenuItem>
-            </Link>
+            <MenuItem as="a" href="/signup">
+              アカウント登録
+            </MenuItem>
+            <MenuItem as="a" href="/login">
+              ログイン
+            </MenuItem>
           </>
         )}
       </MenuList>

@@ -67,11 +67,51 @@ const MainBox = () => {
   );
 };
 
+const Explanation = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) => {
+  return (
+    <>
+      <Heading>{title}</Heading>
+      <Box pl={4} py={2}>
+        {children}
+      </Box>
+    </>
+  );
+};
+
 const Home = () => {
   return (
     <>
       <MainBox />
-      <Container maxW="container.lg"></Container>
+      <Container
+        maxW="container.lg"
+        position="relative"
+        bg="rgba(255, 255, 255, 0.8)"
+        py={4}
+      >
+        <Explanation title="ゴママヨって何？">
+          <Text>TODO</Text>
+        </Explanation>
+        <Explanation title="このサイトは何？">
+          <Text>TODO</Text>
+        </Explanation>
+        <Explanation title="投稿できないんだけど？">
+          <Text>
+            MeCabを用いて形態素解析を行い、品詞に分割してから接頭辞と接尾辞が一致しているかどうかを判定しています。
+            このため、MeCabによって固有名詞と認識された単語(例:"サイレンススズカ")は投稿できません。
+            半角スペースを挟むことでその箇所で品詞の分割が行われるため、投稿できない場合は
+            こちらを試してみてください。
+          </Text>
+        </Explanation>
+        <Explanation title="GitHub">
+          <Text>TODO</Text>
+        </Explanation>
+      </Container>
     </>
   );
 };

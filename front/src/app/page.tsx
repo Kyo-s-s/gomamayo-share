@@ -50,9 +50,7 @@ const MainBox = () => {
             <TopButton href="/posts">タイムライン</TopButton>
           ) : (
             <TopButton href="/signup">
-              <Text display="inline-block" verticalAlign="middle">
-                アカウント登録
-              </Text>
+              <Text display="inline-block">アカウント登録</Text>
               <Interrobang
                 mx={1}
                 size={8}
@@ -75,12 +73,12 @@ const Explanation = ({
   children: React.ReactNode;
 }) => {
   return (
-    <>
+    <Box py={4}>
       <Heading>{title}</Heading>
-      <Box pl={4} py={2}>
+      <Box px={4} py={2}>
         {children}
       </Box>
-    </>
+    </Box>
   );
 };
 
@@ -89,14 +87,17 @@ const Home = () => {
     <>
       <MainBox />
       <Container
-        maxW="container.lg"
+        maxW="container.md"
         position="relative"
         bg="rgba(255, 255, 255, 0.8)"
         py={4}
         my={4}
       >
-        <Explanation title="ゴママヨって何？">
-          <Text>TODO</Text>
+        <Explanation title="ゴママヨとは？">
+          <Text>
+            ゴママヨとは、言葉遊びのひとつで、ある複合語の結合部で連続する同じ音が続いているものを指します。
+            たとえば"アカウント登録"という複合語は、"と"が連続しているためゴママヨです。
+          </Text>
         </Explanation>
         <Explanation title="このサイトは何？">
           <Text>
@@ -107,7 +108,7 @@ const Home = () => {
         <Explanation title="投稿できないんだけど？">
           <Text>
             MeCabを用いて形態素解析を行い、品詞に分割してから連続する品詞の接頭辞/接尾辞が一致しているかどうかを判定しています。
-            このため、MeCabによって固有名詞と認識される単語(例:サイレンススズカ)は投稿できません。
+            このため、MeCabによって固有名詞と認識される単語(例:"サイレンススズカ")などは投稿できません。
             半角スペースを挟むことでその箇所で品詞の分割が行われるため、投稿できない場合はこちらを試してみてください。
           </Text>
         </Explanation>

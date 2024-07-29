@@ -57,7 +57,7 @@ const MainBox = () => {
                 mx={1}
                 size={8}
                 display="inline-block"
-                verticalAlign="middle"
+                verticalAlign="text-top"
               />
             </TopButton>
           )}
@@ -93,23 +93,28 @@ const Home = () => {
         position="relative"
         bg="rgba(255, 255, 255, 0.8)"
         py={4}
+        my={4}
       >
         <Explanation title="ゴママヨって何？">
           <Text>TODO</Text>
         </Explanation>
         <Explanation title="このサイトは何？">
-          <Text>TODO</Text>
+          <Text>
+            気に入ったゴママヨを投稿し、他の人と共有するためのサイトです。
+            ゴママヨを投稿したり、他の人が投稿したゴママヨを見ていいねすることができます。
+          </Text>
         </Explanation>
         <Explanation title="投稿できないんだけど？">
           <Text>
-            MeCabを用いて形態素解析を行い、品詞に分割してから接頭辞と接尾辞が一致しているかどうかを判定しています。
-            このため、MeCabによって固有名詞と認識された単語(例:"サイレンススズカ")は投稿できません。
-            半角スペースを挟むことでその箇所で品詞の分割が行われるため、投稿できない場合は
-            こちらを試してみてください。
+            MeCabを用いて形態素解析を行い、品詞に分割してから連続する品詞の接頭辞/接尾辞が一致しているかどうかを判定しています。
+            このため、MeCabによって固有名詞と認識される単語(例:サイレンススズカ)は投稿できません。
+            半角スペースを挟むことでその箇所で品詞の分割が行われるため、投稿できない場合はこちらを試してみてください。
           </Text>
         </Explanation>
-        <Explanation title="GitHub">
-          <Text>TODO</Text>
+        <Explanation title="開発情報">
+          GitHubは
+          <Link href="https://github.com/Kyo-s-s/gomamayo-share">こちら</Link>
+          です。
         </Explanation>
       </Container>
     </>

@@ -20,7 +20,7 @@ export const Form = ({
   isInvalid = false,
   submitButton = "確定",
 }: {
-  title: React.ReactNode;
+  title?: React.ReactNode;
   onSubmit: () => void;
   children?: React.ReactNode;
   isInvalid?: boolean;
@@ -28,9 +28,11 @@ export const Form = ({
 }) => {
   return (
     <Card borderRadius="15px">
-      <CardHeader pb={0}>
-        <Heading>{title}</Heading>
-      </CardHeader>
+      {title && (
+        <CardHeader pb={0}>
+          <Heading>{title}</Heading>
+        </CardHeader>
+      )}
       <CardBody>
         {children}
         <Flex>

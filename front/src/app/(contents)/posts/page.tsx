@@ -1,13 +1,29 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { getRequest } from "../../../utils/request";
+import { getRequest, postRequest } from "../../../utils/request";
 import { Post, User } from "../../../types/types";
-import { Box, Container, Flex, IconButton, Link } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Flex,
+  IconButton,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
 import PostCard from "@/components/PostCard";
 import { useInView } from "framer-motion";
 import { useAuth } from "@/context/AuthContext";
 import { AddIcon } from "@chakra-ui/icons";
+import { TextForm } from "@/components/form";
+import useMessage from "@/utils/useMessage";
+import { Button } from "@/components/custom";
 
 type PostsApiResponse = {
   user: User;
@@ -61,7 +77,7 @@ const Posts = () => {
   );
 };
 
-const PostButton = () => {
+const PostButton = ({ onClick }: { onClick: () => void }) => {
   const { user } = useAuth();
   if (!user) {
     return <></>;
@@ -69,25 +85,76 @@ const PostButton = () => {
   return (
     <Flex justify={"flex-end"} px="20px">
       <Box position="fixed" bottom="20px">
-        <Link href="/posts/new">
-          <IconButton
-            size="lg"
-            isRound={true}
-            aria-label="New Post"
-            icon={<AddIcon />}
-          />
-        </Link>
+        <IconButton
+          onClick={onClick}
+          size="lg"
+          isRound={true}
+          aria-label="New Post"
+          icon={<AddIcon />}
+        />
       </Box>
     </Flex>
   );
 };
 
-const Page = () => {
+const NewPostModal = ({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
+  const [content, setContent] = useState("");
+  const { successMessage, errorMessage } = useMessage();
+
+  const handlePost = async () => {
+    const res = await postRequest<Post>(
+      "/posts",
+      { post: { content: content } },
+      true
+    );
+    if (res.success) {
+      successMessage({}); // FIXME: 一番上に出てこない
+      onClose();
+    } else {
+      errorMessage({
+        description: `${res.failure.message}`,
+      });
+    }
+  };
+
   return (
-    <Container maxW="container.md" pt="50px">
-      <Posts />
-      <PostButton />
-    </Container>
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>ゴママヨ投稿</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <TextForm
+            value={content}
+            setValue={setContent}
+            placeholder="ごまマヨネーズ"
+          />
+        </ModalBody>
+        <ModalFooter>
+          <Button onClick={handlePost}>投稿</Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  );
+};
+
+const Page = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  return (
+    <>
+      <Container maxW="container.md" pt="50px">
+        <Posts />
+        <PostButton onClick={onOpen} />
+      </Container>
+      <NewPostModal isOpen={isOpen} onClose={onClose} />
+    </>
   );
 };
 

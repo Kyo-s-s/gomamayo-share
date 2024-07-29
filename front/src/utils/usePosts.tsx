@@ -31,8 +31,9 @@ const PostLoader = ({
       if (res.success) {
         if (res.success.length === 0) {
           setFinish(true);
+        } else {
+          setPosts([...posts, ...res.success]);
         }
-        setPosts([...posts, ...res.success]);
       }
     };
 
@@ -48,8 +49,7 @@ const usePosts = (path: string = "/posts") => {
   const [posts, setPosts] = useState<PostsApiResponse>([]);
 
   const reload = async () => {
-    const params = { limit: "10" };
-    const res = await getRequest<PostsApiResponse>(path, params, true);
+    const res = await getRequest<PostsApiResponse>(path, { limit: "10" }, true);
     if (res.success) {
       setPosts(res.success);
       window.scrollTo({

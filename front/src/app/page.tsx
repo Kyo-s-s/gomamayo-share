@@ -61,10 +61,16 @@ const MainBox = () => {
                   verticalAlign="text-top"
                 />
               </TopButton>
-              <Text fontWeight="bold">
+              <Text>
+                既にアカウントをお持ちの方は{' '}
+                <LinkText href='/login'>
+                  ログイン
+                </LinkText>
+              </Text>
+              <Text>
                 アカウント登録せず{' '}
                 <LinkText href='/posts'>
-                  タイムラインを見る
+                  タイムラインへ
                 </LinkText>
               </Text>
             </>

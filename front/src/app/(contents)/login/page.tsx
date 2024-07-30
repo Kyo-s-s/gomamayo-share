@@ -44,7 +44,7 @@ const Page = () => {
     <Container maxW="container.sm" height="100svh" position="relative">
       <AbsoluteCenter width="100%" px={4}>
         <Form title="ログイン" onSubmit={handleLogin} isInvalid={isInvalid}>
-          <Text>
+          <Text pb={4}>
             アカウントをお持ちでない方は{' '}
             <Link color='teal.300' href='/signup' fontWeight="bold">
               アカウント登録

@@ -67,7 +67,7 @@ const Page = () => {
           onSubmit={handleSignUp}
           isInvalid={isInvalid}
         >
-          <Text>
+          <Text pb={4}>
             既にアカウントをお持ちの方は{' '}
             <Link color='teal.300' href='/login' fontWeight="bold">
               ログイン

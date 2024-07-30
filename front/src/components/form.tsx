@@ -31,7 +31,7 @@ export const Form = ({
       <CardHeader pb={0}>
         <Heading>{title}</Heading>
       </CardHeader>
-      <CardBody>
+      <CardBody pt={4}>
         {children}
         <Flex>
           <Spacer />

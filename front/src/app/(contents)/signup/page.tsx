@@ -9,7 +9,7 @@ import { CheckForm, Form, StringForm } from "@/components/form";
 import { validateName, validatePassword } from "@/utils/validate";
 import useMessage from "@/utils/useMessage";
 import Interrobang from "@/components/Interrobang";
-import { Link } from "@chakra-ui/next-js";
+import { LinkText } from "@/components/custom";
 
 const Page = () => {
   useRedirectIfLoggedIn();
@@ -69,9 +69,9 @@ const Page = () => {
         >
           <Text pb={4}>
             既にアカウントをお持ちの方は{' '}
-            <Link color='teal.300' href='/login' fontWeight="bold">
+            <LinkText href='/login'>
               ログイン
-            </Link>
+            </LinkText>
           </Text>
           <Divider />
           <StringForm

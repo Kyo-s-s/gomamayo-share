@@ -8,7 +8,7 @@ import { loginRequest } from "@/utils/auth";
 import { CheckForm, Form, StringForm } from "@/components/form";
 import { validateName, validatePassword } from "@/utils/validate";
 import useMessage from "@/utils/useMessage";
-import { Link } from "@chakra-ui/next-js";
+import { LinkText } from "@/components/custom";
 
 const Page = () => {
   useRedirectIfLoggedIn();
@@ -46,9 +46,9 @@ const Page = () => {
         <Form title="ログイン" onSubmit={handleLogin} isInvalid={isInvalid}>
           <Text pb={4}>
             アカウントをお持ちでない方は{' '}
-            <Link color='teal.300' href='/signup' fontWeight="bold">
+            <LinkText href='/signup'>
               アカウント登録
-            </Link>
+            </LinkText>
           </Text>
           <Divider />
           <StringForm

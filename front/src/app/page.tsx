@@ -63,9 +63,9 @@ const MainBox = () => {
               </TopButton>
               <Text fontWeight="bold">
                 アカウント登録せず{' '}
-                <Link color='teal.300' href='/posts'>
+                <LinkText href='/posts'>
                   タイムラインを見る
-                </Link>
+                </LinkText>
               </Text>
             </>
           )}

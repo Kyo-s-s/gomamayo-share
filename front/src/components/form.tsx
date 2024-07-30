@@ -33,7 +33,7 @@ export const Form = ({
           <Heading>{title}</Heading>
         </CardHeader>
       )}
-      <CardBody>
+      <CardBody pt={4}>
         {children}
         <Flex>
           <Spacer />

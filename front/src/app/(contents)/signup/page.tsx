@@ -2,13 +2,14 @@
 
 import React, { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
-import { AbsoluteCenter, Container, Text } from "@chakra-ui/react";
+import { AbsoluteCenter, Container, Divider, Text } from "@chakra-ui/react";
 import useRedirect, { useRedirectIfLoggedIn } from "@/utils/useRedirect";
 import { signupRequest } from "@/utils/auth";
 import { CheckForm, Form, StringForm } from "@/components/form";
 import { validateName, validatePassword } from "@/utils/validate";
 import useMessage from "@/utils/useMessage";
 import Interrobang from "@/components/Interrobang";
+import { LinkText } from "@/components/custom";
 
 const Page = () => {
   useRedirectIfLoggedIn();
@@ -66,6 +67,13 @@ const Page = () => {
           onSubmit={handleSignUp}
           isInvalid={isInvalid}
         >
+          <Text pb={4}>
+            既にアカウントをお持ちの方は{" "}
+            <LinkText href="/login">
+              ログイン
+            </LinkText>
+          </Text>
+          <Divider />
           <StringForm
             title="ユーザー名"
             value={name}

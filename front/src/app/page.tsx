@@ -49,15 +49,31 @@ const MainBox = () => {
           {user ? (
             <TopButton href="/posts">タイムライン</TopButton>
           ) : (
-            <TopButton href="/signup">
-              <Text display="inline-block">アカウント登録</Text>
-              <Interrobang
-                mx={1}
-                size={8}
-                display="inline-block"
-                verticalAlign="text-top"
-              />
-            </TopButton>
+            <>
+              <TopButton href="/signup">
+                <Text display="inline-block">
+                  アカウント登録
+                </Text>
+                <Interrobang
+                  mx={1}
+                  size={8}
+                  display="inline-block"
+                  verticalAlign="text-top"
+                />
+              </TopButton>
+              <Text>
+                既にアカウントをお持ちの方は{" "}
+                <LinkText href="/login">
+                  ログイン
+                </LinkText>
+              </Text>
+              <Text>
+                アカウント登録せず{" "}
+                <LinkText href="/posts">
+                  タイムラインへ
+                </LinkText>
+              </Text>
+            </>
           )}
         </VStack>
       </AbsoluteCenter>

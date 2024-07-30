@@ -45,8 +45,8 @@ const Page = () => {
       <AbsoluteCenter width="100%" px={4}>
         <Form title="ログイン" onSubmit={handleLogin} isInvalid={isInvalid}>
           <Text pb={4}>
-            アカウントをお持ちでない方は{' '}
-            <LinkText href='/signup'>
+            アカウントをお持ちでない方は{" "}
+            <LinkText href="/signup">
               アカウント登録
             </LinkText>
           </Text>

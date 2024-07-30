@@ -62,14 +62,14 @@ const MainBox = () => {
                 />
               </TopButton>
               <Text>
-                既にアカウントをお持ちの方は{' '}
-                <LinkText href='/login'>
+                既にアカウントをお持ちの方は{" "}
+                <LinkText href="/login">
                   ログイン
                 </LinkText>
               </Text>
               <Text>
-                アカウント登録せず{' '}
-                <LinkText href='/posts'>
+                アカウント登録せず{" "}
+                <LinkText href="/posts">
                   タイムラインへ
                 </LinkText>
               </Text>

@@ -68,8 +68,8 @@ const Page = () => {
           isInvalid={isInvalid}
         >
           <Text pb={4}>
-            既にアカウントをお持ちの方は{' '}
-            <LinkText href='/login'>
+            既にアカウントをお持ちの方は{" "}
+            <LinkText href="/login">
               ログイン
             </LinkText>
           </Text>

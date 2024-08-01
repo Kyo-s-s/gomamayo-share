@@ -10,6 +10,7 @@ import { useAuth } from "@/context/AuthContext";
 import { formatDistanceToNow, format, parseISO } from "date-fns";
 import { ja } from "date-fns/locale";
 import useMessage from "@/utils/useMessage";
+import { TwitterShareButton } from "./custom/Button";
 
 type PostCardProps = {
   post: Post;
@@ -73,6 +74,9 @@ const PostCard = ({ post, user, is_liked }: PostCardProps) => {
             ⁉
           </Button>
           <Text>{likes_count}</Text>
+          <TwitterShareButton text={post.content} url="https://gomamayo-share.vercel.app/" hashtags="GomamayoShare">
+            tweet
+          </TwitterShareButton>
         </Flex>
       </CardBody>
     </Card>

@@ -7,11 +7,13 @@ export const Button = (props: ButtonProps) => {
 
 interface LinkButtonProps extends ButtonProps {
   href: string;
+  target?: string;
+  rel?: string;
 }
 
-export const LinkButton = ({ href, ...props }: LinkButtonProps) => {
+export const LinkButton = ({ href, target, rel, ...props }: LinkButtonProps) => {
   return (
-    <Link href={href}>
+    <Link href={href} target={target} rel={rel}>
       <Button {...props} />
     </Link>
   );
@@ -34,6 +36,6 @@ export const TwitterShareButton = ({ text, url, hashtags, via, ...props }: Twitt
   if (via) shareURL.searchParams.append("via", via + "\n");
 
   return (
-    <LinkButton href={shareURL.href} {...props} />
+    <LinkButton href={shareURL.href} target="_blenk" rel="noopener noreferrer" {...props} />
   );
 };

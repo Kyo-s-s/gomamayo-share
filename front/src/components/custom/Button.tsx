@@ -25,7 +25,7 @@ interface TwitterShareButtonProps extends ButtonProps {
 }
 
 export const TwitterShareButton = ({ text, url, hashtags, via, ...props }: TwitterShareButtonProps) => {
-  const twitterBaseUrl = "https://twitter.com/intent/tweet";
+  const twitterBaseUrl = "https://x.com/intent/tweet";
 
   const shareURL = new URL(twitterBaseUrl);
   shareURL.searchParams.append("text", text + "\n");

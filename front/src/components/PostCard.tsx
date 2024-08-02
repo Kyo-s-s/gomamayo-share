@@ -35,6 +35,8 @@ const PostCard = ({ post, user, is_liked }: PostCardProps) => {
   const [isLocked, setIsLocked] = useState(false);
   const { errorMessage } = useMessage();
 
+  const postURL = `https://gomamayo-share.vercel.app/posts/${post.id}`;
+
   const likes_count = post.likes_count + (liked ? 1 : 0) - (is_liked ? 1 : 0);
 
   const handleLike = async () => {
@@ -74,7 +76,7 @@ const PostCard = ({ post, user, is_liked }: PostCardProps) => {
             ⁉
           </Button>
           <Text>{likes_count}</Text>
-          <TwitterShareButton text={post.content} url="https://gomamayo-share.vercel.app/" hashtags="GomamayoShare">
+          <TwitterShareButton text={post.content} url={postURL} hashtags="GomamayoShare">
             tweet
           </TwitterShareButton>
         </Flex>

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { getRequest } from "./request";
 import PostCard from "@/components/PostCard";
 import { useInView } from "framer-motion";
-import { Box } from "@chakra-ui/react";
+import { Box, Spinner } from "@chakra-ui/react";
 
 type PostsApiResponse = {
   user: User;
@@ -42,7 +42,13 @@ const PostLoader = ({
     }
   }, [isInView]);
 
-  return finish ? <></> : <Box ref={ref}>Loading...</Box>;
+  return finish ? (
+    <></>
+  ) : (
+    <Box ref={ref} textAlign="center">
+      <Spinner thickness="5px" color="gray.400" speed="0.75s" size="xl" />
+    </Box>
+  );
 };
 
 const usePosts = (path: string = "/posts") => {

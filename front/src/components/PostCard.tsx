@@ -4,13 +4,12 @@ import { Post, User } from "@/types/types";
 import { Link } from "@chakra-ui/next-js";
 import { Card, CardBody, Flex, Text } from "@chakra-ui/react";
 import { useState } from "react";
-import { Button } from "./custom";
+import { Button, TwitterShareButton } from "./custom";
 import { deleteRequest, postRequest } from "@/utils/request";
 import { useAuth } from "@/context/AuthContext";
 import { formatDistanceToNow, format, parseISO } from "date-fns";
 import { ja } from "date-fns/locale";
 import useMessage from "@/utils/useMessage";
-import { TwitterShareButton } from "./custom/Button";
 
 type PostCardProps = {
   post: Post;

@@ -30,10 +30,13 @@ export const TwitterShareButton = ({ text, url, hashtags, via, ...props }: Twitt
   const twitterBaseUrl = "https://x.com/intent/tweet";
 
   const shareURL = new URL(twitterBaseUrl);
-  shareURL.searchParams.append("text", text + "\n");
-  shareURL.searchParams.append("url", url + "\n");
-  if (hashtags) shareURL.searchParams.append("hashtags", hashtags + "\n");
-  if (via) shareURL.searchParams.append("via", via + "\n");
+  const shareText = [
+    text,
+    url,
+    hashtags ? `#${hashtags}` : "",
+    via ? `@${via}` : "",
+  ].filter(Boolean).join("\n");
+  shareURL.searchParams.append("text", shareText);
 
   return (
     <LinkButton href={shareURL.href} target="_blenk" rel="noopener noreferrer" {...props} />

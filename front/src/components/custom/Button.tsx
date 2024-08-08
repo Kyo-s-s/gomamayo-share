@@ -28,12 +28,8 @@ interface TwitterShareButtonProps extends ButtonProps {
 }
 
 export const TwitterShareButton = ({ text, url, hashtags, via, ...props }: TwitterShareButtonProps) => {
-  const twitterBaseUrl = process.env.NEXT_PUBLIC_X_BASE_URL;
-
-  if(!twitterBaseUrl) {
-    throw new Error("NEXT_PUBLIC_X_BASE_URL is not defined");
-  }
-
+  const twitterBaseUrl = "https://x.com/intent/tweet";
+  
   const shareURL = new URL(twitterBaseUrl);
   const shareText = [
     text,

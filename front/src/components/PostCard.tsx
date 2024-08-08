@@ -34,7 +34,7 @@ const PostCard = ({ post, user, is_liked }: PostCardProps) => {
   const [isLocked, setIsLocked] = useState(false);
   const { errorMessage } = useMessage();
 
-  const postURL = `https://gomamayo-share.vercel.app/posts/${post.id}`;
+  const postURL = `${process.env.NEXT_PUBLIC_BASE_URL}/posts/${post.id}`;
 
   const likes_count = post.likes_count + (liked ? 1 : 0) - (is_liked ? 1 : 0);
 

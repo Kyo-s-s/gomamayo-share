@@ -1,6 +1,5 @@
 import { Link } from "@chakra-ui/next-js";
 import { Button as ChakraButton, ButtonProps } from "@chakra-ui/react";
-import { env } from "process";
 
 export const Button = (props: ButtonProps) => {
   return <ChakraButton {...props}>{props.children}</ChakraButton>;
@@ -29,7 +28,7 @@ interface TwitterShareButtonProps extends ButtonProps {
 
 export const TwitterShareButton = ({ text, url, hashtags, via, ...props }: TwitterShareButtonProps) => {
   const twitterBaseUrl = "https://x.com/intent/tweet";
-  
+
   const shareURL = new URL(twitterBaseUrl);
   const shareText = [
     text,

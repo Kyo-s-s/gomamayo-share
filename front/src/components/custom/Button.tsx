@@ -44,6 +44,6 @@ export const TwitterShareButton = ({ text, url, hashtags, via, ...props }: Twitt
   shareURL.searchParams.append("text", shareText);
 
   return (
-    <LinkButton href={shareURL.href} target="_blenk" rel="noopener noreferrer" {...props} />
+    <LinkButton href={shareURL.href} target="_blank" rel="noopener noreferrer" {...props} />
   );
 };

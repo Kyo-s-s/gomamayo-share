@@ -77,7 +77,7 @@ const NewPostModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent mx={2}>
         <ModalHeader>ゴママヨ投稿</ModalHeader>
         <ModalCloseButton />
         <ModalBody>

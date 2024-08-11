@@ -3,7 +3,7 @@
 import { Box } from "@chakra-ui/react";
 import Interrobang from "./Interrobang";
 
-const Background = () => {
+const Background = ({ isScrollable = false }: { isScrollable?: boolean }) => {
   const positions: [number, number, number, number][] = [
     [320, 0, -10, 320],
     [350, 200, 200, 240],
@@ -40,7 +40,13 @@ const Background = () => {
     [320, 1700, 1900, 50],
   ];
   return (
-    <Box w="100%" h="100svh" overflow="hidden" position="fixed" opacity="0.5">
+    <Box
+      w="100%"
+      h={isScrollable ? "100vh" : "100svh"}
+      overflow="hidden"
+      position="fixed"
+      opacity="0.5"
+    >
       {positions.map(([size, top, left, transform], index) => (
         <Interrobang
           key={index}

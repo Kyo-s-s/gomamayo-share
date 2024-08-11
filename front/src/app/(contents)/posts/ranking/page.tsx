@@ -1,5 +1,6 @@
 "use client";
 
+import Background from "@/components/Background";
 import PostCard from "@/components/PostCard";
 import { Post, User } from "@/types/types";
 import { getRequest } from "@/utils/request";
@@ -41,10 +42,13 @@ const PostRanking = () => {
 
 const Page = () => {
   return (
-    <Container maxW="container.md">
-      <Heading position="relative">Ranking</Heading>
-      <PostRanking />
-    </Container>
+    <>
+      <Background isScrollable />
+      <Container maxW="container.md">
+        <Heading position="relative">Ranking</Heading>
+        <PostRanking />
+      </Container>
+    </>
   );
 };
 

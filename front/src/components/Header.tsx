@@ -17,7 +17,6 @@ import {
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Link } from "@chakra-ui/next-js";
 
-
 const AccountMenuButton = () => {
   const { user, logout } = useAuth();
   return (
@@ -47,7 +46,7 @@ const Header = () => {
   return (
     <header
       style={{
-        position: "fixed",
+        position: "sticky",
         top: "0pt",
         left: "0pt",
         width: "100%",

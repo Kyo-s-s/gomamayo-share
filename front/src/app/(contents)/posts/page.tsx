@@ -101,7 +101,7 @@ const Page = () => {
 
   return (
     <>
-      <Container maxW="container.md" pt="50px">
+      <Container maxW="container.md">
         <Posts />
         <PostButton onClick={onOpen} />
       </Container>

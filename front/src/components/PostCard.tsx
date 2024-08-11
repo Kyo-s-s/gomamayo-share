@@ -59,7 +59,7 @@ const PostCard = ({ post, user, is_liked }: PostCardProps) => {
     <Card my={2}>
       <CardBody>
         <Flex gap={4}>
-          <Link href={`/users/${user.id}`}>{user.name}</Link>
+          <Text>{user.name}</Text>
           <Text>{formatPostTime(post.created_at)}</Text>
         </Flex>
         <Text>{post.content}</Text>

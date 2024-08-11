@@ -1,4 +1,3 @@
-import Background from "@/components/Background";
 import Header from "@/components/Header";
 
 export default function RootLayout({
@@ -9,7 +8,6 @@ export default function RootLayout({
   return (
     <>
       <Header />
-      <Background />
       {children}
     </>
   );

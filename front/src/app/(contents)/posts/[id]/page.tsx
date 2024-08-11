@@ -1,5 +1,6 @@
 "use client";
 
+import Background from "@/components/Background";
 import PostCard from "@/components/PostCard";
 import { Post, User } from "@/types/types";
 import { getRequest } from "@/utils/request";
@@ -30,6 +31,7 @@ const PostPage = ({ id }: { id: string }) => {
 const Page = ({ params }: { params: { id: string } }) => {
   return (
     <>
+      <Background />
       <Heading>posts {params.id}</Heading>
       <PostPage id={params.id} />
     </>

@@ -23,6 +23,7 @@ import { TextForm } from "@/components/form";
 import useMessage from "@/utils/useMessage";
 import { Button } from "@/components/custom";
 import usePosts from "@/utils/usePosts";
+import Background from "@/components/Background";
 
 const PostButton = ({ onClick }: { onClick: () => void }) => {
   const { user } = useAuth();
@@ -101,6 +102,7 @@ const Page = () => {
 
   return (
     <>
+      <Background isScrollable />
       <Container maxW="container.md">
         <Posts />
         <PostButton onClick={onOpen} />

@@ -4,7 +4,7 @@ import { Post, User } from "@/types/types";
 import { Link } from "@chakra-ui/next-js";
 import { Card, CardBody, Flex, Text } from "@chakra-ui/react";
 import { useState } from "react";
-import { Button } from "./custom";
+import { Button, TwitterShareButton } from "./custom";
 import { deleteRequest, postRequest } from "@/utils/request";
 import { useAuth } from "@/context/AuthContext";
 import { formatDistanceToNow, format, parseISO } from "date-fns";
@@ -33,6 +33,8 @@ const PostCard = ({ post, user, is_liked }: PostCardProps) => {
   const [liked, setLiked] = useState(is_liked);
   const [isLocked, setIsLocked] = useState(false);
   const { errorMessage } = useMessage();
+
+  const postURL = `${process.env.NEXT_PUBLIC_BASE_URL}/posts/${post.id}`;
 
   const likes_count = post.likes_count + (liked ? 1 : 0) - (is_liked ? 1 : 0);
 
@@ -73,6 +75,9 @@ const PostCard = ({ post, user, is_liked }: PostCardProps) => {
             ⁉
           </Button>
           <Text>{likes_count}</Text>
+          <TwitterShareButton text={post.content} url={postURL} hashtags="GomamayoShare">
+            tweet
+          </TwitterShareButton>
         </Flex>
       </CardBody>
     </Card>

@@ -8,6 +8,7 @@ import {
   Divider,
   Flex,
   Heading,
+  IconButton,
   Menu,
   MenuButton,
   MenuDivider,
@@ -55,9 +56,7 @@ const MenuButtons = () => {
         </>
       ) : (
         <Menu>
-          <MenuButton as={Button}>
-            <HamburgerIcon />
-          </MenuButton>
+          <MenuButton as={IconButton} icon={<HamburgerIcon />} />
           <MenuList>
             <MenuItem as="a" href="/posts">
               タイムライン

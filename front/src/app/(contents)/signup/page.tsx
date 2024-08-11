@@ -48,7 +48,7 @@ const Page = () => {
     nameError !== "" || passwordError !== "" || passwordConfirmError !== "";
 
   return (
-    <Container maxW="container.sm" height="100svh" position="relative">
+    <Container maxW="container.sm" height="90svh" position="relative">
       <AbsoluteCenter width="100%" px={4}>
         <Form
           title={
@@ -69,9 +69,7 @@ const Page = () => {
         >
           <Text pb={4}>
             既にアカウントをお持ちの方は{" "}
-            <LinkText href="/login">
-              ログイン
-            </LinkText>
+            <LinkText href="/login">ログイン</LinkText>
           </Text>
           <Divider />
           <StringForm

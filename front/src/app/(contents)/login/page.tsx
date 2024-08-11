@@ -41,14 +41,12 @@ const Page = () => {
   const isInvalid = nameError !== "" || passwordError !== "";
 
   return (
-    <Container maxW="container.sm" height="100svh" position="relative">
+    <Container maxW="container.sm" height="90svh" position="relative">
       <AbsoluteCenter width="100%" px={4}>
         <Form title="ログイン" onSubmit={handleLogin} isInvalid={isInvalid}>
           <Text pb={4}>
             アカウントをお持ちでない方は{" "}
-            <LinkText href="/signup">
-              アカウント登録
-            </LinkText>
+            <LinkText href="/signup">アカウント登録</LinkText>
           </Text>
           <Divider />
           <StringForm

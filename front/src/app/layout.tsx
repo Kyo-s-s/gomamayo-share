@@ -8,6 +8,10 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Gomamayo Share",
+  twitter: {
+    title: "Gomamayo Share",
+    card: "summary",
+  },
 };
 
 export default function RootLayout({

@@ -42,7 +42,6 @@ const MainBox = () => {
 
   return (
     <Box height="100svh" position="relative" overflow="hidden">
-      <Background />
       <AbsoluteCenter>
         <VStack spacing={8} position="relative">
           <Heading fontSize="4em">Gomamayo Share</Heading>
@@ -51,9 +50,7 @@ const MainBox = () => {
           ) : (
             <>
               <TopButton href="/signup">
-                <Text display="inline-block">
-                  アカウント登録
-                </Text>
+                <Text display="inline-block">アカウント登録</Text>
                 <Interrobang
                   mx={1}
                   size={8}
@@ -63,15 +60,11 @@ const MainBox = () => {
               </TopButton>
               <Text>
                 既にアカウントをお持ちの方は{" "}
-                <LinkText href="/login">
-                  ログイン
-                </LinkText>
+                <LinkText href="/login">ログイン</LinkText>
               </Text>
               <Text>
                 アカウント登録せず{" "}
-                <LinkText href="/posts">
-                  タイムラインへ
-                </LinkText>
+                <LinkText href="/posts">タイムラインへ</LinkText>
               </Text>
             </>
           )}
@@ -101,6 +94,7 @@ const Explanation = ({
 const Home = () => {
   return (
     <>
+      <Background isScrollable />
       <MainBox />
       <Container
         maxW="container.md"

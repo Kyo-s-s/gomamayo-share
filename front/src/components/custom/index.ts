@@ -1,2 +1,2 @@
-export { Button, LinkButton } from "./Button";
+export { Button, LinkButton, TwitterShareButton } from "./Button";
 export { LinkText } from "./LinkText";

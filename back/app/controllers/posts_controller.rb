@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :signin_check, only: :create
+  before_action :signin_check, only: %i[create destroy]
 
   def index
     limit, timestamp = index_params
@@ -32,6 +32,14 @@ class PostsController < ApplicationController
       render json: post.serialize
     else
       render json: { message: error_message_for_post(post) }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if current_user.posts.find_by(id: params[:id])&.destroy
+      render json: { message: 'Post deleted' }
+    else
+      render json: { message: 'Post not found' }, status: :not_found
     end
   end
 

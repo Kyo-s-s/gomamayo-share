@@ -16,25 +16,25 @@ type PostsApiResponse = {
 const PostRanking = () => {
   const [posts, setPosts] = useState<PostsApiResponse>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await getRequest<PostsApiResponse>(
-        "/posts/ranking",
-        {},
-        true
-      );
-      if (res.success) {
-        setPosts(res.success);
-      }
-    };
+  const fetchData = async () => {
+    const res = await getRequest<PostsApiResponse>("/posts/ranking", {}, true);
+    if (res.success) {
+      setPosts(res.success);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
   return (
     <>
       {posts.map((post) => (
-        <PostCard key={post.post.id} {...post} />
+        <PostCard
+          deleteAction={() => fetchData()}
+          key={post.post.id}
+          {...post}
+        />
       ))}
     </>
   );

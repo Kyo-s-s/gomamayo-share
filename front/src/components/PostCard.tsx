@@ -29,18 +29,17 @@ const formatPostTime = (dateStr: string): string => {
 };
 
 const PostCard = ({ post, user, is_liked }: PostCardProps) => {
-  const { user: login_user } = useAuth();
+  const { user: loginUser } = useAuth();
   const [liked, setLiked] = useState(is_liked);
   const [isLocked, setIsLocked] = useState(false);
   const { errorMessage } = useMessage();
 
   const postURL = `${process.env.NEXT_PUBLIC_BASE_URL}/posts/${post.id}`;
 
-  // なんでスネークケース？
-  const likes_count = post.likes_count + (liked ? 1 : 0) - (is_liked ? 1 : 0);
+  const likesCount = post.likes_count + (liked ? 1 : 0) - (is_liked ? 1 : 0);
 
   const handleLike = async () => {
-    if (!login_user) {
+    if (!loginUser) {
       errorMessage({
         description: "Please log in",
       });
@@ -71,7 +70,7 @@ const PostCard = ({ post, user, is_liked }: PostCardProps) => {
           <Button size="sm" p={0} variant="ghost" onClick={handleLike}>
             <Interrobang size={5} isWhite={!liked} />
           </Button>
-          <Text verticalAlign="baseline">{likes_count}</Text>
+          <Text verticalAlign="baseline">{likesCount}</Text>
           <Spacer />
           <TwitterShareButton
             text={post.content}

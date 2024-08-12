@@ -1,7 +1,14 @@
 "use client";
 
 import { Post, User } from "@/types/types";
-import { Card, CardBody, Flex, Spacer, Text } from "@chakra-ui/react";
+import {
+  Card,
+  CardBody,
+  Flex,
+  IconButton,
+  Spacer,
+  Text,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import { Button, TwitterShareButton } from "./custom";
 import { deleteRequest, postRequest } from "@/utils/request";
@@ -10,11 +17,13 @@ import { formatDistanceToNow, format, parseISO } from "date-fns";
 import { ja } from "date-fns/locale";
 import useMessage from "@/utils/useMessage";
 import Interrobang from "./Interrobang";
+import { FaRegTrashCan } from "react-icons/fa6";
 
 type PostCardProps = {
   post: Post;
   user: User;
   is_liked: boolean;
+  deleteAction: (post: Post) => void;
 };
 
 const formatPostTime = (dateStr: string): string => {
@@ -28,7 +37,42 @@ const formatPostTime = (dateStr: string): string => {
   }
 };
 
-const PostCard = ({ post, user, is_liked }: PostCardProps) => {
+const DeleteButton = ({
+  post,
+  deleteAction,
+}: {
+  post: Post;
+  deleteAction: (post: Post) => void;
+}) => {
+  const { successMessage, errorMessage } = useMessage();
+  const handleDelete = async () => {
+    const res = await deleteRequest(`/posts/${post.id}`, true);
+    if (res.success) {
+      deleteAction(post);
+      successMessage({
+        description: "投稿を削除しました。",
+      });
+    } else {
+      errorMessage({
+        description: `${res.failure?.message || "エラーが発生しました。"}`,
+      });
+      window.location.reload();
+    }
+  };
+  // TODO: modal
+  return (
+    <IconButton
+      size="sm"
+      aria-label="post delete"
+      p={0}
+      icon={<FaRegTrashCan size={18} />}
+      variant="ghost"
+      onClick={handleDelete}
+    />
+  );
+};
+
+const PostCard = ({ post, user, is_liked, deleteAction }: PostCardProps) => {
   const { user: loginUser } = useAuth();
   const [liked, setLiked] = useState(is_liked);
   const [isLocked, setIsLocked] = useState(false);
@@ -60,17 +104,22 @@ const PostCard = ({ post, user, is_liked }: PostCardProps) => {
   return (
     <Card my={2}>
       <CardBody p={4}>
-        <Flex gap={4}>
+        <Flex>
           <Text>{user.name}</Text>
           <Spacer />
           <Text>{formatPostTime(post.created_at)}</Text>
         </Flex>
         <Text py={1}>{post.content}</Text>
-        <Flex alignItems="center" gap={2}>
-          <Button size="sm" p={0} variant="ghost" onClick={handleLike}>
-            <Interrobang size={5} isWhite={!liked} />
-          </Button>
-          <Text verticalAlign="baseline">{likesCount}</Text>
+        <Flex alignItems="center" gap={4}>
+          <Flex alignItems="center" gap={2}>
+            <Button size="sm" p={0} variant="ghost" onClick={handleLike}>
+              <Interrobang size={5} isWhite={!liked} />
+            </Button>
+            <Text verticalAlign="baseline">{likesCount}</Text>
+          </Flex>
+          {loginUser?.id === user.id && (
+            <DeleteButton post={post} deleteAction={deleteAction} />
+          )}
           <Spacer />
           <TwitterShareButton
             text={post.content}

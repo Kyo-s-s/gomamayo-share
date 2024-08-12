@@ -5,6 +5,7 @@ import { LinkText } from "@/components/custom";
 import PostCard from "@/components/PostCard";
 import { Post, User } from "@/types/types";
 import { getRequest } from "@/utils/request";
+import useRedirect from "@/utils/useRedirect";
 import {
   AbsoluteCenter,
   Box,
@@ -22,6 +23,7 @@ type PostApiResponse = {
 };
 
 const PostPage = ({ id }: { id: string }) => {
+  const redirectTo = useRedirect();
   const [post, setPost] = useState<PostApiResponse | null>(null);
   // loading ?
 
@@ -37,7 +39,7 @@ const PostPage = ({ id }: { id: string }) => {
   return (
     <>
       {post ? (
-        <PostCard {...post} />
+        <PostCard deleteAction={(_) => redirectTo("/posts")} {...post} />
       ) : (
         // FIXME: Spinner.tsx に切り出す
         <Box textAlign="center">

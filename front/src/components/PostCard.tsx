@@ -6,8 +6,16 @@ import {
   CardBody,
   Flex,
   IconButton,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Spacer,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Button, TwitterShareButton } from "./custom";
@@ -44,6 +52,7 @@ const DeleteButton = ({
   post: Post;
   deleteAction: (post: Post) => void;
 }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { successMessage, errorMessage } = useMessage();
   const handleDelete = async () => {
     const res = await deleteRequest(`/posts/${post.id}`, true);
@@ -59,16 +68,37 @@ const DeleteButton = ({
       window.location.reload();
     }
   };
-  // TODO: modal
   return (
-    <IconButton
-      size="sm"
-      aria-label="post delete"
-      p={0}
-      icon={<FaRegTrashCan size={18} />}
-      variant="ghost"
-      onClick={handleDelete}
-    />
+    <>
+      <IconButton
+        size="sm"
+        aria-label="post delete"
+        p={0}
+        icon={<FaRegTrashCan size={18} />}
+        variant="ghost"
+        onClick={onOpen}
+      />
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent mx={2}>
+          <ModalHeader>削除確認</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>
+              削除すると元に戻すことはできません。 本当に削除しますか？
+            </Text>
+            <Text>投稿内容: {post.content}</Text>
+          </ModalBody>
+          <ModalFooter gap={2}>
+            <Button colorScheme="red" onClick={handleDelete}>
+              削除
+            </Button>
+            <Button onClick={onClose}>キャンセル</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 

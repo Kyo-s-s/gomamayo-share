@@ -84,6 +84,37 @@ RSpec.describe PostsController, type: :request do
     end
   end
 
+  describe 'DELETE #destroy' do
+    let!(:gomamayo) { FactoryBot.create(:post_gomamayo) }
+
+    context 'with login' do
+      let!(:user) { FactoryBot.create(:user_kyo) }
+      let!(:header) { sign_in user }
+
+      it 'success' do
+        delete destroy_post_path(id: gomamayo.id), headers: header
+        expect(response).to be_successful
+      end
+    end
+
+    context 'with another user login' do
+      let!(:user) { FactoryBot.create(:user_another) }
+      let!(:header) { sign_in user }
+
+      it 'failure not found' do
+        delete destroy_post_path(id: gomamayo.id), headers: header
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'without login' do
+      it 'failure' do
+        delete destroy_post_path(id: gomamayo.id)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
+
   describe 'GET #show' do
     let!(:user) { FactoryBot.create(:user_kyo) }
     let!(:gomamayo) { FactoryBot.create(:post_gomamayo) }

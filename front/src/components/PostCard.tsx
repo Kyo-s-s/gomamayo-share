@@ -1,7 +1,7 @@
 "use client";
 
 import { Post, User } from "@/types/types";
-import { Card, CardBody, Flex, Text } from "@chakra-ui/react";
+import { Card, CardBody, Flex, Spacer, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import { Button, TwitterShareButton } from "./custom";
 import { deleteRequest, postRequest } from "@/utils/request";
@@ -9,6 +9,7 @@ import { useAuth } from "@/context/AuthContext";
 import { formatDistanceToNow, format, parseISO } from "date-fns";
 import { ja } from "date-fns/locale";
 import useMessage from "@/utils/useMessage";
+import Interrobang from "./Interrobang";
 
 type PostCardProps = {
   post: Post;
@@ -35,6 +36,7 @@ const PostCard = ({ post, user, is_liked }: PostCardProps) => {
 
   const postURL = `${process.env.NEXT_PUBLIC_BASE_URL}/posts/${post.id}`;
 
+  // なんでスネークケース？
   const likes_count = post.likes_count + (liked ? 1 : 0) - (is_liked ? 1 : 0);
 
   const handleLike = async () => {
@@ -58,29 +60,24 @@ const PostCard = ({ post, user, is_liked }: PostCardProps) => {
 
   return (
     <Card my={2}>
-      <CardBody>
+      <CardBody p={4}>
         <Flex gap={4}>
           <Text>{user.name}</Text>
+          <Spacer />
           <Text>{formatPostTime(post.created_at)}</Text>
         </Flex>
-        <Text>{post.content}</Text>
-        <Flex gap={2}>
-          <Button
-            size="sm"
-            onClick={handleLike}
-            colorScheme="red"
-            variant={liked ? "solid" : "outline"}
-          >
-            ⁉
+        <Text py={1}>{post.content}</Text>
+        <Flex alignItems="center" gap={2}>
+          <Button size="sm" p={0} variant="ghost" onClick={handleLike}>
+            <Interrobang size={5} isWhite={!liked} />
           </Button>
-          <Text>{likes_count}</Text>
+          <Text verticalAlign="baseline">{likes_count}</Text>
+          <Spacer />
           <TwitterShareButton
             text={post.content}
             url={postURL}
             hashtags="GomamayoShare"
-          >
-            tweet
-          </TwitterShareButton>
+          />
         </Flex>
       </CardBody>
     </Card>

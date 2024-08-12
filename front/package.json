@@ -21,7 +21,8 @@
     "next": "14.2.4",
     "nookies": "^2.5.2",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-icons": "^5.2.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.1.0",

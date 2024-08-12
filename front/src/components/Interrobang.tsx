@@ -1,13 +1,14 @@
 import { Image, ImageProps } from "@chakra-ui/next-js";
 
 interface InterrobangProps extends Omit<ImageProps, "src" | "alt"> {
+  isWhite?: boolean;
   size: number;
 }
 
-const Interrobang = ({ size, ...props }: InterrobangProps) => {
+const Interrobang = ({ size, isWhite = false, ...props }: InterrobangProps) => {
   return (
     <Image
-      src="/interrobang.svg"
+      src={isWhite ? "/interrobang-white.svg" : "/interrobang.svg"}
       alt="interrobang"
       width={size}
       height={size}

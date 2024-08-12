@@ -39,7 +39,7 @@ const PostPage = ({ id }: { id: string }) => {
   return (
     <>
       {post ? (
-        <PostCard deleteAction={(_) => redirectTo("/posts")} {...post} />
+        <PostCard deleteAction={() => redirectTo("/posts")} {...post} />
       ) : (
         // FIXME: Spinner.tsx に切り出す
         <Box textAlign="center">

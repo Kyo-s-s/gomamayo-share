@@ -1,5 +1,6 @@
 import { Link } from "@chakra-ui/next-js";
 import { Button as ChakraButton, ButtonProps } from "@chakra-ui/react";
+import { FaXTwitter } from "react-icons/fa6";
 
 export const Button = (props: ButtonProps) => {
   return <ChakraButton {...props}>{props.children}</ChakraButton>;
@@ -11,7 +12,12 @@ interface LinkButtonProps extends ButtonProps {
   rel?: string;
 }
 
-export const LinkButton = ({ href, target, rel, ...props }: LinkButtonProps) => {
+export const LinkButton = ({
+  href,
+  target,
+  rel,
+  ...props
+}: LinkButtonProps) => {
   return (
     <Link href={href} target={target} rel={rel}>
       <Button {...props} />
@@ -26,7 +32,13 @@ interface TwitterShareButtonProps extends ButtonProps {
   via?: string;
 }
 
-export const TwitterShareButton = ({ text, url, hashtags, via, ...props }: TwitterShareButtonProps) => {
+export const TwitterShareButton = ({
+  text,
+  url,
+  hashtags,
+  via,
+  ...props
+}: TwitterShareButtonProps) => {
   const twitterBaseUrl = "https://x.com/intent/tweet";
 
   const shareURL = new URL(twitterBaseUrl);
@@ -35,10 +47,22 @@ export const TwitterShareButton = ({ text, url, hashtags, via, ...props }: Twitt
     url,
     hashtags ? `#${hashtags}` : "",
     via ? `@${via}` : "",
-  ].filter(Boolean).join("\n");
+  ]
+    .filter(Boolean)
+    .join("\n");
   shareURL.searchParams.append("text", shareText);
 
   return (
-    <LinkButton href={shareURL.href} target="_blank" rel="noopener noreferrer" {...props} />
+    <LinkButton
+      size="sm"
+      href={shareURL.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      variant="ghost"
+      p={0}
+      {...props}
+    >
+      <FaXTwitter size={20} />
+    </LinkButton>
   );
 };

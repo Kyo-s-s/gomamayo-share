@@ -147,10 +147,10 @@ const PostCard = ({ post, user, is_liked, deleteAction }: PostCardProps) => {
             </Button>
             <Text verticalAlign="baseline">{likesCount}</Text>
           </Flex>
+          <Spacer />
           {loginUser?.id === user.id && (
             <DeleteButton post={post} deleteAction={deleteAction} />
           )}
-          <Spacer />
           <TwitterShareButton
             text={post.content}
             url={postURL}

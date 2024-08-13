@@ -31,9 +31,9 @@ const TopButton = ({
     <LinkButton
       href={href}
       border="1px"
-      fontSize="25px"
-      borderRadius="30px"
-      p="30px"
+      fontSize="1.5em"
+      borderRadius="25px"
+      p="25px"
       bg="white"
     >
       {children}
@@ -48,7 +48,13 @@ const MainBox = ({ aboutMoreAction }: { aboutMoreAction: () => void }) => {
   return (
     <Box height="100svh" position="relative" overflow="hidden">
       <AbsoluteCenter>
-        <VStack spacing={8} position="relative">
+        <VStack
+          spacing={8}
+          position="relative"
+          p={4}
+          bg="rgba(255, 255, 255, 0.8)"
+          borderRadius={8}
+        >
           {isDesktop ? (
             <Heading fontSize="3.5em">Gomamayo Share</Heading>
           ) : (
@@ -63,21 +69,18 @@ const MainBox = ({ aboutMoreAction }: { aboutMoreAction: () => void }) => {
             <>
               <TopButton href="/signup">
                 <Text display="inline-block">アカウント登録</Text>
-                <Interrobang
-                  mx={1}
-                  size={8}
-                  display="inline-block"
-                  verticalAlign="text-top"
-                />
+                <Interrobang mx={1} size={7} display="inline-block" />
               </TopButton>
-              <Text>
-                既にアカウントをお持ちの方は{" "}
-                <LinkText href="/login">ログイン</LinkText>
-              </Text>
-              <Text>
-                アカウント登録せず{" "}
-                <LinkText href="/posts">タイムラインへ</LinkText>
-              </Text>
+              <VStack spacing={2}>
+                <Text>
+                  既にアカウントをお持ちの方は{" "}
+                  <LinkText href="/login">ログイン</LinkText>
+                </Text>
+                <Text>
+                  アカウント登録せず{" "}
+                  <LinkText href="/posts">タイムラインへ</LinkText>
+                </Text>
+              </VStack>
             </>
           )}
         </VStack>

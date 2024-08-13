@@ -31,9 +31,10 @@ const PostButton = ({ onClick }: { onClick: () => void }) => {
     return <></>;
   }
   return (
-    <Flex justify={"flex-end"} px="20px">
+    <Flex justify="flex-end" px="20px">
       <Box position="fixed" bottom="20px">
         <IconButton
+          colorScheme="red"
           onClick={onClick}
           size="lg"
           isRound={true}

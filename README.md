@@ -1,5 +1,13 @@
 # gomamayo-share
 
+https://gomamayo-share.vercel.app/
+
+---
+## Backend
+
+### Ruby
+
+バージョンは `.tool-versions` を参照。
 
 ### Mecab の導入
 
@@ -46,3 +54,34 @@ EOS
 ```
 
 になればOKそう
+
+### サーバーの起動
+
+```
+$ bundle install
+```
+をしておく。
+
+```
+$ bundle exec rails s
+```
+で起動する。`localhost:3000`で起動すること。
+
+
+## Frontend
+
+### Node.js
+
+バージョンは `.tool-versions` を参照。
+
+### 起動
+
+```
+$ npm install
+```
+をしておく。
+
+```
+$ npm run dev
+```
+で起動する。`localhost:3001`で起動すること。

@@ -43,7 +43,7 @@ const AccountMenuItems = () => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent mx={2}>
-          <ModalHeader>ログアウト</ModalHeader>
+          <ModalHeader>ログアウト確認</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             ログアウトしますか？

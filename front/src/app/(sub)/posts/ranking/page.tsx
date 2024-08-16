@@ -5,7 +5,7 @@ import { BackHeader } from "@/components/Header";
 import PostCard from "@/components/PostCard";
 import { Post, User } from "@/types/types";
 import { getRequest } from "@/utils/request";
-import { Container, Heading } from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 type PostsApiResponse = {

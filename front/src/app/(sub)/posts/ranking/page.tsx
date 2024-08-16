@@ -1,10 +1,11 @@
 "use client";
 
 import Background from "@/components/Background";
+import { BackHeader } from "@/components/Header";
 import PostCard from "@/components/PostCard";
 import { Post, User } from "@/types/types";
 import { getRequest } from "@/utils/request";
-import { Container, Heading } from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 type PostsApiResponse = {
@@ -29,10 +30,11 @@ const PostRanking = () => {
 
   return (
     <>
-      {posts.map((post) => (
+      {posts.map((post, idx) => (
         <PostCard
           deleteAction={() => fetchData()}
           key={post.post.id}
+          ranking={idx + 1}
           {...post}
         />
       ))}
@@ -43,9 +45,9 @@ const PostRanking = () => {
 const Page = () => {
   return (
     <>
+      <BackHeader title="ランキング" />
       <Background isScrollable />
       <Container maxW="container.md">
-        <Heading position="relative">Ranking</Heading>
         <PostRanking />
       </Container>
     </>

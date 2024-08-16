@@ -2,8 +2,10 @@
 
 import { Post, User } from "@/types/types";
 import {
+  Badge,
   Card,
   CardBody,
+  Center,
   Flex,
   IconButton,
   Modal,
@@ -32,6 +34,7 @@ type PostCardProps = {
   user: User;
   is_liked: boolean;
   deleteAction: (post: Post) => void;
+  ranking?: number;
 };
 
 const formatPostTime = (dateStr: string): string => {
@@ -102,7 +105,13 @@ const DeleteButton = ({
   );
 };
 
-const PostCard = ({ post, user, is_liked, deleteAction }: PostCardProps) => {
+const PostCard = ({
+  post,
+  user,
+  is_liked,
+  deleteAction,
+  ranking,
+}: PostCardProps) => {
   const { user: loginUser } = useAuth();
   const [liked, setLiked] = useState(is_liked);
   const [isLocked, setIsLocked] = useState(false);
@@ -134,6 +143,13 @@ const PostCard = ({ post, user, is_liked, deleteAction }: PostCardProps) => {
   return (
     <Card my={2}>
       <CardBody p={4}>
+        {ranking && (
+          <Center>
+            <Badge fontSize="1em" colorScheme="red">
+              {ranking}位
+            </Badge>
+          </Center>
+        )}
         <Flex>
           <Text>{user.name}</Text>
           <Spacer />

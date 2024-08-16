@@ -124,7 +124,7 @@ const PostCard = ({
   const handleLike = async () => {
     if (!loginUser) {
       errorMessage({
-        description: "Please log in",
+        description: "ログインしてください。",
       });
       return;
     }

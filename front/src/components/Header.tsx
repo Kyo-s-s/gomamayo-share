@@ -14,8 +14,16 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Spacer,
   useBreakpointValue,
+  useDisclosure,
 } from "@chakra-ui/react";
 import {
   ChevronDownIcon,
@@ -27,8 +35,29 @@ import { useRouter } from "next/navigation";
 
 const AccountMenuItems = () => {
   const { user, logout } = useAuth();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return user ? (
-    <MenuItem onClick={logout}>ログアウト</MenuItem>
+    <>
+      <MenuItem onClick={onOpen}>ログアウト</MenuItem>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent mx={2}>
+          <ModalHeader>ログアウト</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            ログアウトしますか？
+            他の端末でもログインしている場合、すべてログアウトされます。
+          </ModalBody>
+          <ModalFooter gap={2}>
+            <Button onClick={logout} colorScheme="red">
+              ログアウト
+            </Button>
+            <Button onClick={onClose}>キャンセル</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   ) : (
     <>
       <MenuItem as="a" href="/signup">

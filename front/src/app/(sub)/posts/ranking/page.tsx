@@ -30,10 +30,11 @@ const PostRanking = () => {
 
   return (
     <>
-      {posts.map((post) => (
+      {posts.map((post, idx) => (
         <PostCard
           deleteAction={() => fetchData()}
           key={post.post.id}
+          ranking={idx + 1}
           {...post}
         />
       ))}

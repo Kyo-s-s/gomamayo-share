@@ -8,7 +8,7 @@ export const LinkText = ({
   children: React.ReactNode;
 }) => {
   return (
-    <Link href={href} color="teal.300">
+    <Link href={href} color="cyan.600">
       {children}
     </Link>
   );

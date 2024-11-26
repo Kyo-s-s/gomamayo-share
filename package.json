@@ -1,0 +1,28 @@
+{
+  "name": "gomamayo-share",
+  "version": "1.0.0",
+  "description": "https://gomamayo-share.vercel.app/",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.2",
+    "@storybook/addon-essentials": "^8.4.5",
+    "@storybook/addon-interactions": "^8.4.5",
+    "@storybook/addon-onboarding": "^8.4.5",
+    "@storybook/blocks": "^8.4.5",
+    "@storybook/nextjs": "^8.4.5",
+    "@storybook/react": "^8.4.5",
+    "@storybook/test": "^8.4.5",
+    "storybook": "^8.4.5"
+  },
+  "dependencies": {
+    "prop-types": "^15.8.1"
+  }
+}

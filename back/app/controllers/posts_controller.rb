@@ -49,6 +49,11 @@ class PostsController < ApplicationController
     render json: posts_serialize(posts)
   end
 
+  def all
+    posts = Post.includes(:user)
+    render json: posts.to_json(include: { user: { only: %i[id name] } })
+  end
+
   private
 
   def index_params

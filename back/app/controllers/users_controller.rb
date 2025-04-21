@@ -12,4 +12,9 @@ class UsersController < ApplicationController
       render json: { message: 'User not found' }, status: :not_found
     end
   end
+
+  def all
+    users = User.all
+    render json: users.to_json(only: %i[id name created_at updated_at])
+  end
 end

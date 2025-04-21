@@ -12,13 +12,16 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   get    'users', to: 'users#index'
+  get    'users/all', to: 'users#all', as: 'all_user'
   get    'users/:id', to: 'users#show', as: 'show_user'
   get    'auth/sessions', to: 'sessions#sessions'
   post   'posts', to: 'posts#create', as: 'create_post'
   get    'posts', to: 'posts#index', as: 'index_post'
+  get    'posts/all', to: 'posts#all', as: 'all_post'
   get    'posts/ranking', to: 'posts#ranking', as: 'ranking_post'
   get    'posts/:id', to: 'posts#show', as: 'show_post'
   delete 'posts/:id', to: 'posts#destroy', as: 'destroy_post'
+  get    'likes/all', to: 'likes#all', as: 'all_like'
   post   'likes/:id', to: 'likes#create', as: 'create_like'
   delete 'likes/:id', to: 'likes#destroy', as: 'destroy_like'
 end

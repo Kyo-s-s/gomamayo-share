@@ -18,4 +18,9 @@ class LikesController < ApplicationController
       render json: { message: 'Like not found' }, status: :not_found
     end
   end
+
+  def all
+    likes = Like.includes(:post, :user)
+    render json: likes.to_json(include: { user: { only: %i[id name] }, post: { only: %i[id content created_at] } })
+  end
 end

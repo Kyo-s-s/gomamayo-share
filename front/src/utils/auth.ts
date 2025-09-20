@@ -61,26 +61,26 @@ type TokenCheckResponse = {
   message: string | null;
 };
 
-export const tokenCheck = async () => {
-  const header = pickupHeader();
-  if (header == null) {
-    return null;
-  }
-  const res = await getRequest<TokenCheckResponse>("/auth/sessions", {}, true);
-  if (res.success?.is_login) {
-    const user = {
-      /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
-      id: res.success.user?.id!,
-      name: res.success.user?.name!,
-      /* eslint-enable @typescript-eslint/no-non-null-asserted-optional-chain */
-    };
-    registerUser(user);
-    return user;
-  } else {
-    clearSessionsAndCookies();
-    return null;
-  }
-};
+// export const tokenCheck = async () => {
+//   const header = pickupHeader();
+//   if (header == null) {
+//     return null;
+//   }
+//   const res = await getRequest<TokenCheckResponse>("/auth/sessions", {}, true);
+//   if (res.success?.is_login) {
+//     const user = {
+//       /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+//       id: res.success.user?.id!,
+//       name: res.success.user?.name!,
+//       /* eslint-enable @typescript-eslint/no-non-null-asserted-optional-chain */
+//     };
+//     registerUser(user);
+//     return user;
+//   } else {
+//     clearSessionsAndCookies();
+//     return null;
+//   }
+// };
 
 const setHeaderRequest = async (
   name: string,

@@ -66,17 +66,18 @@ const usePosts = (path: string = "/posts") => {
   };
 
   const Posts = () => {
-    const deleteAction = (post: Post) => {
-      setPosts(posts.filter((p) => p.post.id !== post.id));
-    };
-    return (
-      <>
-        {posts.map((post) => (
-          <PostCard key={post.post.id} deleteAction={deleteAction} {...post} />
-        ))}
-        <PostLoader posts={posts} setPosts={setPosts} />
-      </>
-    );
+    // const deleteAction = (post: Post) => {
+    //   setPosts(posts.filter((p) => p.post.id !== post.id));
+    // };
+    return <></>;
+    // return (
+    //   <>
+    //     {posts.map((post) => (
+    //       <PostCard key={post.post.id} deleteAction={deleteAction} {...post} />
+    //     ))}
+    //     <PostLoader posts={posts} setPosts={setPosts} />
+    //   </>
+    // );
   };
   return { Posts, reload };
 };

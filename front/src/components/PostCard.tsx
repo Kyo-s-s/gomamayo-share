@@ -22,7 +22,7 @@ import {
 import { useState } from "react";
 import { Button, TwitterShareButton } from "./custom";
 import { deleteRequest, postRequest } from "@/utils/request";
-import { useAuth } from "@/context/AuthContext";
+import { useSession } from "next-auth/react";
 import { formatDistanceToNow, format, parseISO } from "date-fns";
 import { ja } from "date-fns/locale";
 import useMessage from "@/utils/useMessage";
@@ -112,7 +112,8 @@ const PostCard = ({
   deleteAction,
   ranking,
 }: PostCardProps) => {
-  const { user: loginUser } = useAuth();
+  const { data: session } = useSession();
+  const loginUser = session?.user;
   const [liked, setLiked] = useState(is_liked);
   const [isLocked, setIsLocked] = useState(false);
   const { errorMessage } = useMessage();

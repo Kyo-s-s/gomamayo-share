@@ -17,16 +17,17 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useAuth } from "@/context/AuthContext";
 import { AddIcon } from "@chakra-ui/icons";
 import { TextForm } from "@/components/form";
 import useMessage from "@/utils/useMessage";
 import { Button } from "@/components/custom";
 import usePosts from "@/utils/usePosts";
 import Background from "@/components/Background";
+import { useSession } from "next-auth/react";
 
 const PostButton = ({ onClick }: { onClick: () => void }) => {
-  const { user } = useAuth();
+  const { data: session, status } = useSession();
+  const user = session?.user;
   if (!user) {
     return <></>;
   }

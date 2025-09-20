@@ -1,11 +1,8 @@
 "use client";
 
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import dynamic from "next/dynamic";
 import { Zen_Maru_Gothic } from "next/font/google";
-const AuthProvider = dynamic(() => import("../context/AuthContext"), {
-  ssr: false,
-});
+import { SessionProvider } from "next-auth/react";
 
 const zenMaruGothic = Zen_Maru_Gothic({
   subsets: ["latin"],
@@ -27,7 +24,7 @@ const theme = extendTheme({
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ChakraProvider theme={theme}>
-      <AuthProvider>{children}</AuthProvider>
+      <SessionProvider>{children}</SessionProvider>
     </ChakraProvider>
   );
 }

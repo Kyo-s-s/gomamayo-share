@@ -1,10 +1,10 @@
 export type User = {
-  id: number;
+  id: string;
   name: string;
 };
 
 export type Post = {
-  id: number;
+  id: string;
   content: string;
   created_at: string;
   likes_count: number;

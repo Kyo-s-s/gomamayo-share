@@ -1,14 +1,15 @@
 "use client";
 
+import { useSession, signIn } from "next-auth/react"
 import Background from "@/components/Background";
-import { LinkButton, LinkText } from "@/components/custom";
+import { LinkText } from "@/components/custom";
 import Interrobang from "@/components/Interrobang";
-import { useAuth } from "@/context/AuthContext";
 import {
   AbsoluteCenter,
   Box,
   Center,
   Container,
+  Button,
   Heading,
   IconButton,
   ListItem,
@@ -16,34 +17,65 @@ import {
   UnorderedList,
   useBreakpointValue,
   VStack,
+  HStack,
 } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { MdOutlineExpandMore } from "react-icons/md";
+import { Link } from "@chakra-ui/next-js";
 
-const TopButton = ({
-  href,
+const KadomaruButton = ({
   children,
+  onClick,
 }: {
-  href: string;
   children: React.ReactNode;
-}) => {
-  return (
-    <LinkButton
-      href={href}
-      border="1px"
-      fontSize="1.5em"
-      borderRadius="25px"
-      p="25px"
-      bg="white"
-    >
-      {children}
-    </LinkButton>
-  );
+  onClick?: () => void;
+}) => (
+  <Button
+    border="1px"
+    fontSize="1.5em"
+    borderRadius="30px"
+    p="30px"
+    bg="white"
+    onClick={onClick}
+  >
+    {children}
+  </Button>
+)
+
+
+const TopButtonAndExplanation = () => {
+  const { data: session, status } = useSession();
+  if (status == "loading") {
+    // FIXME: ローディング中の表示
+    return <Text>Loading...</Text>
+  }
+
+  if (session) {
+    return <Link href="/posts"><KadomaruButton>タイムラインへ</KadomaruButton></Link>
+  }
+
+  return <>
+    <KadomaruButton onClick={() => signIn()}>
+      <VStack spacing={0}>
+        <HStack spacing={1}>
+          <Text display="inline-block">アカウント登録</Text>
+          <Interrobang mx={1} size={7} display="inline-block" />
+        </HStack>
+        <Text display="inline-block" fontSize="0.66em" color="gray.600">or ログイン</Text>
+      </VStack>
+    </KadomaruButton>
+    <Text>
+      アカウント登録せず{" "}
+      <LinkText href="/posts">タイムラインへ</LinkText>
+    </Text>
+  </>
 };
 
 const MainBox = ({ aboutMoreAction }: { aboutMoreAction: () => void }) => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
-  const { user } = useAuth();
+  const { data: session } = useSession();
+  const user = session?.user;
+  console.log(user);
 
   return (
     <Box height="100svh" position="relative" overflow="hidden">
@@ -63,26 +95,7 @@ const MainBox = ({ aboutMoreAction }: { aboutMoreAction: () => void }) => {
               <Heading fontSize="3.5em">Share</Heading>
             </VStack>
           )}
-          {user ? (
-            <TopButton href="/posts">タイムライン</TopButton>
-          ) : (
-            <>
-              <TopButton href="/signup">
-                <Text display="inline-block">アカウント登録</Text>
-                <Interrobang mx={1} size={7} display="inline-block" />
-              </TopButton>
-              <VStack spacing={2}>
-                <Text>
-                  既にアカウントをお持ちの方は{" "}
-                  <LinkText href="/login">ログイン</LinkText>
-                </Text>
-                <Text>
-                  アカウント登録せず{" "}
-                  <LinkText href="/posts">タイムラインへ</LinkText>
-                </Text>
-              </VStack>
-            </>
-          )}
+          <TopButtonAndExplanation />
         </VStack>
       </AbsoluteCenter>
       <Center w="100%" position="absolute" bottom={4}>

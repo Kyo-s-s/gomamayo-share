@@ -21,8 +21,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Button, TwitterShareButton } from "./custom";
-import { deleteRequest, postRequest } from "@/utils/request";
-import { useAuth } from "@/context/AuthContext";
+import { useSession } from "next-auth/react";
 import { formatDistanceToNow, format, parseISO } from "date-fns";
 import { ja } from "date-fns/locale";
 import useMessage from "@/utils/useMessage";
@@ -50,27 +49,26 @@ const formatPostTime = (dateStr: string): string => {
 
 const DeleteButton = ({
   post,
-  deleteAction,
 }: {
   post: Post;
   deleteAction: (post: Post) => void;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { successMessage, errorMessage } = useMessage();
-  const handleDelete = async () => {
-    const res = await deleteRequest(`/posts/${post.id}`, true);
-    if (res.success) {
-      deleteAction(post);
-      successMessage({
-        description: "投稿を削除しました。",
-      });
-    } else {
-      errorMessage({
-        description: `${res.failure?.message || "エラーが発生しました。"}`,
-      });
-      window.location.reload();
-    }
-  };
+  // const { successMessage, errorMessage } = useMessage();
+  // const handleDelete = async () => {
+  //   const res = await deleteRequest(`/posts/${post.id}`, true);
+  //   if (res.success) {
+  //     deleteAction(post);
+  //     successMessage({
+  //       description: "投稿を削除しました。",
+  //     });
+  //   } else {
+  //     errorMessage({
+  //       description: `${res.failure?.message || "エラーが発生しました。"}`,
+  //     });
+  //     window.location.reload();
+  //   }
+  // };
   return (
     <>
       <IconButton
@@ -94,7 +92,7 @@ const DeleteButton = ({
             <Text>投稿内容: {post.content}</Text>
           </ModalBody>
           <ModalFooter gap={2}>
-            <Button colorScheme="red" onClick={handleDelete}>
+            <Button colorScheme="red" onClick={() => { }}>
               削除
             </Button>
             <Button onClick={onClose}>キャンセル</Button>
@@ -112,7 +110,8 @@ const PostCard = ({
   deleteAction,
   ranking,
 }: PostCardProps) => {
-  const { user: loginUser } = useAuth();
+  const { data: session } = useSession();
+  const loginUser = session?.user;
   const [liked, setLiked] = useState(is_liked);
   const [isLocked, setIsLocked] = useState(false);
   const { errorMessage } = useMessage();
@@ -129,9 +128,9 @@ const PostCard = ({
       return;
     }
     if (isLocked) return;
-    liked
-      ? deleteRequest(`/likes/${post.id}`, true)
-      : postRequest(`/likes/${post.id}`, {}, true);
+    // liked
+    //   ? deleteRequest(`/likes/${post.id}`, true)
+    //   : postRequest(`/likes/${post.id}`, {}, true);
     setLiked(!liked);
     setIsLocked(true);
 

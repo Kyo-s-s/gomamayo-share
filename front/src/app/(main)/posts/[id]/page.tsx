@@ -1,60 +1,52 @@
 "use client";
 
 import Background from "@/components/Background";
-import { LinkText } from "@/components/custom";
-import PostCard from "@/components/PostCard";
-import { Post, User } from "@/types/types";
-import { getRequest } from "@/utils/request";
-import useRedirect from "@/utils/useRedirect";
 import {
-  AbsoluteCenter,
-  Box,
   Container,
-  Flex,
-  Spacer,
-  Spinner,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 
-type PostApiResponse = {
-  user: User;
-  post: Post;
-  is_liked: boolean;
-};
+// type PostApiResponse = {
+//   user: User;
+//   post: Post;
+//   is_liked: boolean;
+// };
 
-const PostPage = ({ id }: { id: string }) => {
-  const redirectTo = useRedirect();
-  const [post, setPost] = useState<PostApiResponse | null>(null);
-  // loading ?
+// const PostPage = ({ id }: { id: string }) => {
+//   // const redirectTo = useRedirect();
+//   const [post, setPost] = useState<PostApiResponse | null>(null);
+//   // loading ?
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await getRequest<PostApiResponse>(`/posts/${id}`, {}, true);
-      if (res.success) {
-        setPost(res.success);
-      }
-    };
-    if (post == null) fetchData();
-  }, [post]);
-  return (
-    <>
-      {post ? (
-        <PostCard deleteAction={() => redirectTo("/posts")} {...post} />
-      ) : (
-        // FIXME: Spinner.tsx に切り出す
-        <Box textAlign="center">
-          <Spinner thickness="5px" color="gray.400" speed="0.75s" size="xl" />
-        </Box>
-      )}
-    </>
-  );
-};
-const Page = ({ params }: { params: { id: string } }) => {
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       const res = await getRequest<PostApiResponse>(`/posts/${id}`, {}, true);
+//       if (res.success) {
+//         setPost(res.success);
+//       }
+//     };
+//     if (post == null) fetchData();
+//   }, [post]);
+//   return (
+//     <>
+//       {post ? (
+//         // <PostCard deleteAction={() => redirectTo("/posts")} {...post} />
+//         <></>
+//       ) : (
+//         // FIXME: Spinner.tsx に切り出す
+//         <Box textAlign="center">
+//           <Spinner thickness="5px" color="gray.400" speed="0.75s" size="xl" />
+//         </Box>
+//       )}
+//     </>
+//   );
+// };
+// const Page = ({ params }: { params: { id: string } }) => {
+const Page = () => {
   return (
     <>
       <Background />
       <Container maxW="container.md" height="90svh" position="relative">
-        <AbsoluteCenter width="100%" px={4}>
+        This is Post Page!!
+        {/* <AbsoluteCenter width="100%" px={4}>
           <PostPage id={params.id} />
           <Flex>
             <Spacer />
@@ -62,7 +54,7 @@ const Page = ({ params }: { params: { id: string } }) => {
               <LinkText href="/posts">タイムラインへ</LinkText>
             </Box>
           </Flex>
-        </AbsoluteCenter>
+        </AbsoluteCenter> */}
       </Container>
     </>
   );

@@ -1,6 +1,5 @@
 "use client";
 
-import { useAuth } from "../context/AuthContext";
 import { LinkButton } from "./custom";
 import {
   Button,
@@ -32,9 +31,11 @@ import {
 } from "@chakra-ui/icons";
 import { Link } from "@chakra-ui/next-js";
 import { useRouter } from "next/navigation";
+import { useSession, signOut } from "next-auth/react";
 
 const AccountMenuItems = () => {
-  const { user, logout } = useAuth();
+  const { data: session } = useSession();
+  const user = session?.user;
   const { isOpen, onOpen, onClose } = useDisclosure();
   return user ? (
     <>
@@ -47,10 +48,9 @@ const AccountMenuItems = () => {
           <ModalCloseButton />
           <ModalBody>
             ログアウトしますか？
-            他の端末でもログインしている場合、すべてログアウトされます。
           </ModalBody>
           <ModalFooter gap={2}>
-            <Button onClick={logout} colorScheme="red">
+            <Button onClick={() => signOut()} colorScheme="red">
               ログアウト
             </Button>
             <Button onClick={onClose}>キャンセル</Button>

@@ -1,8 +1,8 @@
 "use client";
 
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signIn } from "next-auth/react"
 import Background from "@/components/Background";
-import { LinkButton, LinkText } from "@/components/custom";
+import { LinkText } from "@/components/custom";
 import Interrobang from "@/components/Interrobang";
 import {
   AbsoluteCenter,
@@ -73,7 +73,7 @@ const TopButtonAndExplanation = () => {
 
 const MainBox = ({ aboutMoreAction }: { aboutMoreAction: () => void }) => {
   const isDesktop = useBreakpointValue({ base: false, lg: true });
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const user = session?.user;
   console.log(user);
 

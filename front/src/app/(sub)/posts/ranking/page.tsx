@@ -4,7 +4,6 @@ import Background from "@/components/Background";
 import { BackHeader } from "@/components/Header";
 import PostCard from "@/components/PostCard";
 import { Post, User } from "@/types/types";
-import { getRequest } from "@/utils/request";
 import { Container } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
@@ -15,13 +14,13 @@ type PostsApiResponse = {
 }[];
 
 const PostRanking = () => {
-  const [posts, setPosts] = useState<PostsApiResponse>([]);
+  const [posts] = useState<PostsApiResponse>([]);
 
   const fetchData = async () => {
-    const res = await getRequest<PostsApiResponse>("/posts/ranking", {}, true);
-    if (res.success) {
-      setPosts(res.success);
-    }
+    // const res = await getRequest<PostsApiResponse>("/posts/ranking", {}, true);
+    // if (res.success) {
+    //   setPosts(res.success);
+    // }
   };
 
   useEffect(() => {

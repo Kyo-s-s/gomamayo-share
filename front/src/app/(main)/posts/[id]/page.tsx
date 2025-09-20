@@ -1,13 +1,8 @@
 "use client";
 
 import Background from "@/components/Background";
-import { LinkText } from "@/components/custom";
 import {
-  AbsoluteCenter,
-  Box,
   Container,
-  Flex,
-  Spacer,
 } from "@chakra-ui/react";
 
 // type PostApiResponse = {

@@ -11,7 +11,7 @@ import { LinkText } from "@/components/custom";
 import { getPostAction } from "@/actions/post";
 import PostCard from "@/components/PostCard";
 
-const Page = async ({ params }: { params: { id: string } }) => {
+const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   const res = await getPostAction(id);
   if (!res.ok) {

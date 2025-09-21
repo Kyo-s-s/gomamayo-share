@@ -1,6 +1,6 @@
 "use client";
 
-import { Post, User } from "@/types/types";
+import { Post } from "@prisma/client";
 import {
   Badge,
   Card,
@@ -22,22 +22,15 @@ import {
 import { useState } from "react";
 import { Button, TwitterShareButton } from "./custom";
 import { useSession } from "next-auth/react";
-import { formatDistanceToNow, format, parseISO } from "date-fns";
+import { formatDistanceToNow, format } from "date-fns";
 import { ja } from "date-fns/locale";
 import useMessage from "@/utils/useMessage";
 import Interrobang from "./Interrobang";
 import { FaRegTrashCan } from "react-icons/fa6";
+import { deletePostAction } from "@/actions/post";
+import { createLikeAction, deleteLikeAction } from "@/actions/like";
 
-type PostCardProps = {
-  post: Post;
-  user: User;
-  is_liked: boolean;
-  deleteAction: (post: Post) => void;
-  ranking?: number;
-};
-
-const formatPostTime = (dateStr: string): string => {
-  const date = parseISO(dateStr);
+const formatPostTime = (date: Date): string => {
   const now = new Date();
   const diffInDay = (now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24);
   if (diffInDay < 1) {
@@ -51,24 +44,22 @@ const DeleteButton = ({
   post,
 }: {
   post: Post;
-  deleteAction: (post: Post) => void;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // const { successMessage, errorMessage } = useMessage();
-  // const handleDelete = async () => {
-  //   const res = await deleteRequest(`/posts/${post.id}`, true);
-  //   if (res.success) {
-  //     deleteAction(post);
-  //     successMessage({
-  //       description: "投稿を削除しました。",
-  //     });
-  //   } else {
-  //     errorMessage({
-  //       description: `${res.failure?.message || "エラーが発生しました。"}`,
-  //     });
-  //     window.location.reload();
-  //   }
-  // };
+  const { successMessage, errorMessage } = useMessage();
+  const handleDelete = async () => {
+    const res = await deletePostAction(post.id);
+    if (res.ok) {
+      successMessage({
+        description: "投稿を削除しました。",
+      });
+    } else {
+      errorMessage({
+        description: `${"エラーが発生しました。"}`,
+      });
+    }
+    window.location.reload();
+  };
   return (
     <>
       <IconButton
@@ -92,7 +83,7 @@ const DeleteButton = ({
             <Text>投稿内容: {post.content}</Text>
           </ModalBody>
           <ModalFooter gap={2}>
-            <Button colorScheme="red" onClick={() => { }}>
+            <Button colorScheme="red" onClick={handleDelete}>
               削除
             </Button>
             <Button onClick={onClose}>キャンセル</Button>
@@ -105,20 +96,20 @@ const DeleteButton = ({
 
 const PostCard = ({
   post,
-  user,
-  is_liked,
-  deleteAction,
   ranking,
-}: PostCardProps) => {
+}: {
+  post: Post & { user: { id: string; name: string }, likesCount: number, isLiked: boolean };
+  ranking?: number;
+}) => {
   const { data: session } = useSession();
   const loginUser = session?.user;
-  const [liked, setLiked] = useState(is_liked);
+  const [liked, setLiked] = useState(post.isLiked);
   const [isLocked, setIsLocked] = useState(false);
   const { errorMessage } = useMessage();
 
   const postURL = `${process.env.NEXT_PUBLIC_BASE_URL}/posts/${post.id}`;
 
-  const likesCount = post.likes_count + (liked ? 1 : 0) - (is_liked ? 1 : 0);
+  const likesCount = post.likesCount + (liked ? 1 : 0) - (post.isLiked ? 1 : 0);
 
   const handleLike = async () => {
     if (!loginUser) {
@@ -128,9 +119,11 @@ const PostCard = ({
       return;
     }
     if (isLocked) return;
-    // liked
-    //   ? deleteRequest(`/likes/${post.id}`, true)
-    //   : postRequest(`/likes/${post.id}`, {}, true);
+    if (liked) {
+      await deleteLikeAction(post.id);
+    } else {
+      await createLikeAction(post.id);
+    }
     setLiked(!liked);
     setIsLocked(true);
 
@@ -150,9 +143,9 @@ const PostCard = ({
           </Center>
         )}
         <Flex>
-          <Text>{user.name}</Text>
+          <Text>{post.user.name}</Text>
           <Spacer />
-          <Text>{formatPostTime(post.created_at)}</Text>
+          <Text>{formatPostTime(post.createdAt)}</Text>
         </Flex>
         <Text py={1}>{post.content}</Text>
         <Flex alignItems="center" gap={4}>
@@ -163,8 +156,8 @@ const PostCard = ({
             <Text verticalAlign="baseline">{likesCount}</Text>
           </Flex>
           <Spacer />
-          {loginUser?.id === user.id && (
-            <DeleteButton post={post} deleteAction={deleteAction} />
+          {loginUser?.id === post.user.id && (
+            <DeleteButton post={post} />
           )}
           <TwitterShareButton
             text={post.content}

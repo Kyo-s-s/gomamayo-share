@@ -1,40 +1,20 @@
-"use client";
-
+import { getRankingPostsAction } from "@/actions/post";
 import Background from "@/components/Background";
 import { BackHeader } from "@/components/Header";
 import PostCard from "@/components/PostCard";
-import { Post, User } from "@/types/types";
 import { Container } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 
-type PostsApiResponse = {
-  user: User;
-  post: Post;
-  is_liked: boolean;
-}[];
-
-const PostRanking = () => {
-  const [posts] = useState<PostsApiResponse>([]);
-
-  const fetchData = async () => {
-    // const res = await getRequest<PostsApiResponse>("/posts/ranking", {}, true);
-    // if (res.success) {
-    //   setPosts(res.success);
-    // }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+const PostRanking = async () => {
+  const res = await getRankingPostsAction();
+  const posts = res.data.posts;
 
   return (
     <>
       {posts.map((post, idx) => (
         <PostCard
-          deleteAction={() => fetchData()}
-          key={post.post.id}
+          key={post.id}
           ranking={idx + 1}
-          {...post}
+          post={post}
         />
       ))}
     </>

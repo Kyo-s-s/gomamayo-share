@@ -1,60 +1,35 @@
-"use client";
-
+import { redirect } from 'next/navigation';
 import Background from "@/components/Background";
 import {
   Container,
+  AbsoluteCenter,
+  Flex,
+  Spacer,
+  Box,
 } from "@chakra-ui/react";
+import { LinkText } from "@/components/custom";
+import { getPostAction } from "@/actions/post";
+import PostCard from "@/components/PostCard";
 
-// type PostApiResponse = {
-//   user: User;
-//   post: Post;
-//   is_liked: boolean;
-// };
-
-// const PostPage = ({ id }: { id: string }) => {
-//   // const redirectTo = useRedirect();
-//   const [post, setPost] = useState<PostApiResponse | null>(null);
-//   // loading ?
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       const res = await getRequest<PostApiResponse>(`/posts/${id}`, {}, true);
-//       if (res.success) {
-//         setPost(res.success);
-//       }
-//     };
-//     if (post == null) fetchData();
-//   }, [post]);
-//   return (
-//     <>
-//       {post ? (
-//         // <PostCard deleteAction={() => redirectTo("/posts")} {...post} />
-//         <></>
-//       ) : (
-//         // FIXME: Spinner.tsx に切り出す
-//         <Box textAlign="center">
-//           <Spinner thickness="5px" color="gray.400" speed="0.75s" size="xl" />
-//         </Box>
-//       )}
-//     </>
-//   );
-// };
-// const Page = ({ params }: { params: { id: string } }) => {
-const Page = () => {
+const Page = async ({ params }: { params: { id: string } }) => {
+  const { id } = await params;
+  const res = await getPostAction(id);
+  if (!res.ok) {
+    redirect("/posts");
+  }
   return (
     <>
       <Background />
       <Container maxW="container.md" height="90svh" position="relative">
-        This is Post Page!!
-        {/* <AbsoluteCenter width="100%" px={4}>
-          <PostPage id={params.id} />
+        <AbsoluteCenter width="100%" px={4}>
+          <PostCard post={res.data.post} />
           <Flex>
             <Spacer />
             <Box bg="rgba(255, 255, 255, 0.8)" px={2} borderRadius={4}>
               <LinkText href="/posts">タイムラインへ</LinkText>
             </Box>
           </Flex>
-        </AbsoluteCenter> */}
+        </AbsoluteCenter>
       </Container>
     </>
   );

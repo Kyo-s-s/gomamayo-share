@@ -32,12 +32,15 @@ import {
 import { Link } from "@chakra-ui/next-js";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
+import { useState } from "react";
+import { StringForm } from "./form";
+import { changeNameAction } from "@/actions/user";
+import useMessage from "@/utils/useMessage";
+import { validateName } from "@/utils/validateName";
 
-const AccountMenuItems = () => {
-  const { data: session } = useSession();
-  const user = session?.user;
+const LogoutMenuItem = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  return user ? (
+  return (
     <>
       <MenuItem onClick={onOpen}>ログアウト</MenuItem>
 
@@ -57,6 +60,60 @@ const AccountMenuItems = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
+    </>
+  )
+}
+
+const NameChangeMenuItem = ({ beforeName }: { beforeName: string }) => {
+  const [name, setName] = useState(beforeName);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { successMessage, errorMessage } = useMessage();
+  const nameErr = validateName(name);
+
+  return (
+    <>
+      <MenuItem onClick={onOpen}>ユーザー名変更</MenuItem>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent mx={2}>
+          <ModalHeader>ユーザー名変更</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <StringForm title="ユーザー名" placeholder={beforeName} value={name} setValue={setName} errorMessage={nameErr} />
+          </ModalBody>
+          <ModalFooter gap={2}>
+            <Button onClick={async () => {
+              const res = await changeNameAction(name);
+              if (res.ok) {
+                successMessage({
+                  description: "ユーザー名を変更しました。",
+                });
+                window.location.reload();
+              } else {
+                errorMessage({
+                  description: `${res.error}`,
+                });
+              }
+            }} colorScheme="red" disabled={nameErr !== ""}>
+              変更
+            </Button>
+            <Button onClick={onClose}>キャンセル</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  )
+}
+
+
+const AccountMenuItems = () => {
+  const { data: session } = useSession();
+  const user = session?.user;
+  return user ? (
+    <>
+      <NameChangeMenuItem beforeName={user.name || ""} />
+      <LogoutMenuItem />
     </>
   ) : (
     <>

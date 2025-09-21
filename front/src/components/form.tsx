@@ -46,17 +46,18 @@ export const Form = ({
   );
 };
 
-// TODO: Error message
 export const StringForm = ({
   title,
   value,
   setValue,
+  placeholder = "",
   isPassword = false,
   errorMessage = "",
 }: {
   title: string;
   value: string;
   setValue: (s: string) => void;
+  placeholder?: string;
   isPassword?: boolean;
   errorMessage?: string;
 }) => {
@@ -69,6 +70,7 @@ export const StringForm = ({
           value={value}
           onChange={(e) => setValue(e.target.value)}
           isInvalid={errorMessage !== ""}
+          placeholder={placeholder}
         />
       </Tooltip>
     </>

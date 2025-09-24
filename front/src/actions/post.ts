@@ -3,7 +3,8 @@
 import { auth } from "@/auth";
 import prisma from "@/utils/prisma";
 import { err, ok } from "./result";
-
+import { gomamayoCheck } from "@/utils/gomamayoCheck";
+import { Prisma } from "@prisma/client";
 
 export const createPostAction = async (content: string) => {
   const session = await auth();
@@ -11,14 +12,24 @@ export const createPostAction = async (content: string) => {
   if (!user) {
     return err("ログインしてください。")
   }
-  // TODO: ゴママヨ判定
-  const post = await prisma.post.create({
-    data: {
-      content,
-      userId: `${user.id}`,
+  const gomamayoCheckResult = await gomamayoCheck(content);
+  if (gomamayoCheckResult !== "") {
+    return err(gomamayoCheckResult);
+  }
+  try {
+    const post = await prisma.post.create({
+      data: {
+        content,
+        userId: `${user.id}`,
+      }
+    })
+    return ok({ post })
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
+      return err("この内容は既に投稿されています。")
     }
-  })
-  return ok({ post })
+    return err("投稿に失敗しました。")
+  }
 }
 
 export const getRankingPostsAction = async () => {

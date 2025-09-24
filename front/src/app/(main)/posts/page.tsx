@@ -51,8 +51,10 @@ const NewPostModal = ({
 }) => {
   const [content, setContent] = useState("");
   const { successMessage, errorMessage } = useMessage();
+  const [posting, setPosting] = useState(false);
 
   const handlePost = async () => {
+    setPosting(true);
     const res = await createPostAction(content);
     if (res.ok) {
       successMessage({});
@@ -64,6 +66,7 @@ const NewPostModal = ({
         description: `${res.error}`,
       });
     }
+    setPosting(false);
   };
 
   return (
@@ -80,7 +83,7 @@ const NewPostModal = ({
           />
         </ModalBody>
         <ModalFooter>
-          <Button onClick={handlePost}>投稿</Button>
+          <Button onClick={handlePost} isDisabled={posting}>投稿</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

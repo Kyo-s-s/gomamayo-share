@@ -119,14 +119,14 @@ const PostCard = ({
       return;
     }
     if (isLocked) return;
-    if (liked) {
-      await deleteLikeAction(post.id);
-    } else {
-      await createLikeAction(post.id);
-    }
-    setLiked(!liked);
+    setLiked(liked => !liked);
     setIsLocked(true);
-
+    if (!(await (liked ? deleteLikeAction(post.id) : createLikeAction(post.id))).ok) {
+      setLiked(liked => !liked);
+      errorMessage({
+        description: "いいねに失敗しました。",
+      });
+    }
     setTimeout(() => {
       setIsLocked(false);
     }, 3000);

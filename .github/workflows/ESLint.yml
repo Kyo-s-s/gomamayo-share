@@ -1,4 +1,4 @@
-name: front
+name: ESLint
 on:
   push:
     branches:
@@ -10,10 +10,6 @@ jobs:
     name: ESLint Check
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./front
-
     steps:
       - uses: actions/checkout@v4
 
@@ -21,12 +17,11 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'pnpm'
-          cache-dependency-path: front/pnpm-lock.yaml
+          node-version: "22"
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
 
       - name: Install dependencies and run lint
         run: |
           pnpm install
           pnpm lint
-

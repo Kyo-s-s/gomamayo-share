@@ -2,6 +2,7 @@
 
 import { LinkButton } from "./custom";
 import {
+  Box,
   Button,
   Container,
   Divider,
@@ -21,7 +22,6 @@ import {
   ModalHeader,
   ModalOverlay,
   Spacer,
-  useBreakpointValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import {
@@ -31,7 +31,7 @@ import {
 } from "@chakra-ui/icons";
 import { Link } from "@chakra-ui/next-js";
 import { useRouter } from "next/navigation";
-import { useSession, signOut } from "next-auth/react";
+import { useSession, signOut, signIn } from "next-auth/react";
 import { useState } from "react";
 import { StringForm } from "./form";
 import { changeNameAction } from "@/actions/user";
@@ -117,11 +117,8 @@ const AccountMenuItems = () => {
     </>
   ) : (
     <>
-      <MenuItem as="a" href="/signup">
-        アカウント登録
-      </MenuItem>
-      <MenuItem as="a" href="/login">
-        ログイン
+      <MenuItem onClick={() => signIn()}>
+        アカウント登録 / ログイン
       </MenuItem>
     </>
   );
@@ -129,7 +126,7 @@ const AccountMenuItems = () => {
 
 const WideMenuButtons = () => {
   return (
-    <>
+    <Flex gap={2}>
       <LinkButton href={`/posts`}>タイムライン</LinkButton>
       <LinkButton href={`/posts/ranking`}>ランキング</LinkButton>
       <Menu>
@@ -140,7 +137,7 @@ const WideMenuButtons = () => {
           <AccountMenuItems />
         </MenuList>
       </Menu>
-    </>
+    </Flex>
   );
 };
 
@@ -162,15 +159,16 @@ const HamburgerMenuButton = () => {
   );
 };
 
-const MenuButtons = () => {
-  const isDesktop = useBreakpointValue({ base: false, md: true });
-
-  return (
-    <Flex gap={2}>
-      {isDesktop ? <WideMenuButtons /> : <HamburgerMenuButton />}
-    </Flex>
-  );
-};
+const MenuButtons = () => (
+  <>
+    <Box display={{ base: 'none', md: 'block' }}>
+      <WideMenuButtons />
+    </Box>
+    <Box display={{ base: 'block', md: 'none' }}>
+      <HamburgerMenuButton />
+    </Box>
+  </>
+)
 
 const CreateHeader = ({ children }: { children: React.ReactNode }) => {
   return (

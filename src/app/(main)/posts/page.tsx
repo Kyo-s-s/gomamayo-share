@@ -79,11 +79,13 @@ const NewPostModal = ({
           <TextForm
             value={content}
             setValue={setContent}
-            placeholder="ごまマヨネーズ"
+            placeholder="ごまマヨサラダ"
           />
         </ModalBody>
         <ModalFooter>
-          <Button onClick={handlePost} isDisabled={posting}>投稿</Button>
+          <Button onClick={handlePost} isDisabled={posting}>
+            投稿
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
@@ -104,13 +106,13 @@ const Page = () => {
           {posts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}
-          {!finish && <Box py={4} ref={ref} textAlign="center">
-            Loading...
-          </Box>}
+          {!finish && (
+            <Box py={4} ref={ref} textAlign="center">
+              Loading...
+            </Box>
+          )}
         </>
-        {user && (
-          <PostButton onClick={onOpen} />
-        )}
+        {user && <PostButton onClick={onOpen} />}
       </Container>
       <NewPostModal isOpen={isOpen} onClose={onClose} reload={reload} />
     </>

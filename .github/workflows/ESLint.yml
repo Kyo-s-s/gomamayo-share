@@ -1,0 +1,27 @@
+name: ESLint
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+
+jobs:
+  eslint:
+    name: ESLint Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: corepack enable
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies and run lint
+        run: |
+          pnpm install
+          pnpm lint

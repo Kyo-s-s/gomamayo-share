@@ -14,7 +14,6 @@ export const usePosts = () => {
     const res = await getPostsAction(
       posts.length > 0 ? posts[posts.length - 1].id : undefined
     );
-    console.log(res);
     if (res.ok) {
       if (res.data.posts.length === 0) {
         setFinish(true);

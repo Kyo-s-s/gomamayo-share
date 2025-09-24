@@ -10,12 +10,16 @@ export const createLikeAction = async (postID: string) => {
   if (!user) {
     return err("ログインしてください。")
   }
-  await prisma.like.create({
-    data: {
-      userId: `${user.id}`,
-      postId: postID,
-    },
-  })
+  try {
+    await prisma.like.create({
+      data: {
+        userId: `${user.id}`,
+        postId: postID,
+      },
+    })
+  } catch {
+    return err("いいねに失敗しました。")
+  }
   return ok({ message: "いいねしました。" })
 }
 
@@ -25,11 +29,15 @@ export const deleteLikeAction = async (postID: string) => {
   if (!user) {
     return err("ログインしてください。")
   }
-  await prisma.like.deleteMany({
-    where: {
-      userId: `${user.id}`,
-      postId: postID,
-    },
-  })
+  try {
+    await prisma.like.deleteMany({
+      where: {
+        userId: `${user.id}`,
+        postId: postID,
+      },
+    })
+  } catch {
+    return err("いいねを削除に失敗しました。")
+  }
   return ok({ message: "いいねを削除しました。" })
 }

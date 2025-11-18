@@ -24,7 +24,7 @@
     "date-fns": "^3.6.0",
     "framer-motion": "^11.3.2",
     "next": "15.5.3",
-    "next-auth": "5.0.0-beta.29",
+    "next-auth": "5.0.0-beta.30",
     "nookies": "^2.5.2",
     "prisma": "^6.16.2",
     "react": "^19.1.1",
